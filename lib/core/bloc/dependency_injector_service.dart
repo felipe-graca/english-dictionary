@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:english_dictionary/ui/global/bottom_navigator/bottom_navigator_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,7 +12,8 @@ class DependencyInjectorService {
     i.registerSingleton(await SharedPreferences.getInstance());
     i.registerSingleton(FirebaseFirestore.instance);
 
-    /*controllers*/
+    /*cubits*/
+    i.registerLazySingleton(() => BottomNavigatorCubit());
 
     /*services*/
   }
