@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "571655594202",
+    "project_id": "english-dictionary-7f559",
+    "storage_bucket": "english-dictionary-7f559.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571655594202:android:5a02f89b5182e3e64905e3",
+        "android_client_info": {
+          "package_name": "br.com.english_dictorionary.gcapps.english_dictionary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "571655594202-9q0gqp2mljrhqjqstpkf3pgpuvcq8i3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYSD_SGCtOLUqjVXrDKdPDKlMWEV7juVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "571655594202-9q0gqp2mljrhqjqstpkf3pgpuvcq8i3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
