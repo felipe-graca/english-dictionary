@@ -1,4 +1,4 @@
-import 'package:english_dictionary/core/bloc/dependency_injector_service.dart';
+import 'package:english_dictionary/core/feature/dependency_injector_service.dart';
 import 'package:english_dictionary/core/shared/firebase/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
