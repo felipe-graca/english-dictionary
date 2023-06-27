@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/services/service_initializer.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,15 @@ void main() async {
           return const MyApp();
         }
 
-        //TODO: Make a loading screen
-        return Container();
+        return Container(
+          decoration: const BoxDecoration(color: Colors.white),
+          child: const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+              strokeWidth: 1,
+            ),
+          ),
+        );
       },
     ),
   );
@@ -36,7 +44,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'English Dictionary',
-      home: Container(),
+      debugShowCheckedModeBanner: false,
+      navigatorKey: AppRouter.authNavigatorKey,
+      onGenerateRoute: AppRouter.authGenerateRoute,
+      initialRoute: '/',
     );
   }
 }
