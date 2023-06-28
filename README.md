@@ -63,10 +63,27 @@ This application is a simple english dictionary application built using flutter 
         - main.dart
                 
 
-            
+## APIS
+- [wordsapi](https://www.wordsapi.com/)
+- [firebase](https://firebase.google.com/)
+
+## Features
+- [x] Login with google
+- [X] List of words
+= [X] Favorite words
+- [X] History words
+- [X] Total of viewed words
+- [x] Profile
+- [X] Lastest viewed words
+
+## Testing
+- [X] Unit Testing
 
 
-
+## Requirements
+- [Flutter](https://flutter.dev/docs/get-started/install) 3.10.5
+- [Dart](https://dart.dev/) sdk: '>=3.0.5 <4.0.0'
+- [Android SDK](https://developer.android.com/studio)
 
 
 ## Getting Started
@@ -90,7 +107,7 @@ $ flutter pub get
 $ flutter pub run build_runner watch --delete-conflicting-outputs
 ```
 
-- i use [Mockito](https://pub.dev/packages/mockito) for mocking object, so you need to run the code generation above to generate the mock object
+- You need run this command what ever you change the code in test folder [Mockito]
 
 
 ### 4. Run the app
@@ -100,4 +117,8 @@ $ flutter run
 ```
 
 ## Screenshots
+- Figma design(UI/UX) created by me
+
+![Alt Text](images/figma.png)
+
 
