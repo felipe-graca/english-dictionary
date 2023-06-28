@@ -1,6 +1,9 @@
-import 'package:english_dictionary/core/routes/app_router.dart';
+import 'dart:async';
+
+import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../core/routes/app_routes.dart';
 
@@ -12,12 +15,30 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final _authCubit = GetIt.I.get<AuthCubit>();
+
+  StreamSubscription<bool>? authSubscription;
+
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(AppRouter.authContext).pushReplacementNamed(AppRoutes.base);
+    authSubscription = _authCubit.isLogged.listen((isLogged) {
+      handleNavigation(isLogged);
+      authSubscription?.cancel();
     });
     super.initState();
+  }
+
+  void handleNavigation(bool isLogged) {
+    Future.delayed(const Duration(seconds: 1)).then((_) async {
+      if (!mounted) {
+        return;
+      }
+      if (isLogged) {
+        Navigator.of(context).pushReplacementNamed(AppRoutes.base);
+      } else {
+        Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+      }
+    });
   }
 
   @override

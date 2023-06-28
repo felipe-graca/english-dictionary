@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "571655594202-9q0gqp2mljrhqjqstpkf3pgpuvcq8i3j.apps.googleusercontent.com",
+          "client_id": "571655594202-gintrpcg6gqpiena0kf8f1ja77umvhgt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.english_dictorionary.gcapps.english_dictionary",
+            "certificate_hash": "4e812c2f28a2bb9ac647c831263940995590c65c"
+          }
+        },
+        {
+          "client_id": "571655594202-75oqn6qtc3ms0r1jmt3vr0rod79pobv7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "571655594202-9q0gqp2mljrhqjqstpkf3pgpuvcq8i3j.apps.googleusercontent.com",
+              "client_id": "571655594202-75oqn6qtc3ms0r1jmt3vr0rod79pobv7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "571655594202-6lto1s1jqcgp2dt3dol01ge92oglf8ip.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.englishdictorionary.gcapps.englishDictionary.RunnerTests"
+              }
             }
           ]
         }
