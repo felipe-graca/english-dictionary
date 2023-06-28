@@ -1,4 +1,5 @@
-import 'package:english_dictionary/core/feature/dependency_injector_service.dart';
+import 'package:english_dictionary/core/feature/auth/core/service_locator/auth_service_locator.dart';
+import 'package:english_dictionary/core/feature/service_locator.dart';
 import 'package:english_dictionary/core/shared/firebase/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,9 @@ class ServicesInitializer {
   }
 
   static Future<void> _setup() async {
-    DependencyInjectorService.setup();
+    ServiceLocator.initializeAllFeaturesInjections(
+      authLocator: AuthServiceLocator(),
+    );
   }
 
   static _initFirebase() async {
@@ -27,8 +30,4 @@ class ServicesInitializer {
     // analytics = FirebaseAnalytics.instance;
     // firebaseAnalyticsObserver = FirebaseAnalyticsObserver(analytics: analytics);
   }
-
-  // static _initFirebaseMessaging() async {
-  //   await FirebaseMessagingService.instance.init();
-  // }
 }

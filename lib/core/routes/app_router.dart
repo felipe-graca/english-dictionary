@@ -1,5 +1,6 @@
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/presenter/base/page/base_page.dart';
+import 'package:english_dictionary/presenter/login/page/login_page.dart';
 import 'package:english_dictionary/presenter/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +61,7 @@ class AppRouter {
         page = const SplashPage();
         break;
       case AppRoutes.login:
-        page = Container();
+        page = const LoginPgae();
         break;
       case AppRoutes.base:
         page = const BasePage();

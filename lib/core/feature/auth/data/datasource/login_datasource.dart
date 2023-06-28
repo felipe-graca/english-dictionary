@@ -9,7 +9,7 @@ class LoginDatasource implements ILoginDatasource {
   LoginDatasource(this._firebaseService);
 
   @override
-  Future<UserCredential> signInWithGoogle() {
+  Future<bool> login() {
     try {
       return _firebaseService.signInWithGoogle();
     } on FirebaseAuthException {
