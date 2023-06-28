@@ -70,7 +70,7 @@ This application is a simple english dictionary application built using flutter 
 ## Features
 - [x] Login with google
 - [X] List of words
-= [X] Favorite words
+- [X] Favorite words
 - [X] History words
 - [X] Total of viewed words
 - [x] Profile
