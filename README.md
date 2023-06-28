@@ -90,7 +90,7 @@ $ flutter pub get
 $ flutter pub run build_runner watch --delete-conflicting-outputs
 ```
 
-- i use [Mockito](https://pub.dev/packages/mockito) for mocking object, so you need to run the code generation above to generate the mock object
+- You need to run this command what ever you change the code in test folder [Mockito]
 
 
 ### 4. Run the app
@@ -100,6 +100,8 @@ $ flutter run
 ```
 
 ## Screenshots
-- Figma design created by me
+- Figma design(UI/UX) created by me
+
 ![Alt Text](images/figma.png)
+
 
