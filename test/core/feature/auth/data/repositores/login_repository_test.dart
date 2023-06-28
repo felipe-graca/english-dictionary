@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
-import 'package:english_dictionary/core/feature/auth/data/datasource/login_datasource.dart';
+import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource.dart';
 import 'package:english_dictionary/core/feature/auth/data/repositores/login_repository.dart';
 import 'package:english_dictionary/core/feature/auth/domain/repositores/login_repository_interface.dart';
 import 'package:flutter_test/flutter_test.dart';

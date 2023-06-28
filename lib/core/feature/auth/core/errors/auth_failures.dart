@@ -9,3 +9,7 @@ class AuthFailure extends Failure {
 class LoginFailure extends AuthFailure {
   LoginFailure({String message = "Login failed. Please check your internet connection and try again."}) : super(message: message);
 }
+
+class SaveUserFailure extends AuthFailure {
+  SaveUserFailure({String message = "Failed to save user. Please check your internet connection and try again."}) : super(message: message);
+}

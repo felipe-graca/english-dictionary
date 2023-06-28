@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:english_dictionary/core/feature/auth/data/datasource/login_datasource.dart'
+import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 

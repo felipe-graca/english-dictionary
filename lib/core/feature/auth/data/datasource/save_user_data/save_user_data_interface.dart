@@ -1,6 +1,5 @@
 import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
 
-abstract class IFirebaseService {
-  Future<bool> signInWithGoogle();
+abstract class ISaveUserDatasource {
   Future<bool> saveUser(UserDataModel model);
 }
