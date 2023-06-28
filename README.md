@@ -1,6 +1,7 @@
 # english_dictionary
 
-Application for challange interview
+<!-- Create a complete descript -->
+This application is a simple english dictionary application built using flutter framework. This application is built using BLoC pattern, Clean Architecture, TDD, and SOLID principle.
 
 - This application is a simple english dictionary application
 - This application is built using flutter framework
@@ -25,34 +26,99 @@ Application for challange interview
 ## Architecture
     - lib
         - core
-            - error
+            - errors
+            - features
+                - cubit
+                - data
+                    - datasources
+                    - models
+                    - repositories
+                - domain
+                    - entities
+                    - repositories
+                    - usecases
+            - routes
             - usecase
-            - util
-        - data
-            - datasource
-            - model
-            - repository
-        - domain
-            - entity
-            - repository
-            - usecase
-        - presentation
-            - bloc
-            - page
-            - widget
+            - utils
+            - services
+            - shared
+        - presenter
+            - features
+                - cubit
+                - data
+                    - datasources
+                    - models
+                    - repositories
+                - domain
+                    - entities
+                    - repositories
+                    - usecases
+                - pages
+                    - widgets
+        - ui
+            - global
+                - custom_components
+                    - widgets
+                    - cubit
         - main.dart
+                
 
+## APIS
+- [wordsapi](https://www.wordsapi.com/)
+- [firebase](https://firebase.google.com/)
+
+## Features
+- [x] Login with google
+- [X] List of words
+= [X] Favorite words
+- [X] History words
+- [X] Total of viewed words
+- [x] Profile
+- [X] Lastest viewed words
+
+## Testing
+- [X] Unit Testing
+
+
+## Requirements
+- [Flutter](https://flutter.dev/docs/get-started/install) 3.10.5
+- [Dart](https://dart.dev/) sdk: '>=3.0.5 <4.0.0'
+- [Android SDK](https://developer.android.com/studio)
 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### 1. Clone the repository
 
-A few resources to get you started if this is your first Flutter project:
+```shell
+$ git clone
+$ cd english_dictionary
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 2. Get the packages
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```shell
+$ flutter pub get
+```
+
+### 3. Active code generation
+
+```shell
+$ flutter pub run build_runner watch --delete-conflicting-outputs
+```
+
+- You need run this command what ever you change the code in test folder [Mockito]
+
+
+### 4. Run the app
+
+```shell
+$ flutter run
+```
+
+## Screenshots
+- Figma design(UI/UX) created by me
+
+![Alt Text](images/figma.png)
+
+

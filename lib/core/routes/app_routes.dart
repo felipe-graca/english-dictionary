@@ -4,7 +4,8 @@ class AppRoutes {
   static const String favorites = '/favorites';
   static const String profile = '/profile';
 
-  static const String splash = '/splash';
+  static const String base = '/base';
 
+  static const String splash = '/splash';
   static const String login = '/login';
 }
