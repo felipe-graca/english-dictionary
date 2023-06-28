@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:english_dictionary/core/feature/auth/core/service_locator/auth_service_locator_interface.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
-import 'package:english_dictionary/ui/global/bottom_navigator/bottom_navigator_cubit.dart';
+import 'package:english_dictionary/ui/global/bottom_navigator/cubit/bottom_navigator_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -18,7 +18,7 @@ class AppRouter {
   static GlobalKey<NavigatorState> get authNavigatorKey => _authNavigatorKey;
 
   static PageRouteBuilder mainGenerateRoute(RouteSettings routeSettings) {
-    final args = routeSettings.arguments as Map<String, dynamic>?;
+    // final args = routeSettings.arguments as Map<String, dynamic>?;
 
     late final Widget page;
 
