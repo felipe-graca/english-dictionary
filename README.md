@@ -100,6 +100,6 @@ $ flutter run
 ```
 
 ## Screenshots
-
+- Figma design created by me
 ![Alt Text](images/figma.png)
 
