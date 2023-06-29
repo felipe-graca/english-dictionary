@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,6 +44,21 @@ void main() {
         final result = await service.saveUser(userDataModel);
         expect(result, false);
       });
+    });
+  });
+
+  group('Get user details', () {
+    test('should return user details', () async {
+      final IFirebaseService service = MockFirebaseService();
+      when(service.getUserDetails()).thenAnswer((_) async => userDataModel);
+      final result = await service.getUserDetails();
+      expect(result, userDataModel);
+    });
+
+    test('should return null when not found user details', () async {
+      final IFirebaseService service = MockFirebaseService();
+      when(service.getUserDetails()).thenThrow(GetUserDetailsFailure());
+      expect(() => service.getUserDetails(), throwsA(isA<GetUserDetailsFailure>()));
     });
   });
 }

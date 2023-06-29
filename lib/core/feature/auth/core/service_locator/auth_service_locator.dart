@@ -4,8 +4,8 @@ import 'package:english_dictionary/core/feature/auth/data/datasource/login/login
 import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/auth/data/repositores/login_repository.dart';
 import 'package:english_dictionary/core/feature/auth/domain/repositores/login_repository_interface.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/login_usecase.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/login_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
 import 'package:get_it/get_it.dart';
 
 class AuthServiceLocator implements IAuthServiceLocator {

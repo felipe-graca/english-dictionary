@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:english_dictionary/core/feature/auth/domain/usecases/login_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
