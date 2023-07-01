@@ -5,7 +5,7 @@ import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_e
 import 'package:english_dictionary/core/feature/auth/domain/repositores/get_user_details_repository_interface.dart';
 
 class GetUserDetailsRepository implements IGetUserDetailsRepository {
-  final IGetLoggedUserDatasource _getLoggedUserDatasource;
+  final IGetUserDetailsDatasource _getLoggedUserDatasource;
 
   GetUserDetailsRepository(this._getLoggedUserDatasource);
 

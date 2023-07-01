@@ -3,7 +3,7 @@ import 'package:english_dictionary/core/feature/auth/data/datasource/get_user_de
 import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 
-class GetUserDetailsDatasource implements IGetLoggedUserDatasource {
+class GetUserDetailsDatasource implements IGetUserDetailsDatasource {
   final IFirebaseService _firebaseService;
 
   GetUserDetailsDatasource(this._firebaseService);
