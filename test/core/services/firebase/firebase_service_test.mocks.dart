@@ -70,4 +70,12 @@ class MockFirebaseService extends _i1.Mock implements _i3.FirebaseService {
           ),
         )),
       ) as _i4.Future<_i2.UserDataModel>);
+  @override
+  _i4.Future<bool> existsUser() => (super.noSuchMethod(
+        Invocation.method(
+          #existsUser,
+          [],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }

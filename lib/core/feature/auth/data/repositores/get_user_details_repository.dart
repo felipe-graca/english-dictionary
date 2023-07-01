@@ -13,7 +13,7 @@ class GetUserDetailsRepository implements IGetUserDetailsRepository {
   Future<Either<GetUserDetailsFailure, UserDataEntity>> getUserDetails() async {
     try {
       final user = await _getLoggedUserDatasource.getUserDetails();
-      return Right(UserDataEntity.fromModel(user));
+      return Right(user.toEntity());
     } on GetUserDetailsFailure catch (e) {
       return Left(e);
     }

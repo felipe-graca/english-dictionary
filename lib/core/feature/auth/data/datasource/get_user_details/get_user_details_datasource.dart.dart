@@ -12,8 +12,8 @@ class GetUserDetailsDatasource implements IGetLoggedUserDatasource {
   Future<UserDataModel> getUserDetails() async {
     try {
       return await _firebaseService.getUserDetails();
-    } on GetUserDetailsFailure {
-      throw GetUserDetailsFailure();
+    } on GetUserDetailsFailure catch (e) {
+      throw GetUserDetailsFailure(message: e.message);
     }
   }
 }

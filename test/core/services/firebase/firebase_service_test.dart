@@ -1,55 +1,58 @@
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
+import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../feature/auth/data/model/user_data_model_test.dart';
 import 'firebase_service_test.mocks.dart';
 
-@GenerateMocks(
-  [FirebaseService],
-)
+@GenerateMocks([FirebaseService])
 void main() {
-  group('Firebase service', () {
-    group('Login', () {
-      test('should return true when logged user', () async {
-        final IFirebaseService service = MockFirebaseService();
-        when(service.signInWithGoogle()).thenAnswer((_) async => true);
-        final result = await service.signInWithGoogle();
-        expect(result, true);
-      });
+  final faker = Faker();
 
-      test('should return false when not logged user', () async {
-        final IFirebaseService service = MockFirebaseService();
-        when(service.signInWithGoogle()).thenAnswer((_) async => false);
-        final result = await service.signInWithGoogle();
-        expect(result, false);
-      });
+  final userDataModel = UserDataModel(
+    name: faker.person.name(),
+    email: faker.internet.email(),
+    base64Image: faker.image.toString(),
+    uid: faker.guid.guid(),
+    history: const [],
+  );
+
+  final service = MockFirebaseService();
+
+  group('Login', () {
+    test('should return true when logged user', () async {
+      when(service.signInWithGoogle()).thenAnswer((_) async => true);
+      final result = await service.signInWithGoogle();
+      expect(result, true);
     });
 
-    group('Save user', () {
-      test('should return true when saved user', () async {
-        final IFirebaseService service = MockFirebaseService();
-        when(service.saveUser(userDataModel)).thenAnswer((_) async => true);
-        final result = await service.saveUser(userDataModel);
-        expect(result, true);
-      });
+    test('should return false when not logged user', () async {
+      when(service.signInWithGoogle()).thenAnswer((_) async => false);
+      final result = await service.signInWithGoogle();
+      expect(result, false);
+    });
+  });
 
-      test('should return false when not saved user', () async {
-        final IFirebaseService service = MockFirebaseService();
+  group('Save user', () {
+    test('should return true when saved user', () async {
+      when(service.saveUser(userDataModel)).thenAnswer((_) async => true);
+      final result = await service.saveUser(userDataModel);
+      expect(result, true);
+    });
 
-        when(service.saveUser(userDataModel)).thenAnswer((_) async => false);
-        final result = await service.saveUser(userDataModel);
-        expect(result, false);
-      });
+    test('should return false when not saved user', () async {
+      when(service.saveUser(userDataModel)).thenAnswer((_) async => false);
+      final result = await service.saveUser(userDataModel);
+      expect(result, false);
     });
   });
 
   group('Get user details', () {
     test('should return user details', () async {
-      final IFirebaseService service = MockFirebaseService();
       when(service.getUserDetails()).thenAnswer((_) async => userDataModel);
       final result = await service.getUserDetails();
       expect(result, userDataModel);

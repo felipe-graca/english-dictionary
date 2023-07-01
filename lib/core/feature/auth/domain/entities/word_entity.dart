@@ -1,13 +1,16 @@
 import 'package:english_dictionary/core/feature/auth/data/model/word_model.dart';
 import 'package:equatable/equatable.dart';
 
-class WordEntity extends WordModel with EquatableMixin {
-  WordEntity({required super.word, required super.uid});
+class WordEntity extends Equatable {
+  final String word;
+  final String uid;
+
+  const WordEntity({required this.word, required this.uid});
 
   @override
   List<Object?> get props => [
-        super.word,
-        super.uid,
+        word,
+        uid,
       ];
 
   //copyWith
@@ -16,16 +19,15 @@ class WordEntity extends WordModel with EquatableMixin {
     final String? uid,
   }) {
     return WordEntity(
-      word: word ?? super.word,
-      uid: uid ?? super.uid,
+      word: word ?? this.word,
+      uid: uid ?? this.uid,
     );
   }
 
-  //factory fromModel
-  factory WordEntity.fromModel(WordModel model) {
-    return WordEntity(
-      word: model.word,
-      uid: model.uid,
+  WordModel toModel() {
+    return WordModel(
+      word: word,
+      uid: uid,
     );
   }
 }

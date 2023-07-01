@@ -33,6 +33,7 @@ dependencies:
   google_sign_in: ^6.1.4
   google_fonts: ^5.1.0
   vibration: ^1.8.1
+  faker: ^2.1.0
   
 
 dev_dependencies:

@@ -2,13 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
 import 'package:english_dictionary/core/feature/auth/domain/repositores/get_user_details_repository_interface.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_logged_user_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 
-class GetLoggedUserUsecase implements IGetLoggedUserUsecase {
+class GetUserDetailsUsecase implements IGetUserDetailsUsecase {
   final IGetUserDetailsRepository _getLoggedUserRepository;
 
-  GetLoggedUserUsecase(this._getLoggedUserRepository);
+  GetUserDetailsUsecase(this._getLoggedUserRepository);
 
   @override
   Future<Either<GetUserDetailsFailure, UserDataEntity>> call(NoParams params) async {

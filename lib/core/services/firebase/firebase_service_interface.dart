@@ -4,4 +4,5 @@ abstract class IFirebaseService {
   Future<bool> signInWithGoogle();
   Future<bool> saveUser(UserDataModel model);
   Future<UserDataModel> getUserDetails();
+  Future<bool> existsUser();
 }

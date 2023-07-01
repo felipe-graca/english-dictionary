@@ -98,17 +98,17 @@ class AuthCubit extends Cubit<AuthState> {
 
   User? get currentUser => state.currentUser;
 
-  Future<bool> deleteUser() async {
-    try {
-      await _firebaseAuth.currentUser?.delete();
-      logout();
-      return true;
-    } catch (e, s) {
-      if (kDebugMode) {
-        print(e);
-        print(s);
-      }
-      return false;
-    }
-  }
+  // Future<bool> deleteUser() async {
+  //   try {
+  //     await _firebaseAuth.currentUser?.delete();
+  //     logout();
+  //     return true;
+  //   } catch (e, s) {
+  //     if (kDebugMode) {
+  //       print(e);
+  //       print(s);
+  //     }
+  //     return false;
+  //   }
+  // }
 }

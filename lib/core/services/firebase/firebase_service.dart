@@ -58,4 +58,19 @@ class FirebaseService implements IFirebaseService {
       throw GetUserDetailsFailure(message: (e.message ?? '').toString());
     }
   }
+
+  @override
+  Future<bool> existsUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) throw FirebaseAuthException(code: 'ERROR_ABORTED_BY_USER');
+
+      final snapshot = await _firestore.collection('users').doc(user.uid).get();
+
+      if (snapshot.exists) return true;
+      return false;
+    } on FirebaseAuthException catch (e) {
+      throw ExistsUserFailuire(message: (e.message ?? '').toString());
+    }
+  }
 }

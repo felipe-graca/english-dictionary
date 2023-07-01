@@ -4,19 +4,14 @@ import 'dart:convert';
 import 'package:english_dictionary/core/feature/auth/data/model/word_model.dart';
 import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
 
-class UserDataModel {
-  final String name;
-  final String email;
-  final String base64Image;
-  final String uid;
-  final List<WordModel> history;
-  UserDataModel({
-    required this.name,
-    required this.email,
-    required this.base64Image,
-    required this.uid,
-    required this.history,
-  });
+class UserDataModel extends UserDataEntity {
+  const UserDataModel({
+    required String name,
+    required String email,
+    required String base64Image,
+    required String uid,
+    required List<WordModel> history,
+  }) : super(name: name, email: email, base64Image: base64Image, uid: uid, history: history);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -42,14 +37,13 @@ class UserDataModel {
 
   factory UserDataModel.fromJson(String source) => UserDataModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  //fromEntity
-  factory UserDataModel.fromEntity(UserDataEntity entity) {
-    return UserDataModel(
-      name: entity.name,
-      email: entity.email,
-      base64Image: entity.base64Image,
-      uid: entity.uid,
-      history: entity.history,
+  UserDataEntity toEntity() {
+    return UserDataEntity(
+      name: name,
+      email: email,
+      base64Image: base64Image,
+      uid: uid,
+      history: history,
     );
   }
 }

@@ -23,3 +23,8 @@ class GetUserDetailsFailure extends AuthFailure {
   GetUserDetailsFailure({String message = "Failed to get user details. Please check your internet connection and try again."})
       : super(message: message);
 }
+
+class ExistsUserFailuire extends AuthFailure {
+  ExistsUserFailuire({String message = "Failed to check if user exists. Please check your internet connection and try again."})
+      : super(message: message);
+}

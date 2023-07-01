@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource.dart';
 import 'package:english_dictionary/core/feature/auth/data/repositores/login_repository.dart';
@@ -14,14 +13,24 @@ main() {
   group('login repository', () {
     test('should return true when logged user', () async {
       final datasource = MockLoginDatasource();
+      when(datasource.login()).thenAnswer((_) async => true);
       final ILoginRepository repository = LoginRepository(datasource);
-      when(repository.login()).thenAnswer((_) async => const Right(true));
+
+      final result = await repository.login();
+      final folded = result.fold((failure) => failure, (success) => success);
+
+      expect(folded, true);
     });
 
-    test('should return false when not logged user', () async {
+    test('should return trow when not logged user', () async {
       final datasource = MockLoginDatasource();
+      when(datasource.login()).thenThrow(LoginFailure());
       final ILoginRepository repository = LoginRepository(datasource);
-      when(repository.login()).thenAnswer((_) async => Left(LoginFailure()));
+
+      final result = await repository.login();
+      final folded = result.fold((failure) => failure, (success) => success);
+
+      expect(folded, isA<LoginFailure>());
     });
   });
 }

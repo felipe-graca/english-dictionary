@@ -12,27 +12,23 @@ import 'login_usecase_test.mocks.dart';
 
 @GenerateMocks([LoginRepository])
 main() {
-  group('login repository', () {
-    test('should return true when logged user', () async {
-      final repository = MockLoginRepository();
-      final ILoginUsecase usecase = LoginUsecase(repository);
-      when(repository.login()).thenAnswer((_) async => const Right(true));
+  final repository = MockLoginRepository();
+  final ILoginUsecase usecase = LoginUsecase(repository);
 
-      final result = await usecase(noParams);
+  test('should return true when logged user', () async {
+    when(repository.login()).thenAnswer((_) async => const Right(true));
 
-      expect(result, const Right(true));
-    });
+    final result = await usecase(noParams);
 
-    test('should return false when not logged user', () async {
-      final repository = MockLoginRepository();
-      final ILoginUsecase usecase = LoginUsecase(repository);
-      when(repository.login()).thenAnswer((_) async => Left(LoginFailure()));
+    expect(result, const Right(true));
+  });
 
-      final result = await usecase.call(noParams);
+  test('should return false when not logged user', () async {
+    when(repository.login()).thenAnswer((_) async => Left(LoginFailure()));
 
-      final folded = result.fold((l) => l, (r) => r);
+    final result = await usecase.call(noParams);
+    final folded = result.fold((l) => l, (r) => r);
 
-      expect(folded, isA<LoginFailure>());
-    });
+    expect(folded, isA<LoginFailure>());
   });
 }
