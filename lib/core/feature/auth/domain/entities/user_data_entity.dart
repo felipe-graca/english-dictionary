@@ -2,16 +2,28 @@ import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.
 import 'package:english_dictionary/core/feature/auth/data/model/word_model.dart';
 import 'package:equatable/equatable.dart';
 
-class UserDataEntity extends UserDataModel with EquatableMixin {
-  UserDataEntity({required super.name, required super.email, required super.base64Image, required super.uid, required super.history});
+class UserDataEntity extends Equatable {
+  final String name;
+  final String email;
+  final String base64Image;
+  final String uid;
+  final List<WordModel> history;
+
+  const UserDataEntity({
+    this.name = '',
+    this.email = '',
+    this.base64Image = '',
+    this.uid = '',
+    this.history = const [],
+  });
 
   @override
   List<Object?> get props => [
-        super.name,
-        super.email,
-        super.base64Image,
-        super.uid,
-        super.history,
+        name,
+        email,
+        base64Image,
+        uid,
+        history,
       ];
 
   //copyWith
@@ -23,22 +35,24 @@ class UserDataEntity extends UserDataModel with EquatableMixin {
     final List<WordModel>? history,
   }) {
     return UserDataEntity(
-      name: name ?? super.name,
-      email: email ?? super.email,
-      base64Image: base64Image ?? super.base64Image,
-      uid: uid ?? super.uid,
-      history: history ?? super.history,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      base64Image: base64Image ?? this.base64Image,
+      uid: uid ?? this.uid,
+      history: history ?? this.history,
     );
   }
 
-  //factory fromModel
-  factory UserDataEntity.fromModel(UserDataModel model) {
-    return UserDataEntity(
-      name: model.name,
-      email: model.email,
-      base64Image: model.base64Image,
-      uid: model.uid,
-      history: model.history,
+  UserDataModel toModel() {
+    return UserDataModel(
+      name: name,
+      email: email,
+      base64Image: base64Image,
+      uid: uid,
+      history: history,
     );
   }
+
+  //isEmty
+  bool get isEmpty => name.isEmpty && email.isEmpty && base64Image.isEmpty && uid.isEmpty && history.isEmpty;
 }

@@ -1,6 +1,10 @@
 import 'dart:async';
 
-import 'package:english_dictionary/core/feature/auth/domain/usecases/login_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/initialize_user/initialize_user_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,39 +14,46 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final ILoginUsecase _loginUsecase;
-
-  AuthCubit(this._loginUsecase) : super(const AuthState()) {
+  final ILoginUsecase loginUsecase;
+  final IGetUserDetailsUsecase getUserDetailsUsecase;
+  final IExistsUserUsecase existsUserUsecase;
+  final IInitializeUserUsecase initializeUserUsecase;
+  AuthCubit(
+    this.loginUsecase,
+    this.getUserDetailsUsecase,
+    this.existsUserUsecase,
+    this.initializeUserUsecase,
+  ) : super(const AuthState()) {
     Future.delayed(const Duration(milliseconds: 500)).then((_) {
-      _onUserChanged();
+      onUserChanged();
     });
   }
 
-  final _firebaseAuth = FirebaseAuth.instance;
+  final firebaseAuth = FirebaseAuth.instance;
   var userDetailLoading = false;
-  final _isLoggedStream = StreamController<bool>.broadcast();
-  late final isLogged = _isLoggedStream.stream;
+  final isLoggedStream = StreamController<bool>.broadcast();
+  late final isLogged = isLoggedStream.stream;
 
   //login
   Future<void> login() async {
-    final result = await _loginUsecase.call(noParams);
+    final result = await loginUsecase.call(noParams);
     return result.fold(
       (failure) => throw failure,
-      (success) => state.copyWith(currentUser: _firebaseAuth.currentUser),
+      (success) => state.copyWith(currentUser: currentUser.copyWith()),
     );
   }
 
   void startListenAuthChanges() {
-    _firebaseAuth.userChanges().listen((event) {
-      _onUserChanged();
+    firebaseAuth.userChanges().listen((event) {
+      onUserChanged();
     });
   }
 
   dispose() {
-    _isLoggedStream.close();
+    isLoggedStream.close();
   }
 
-  Future<void> _onUserChanged() async {
+  Future<void> onUserChanged() async {
     if (userDetailLoading) {
       return;
     }
@@ -50,15 +61,28 @@ class AuthCubit extends Cubit<AuthState> {
     userDetailLoading = true;
 
     try {
-      if (_firebaseAuth.currentUser == null) {
+      if (firebaseAuth.currentUser == null) {
         emit(const AuthState(status: AuthStatus.unauthenticated));
 
-        _isLoggedStream.add(false);
+        isLoggedStream.add(false);
         userDetailLoading = false;
         return;
       }
 
-      emit(AuthState(status: AuthStatus.authenticated, currentUser: _firebaseAuth.currentUser));
+      final wasUserDetails = await existsUserUsecase.call(noParams);
+      wasUserDetails.fold(
+        (faiulre) => {},
+        (success) async {
+          if (success) {
+            final userDetails = await getUserDetails();
+            emit(state.copyWith(currentUser: userDetails));
+          } else {
+            final userDetails = await initializeUser();
+            emit(state.copyWith(currentUser: userDetails));
+          }
+          emit(const AuthState(status: AuthStatus.authenticated));
+        },
+      );
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -66,12 +90,51 @@ class AuthCubit extends Cubit<AuthState> {
     }
 
     userDetailLoading = false;
-    _isLoggedStream.add(state.currentUser != null);
+    isLoggedStream.add(!state.currentUser.isEmpty);
+  }
+
+  Future<UserDataEntity> getUserDetails() async {
+    try {
+      final userDetails = await getUserDetailsUsecase.call(noParams);
+      return userDetails.fold(
+        (failure) => throw failure,
+        (success) => success,
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return const UserDataEntity();
+    }
+  }
+
+  Future<UserDataEntity> initializeUser() async {
+    try {
+      final userDataEntity = UserDataEntity(
+        uid: firebaseAuth.currentUser!.uid,
+        email: firebaseAuth.currentUser!.email ?? '',
+        name: firebaseAuth.currentUser!.displayName ?? '',
+        base64Image: firebaseAuth.currentUser!.photoURL ?? '',
+        history: const [],
+      );
+
+      final result = await initializeUserUsecase.call(userDataEntity);
+      result.fold(
+        (failure) => throw failure,
+        (success) => success,
+      );
+      return userDataEntity;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return const UserDataEntity();
+    }
   }
 
   Future<void> logout() async {
     try {
-      await _firebaseAuth.signOut();
+      await firebaseAuth.signOut();
     } catch (e, s) {
       if (kDebugMode) {
         print(e);
@@ -80,35 +143,35 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  String? getUid() => currentUser!.uid;
+  String? getUid() => currentUser.uid;
 
   Future<String?> getToken() async {
     late final String? token;
     try {
-      token = await _firebaseAuth.currentUser?.getIdToken(true);
+      token = await firebaseAuth.currentUser?.getIdToken(true);
     } catch (e, s) {
       if (kDebugMode) {
         print(e);
         print(s);
       }
-      token = await _firebaseAuth.currentUser?.getIdToken(false);
+      token = await firebaseAuth.currentUser?.getIdToken(false);
     }
     return token;
   }
 
-  User? get currentUser => state.currentUser;
+  UserDataEntity get currentUser => state.currentUser;
 
-  Future<bool> deleteUser() async {
-    try {
-      await _firebaseAuth.currentUser?.delete();
-      logout();
-      return true;
-    } catch (e, s) {
-      if (kDebugMode) {
-        print(e);
-        print(s);
-      }
-      return false;
-    }
-  }
+  // Future<bool> deleteUser() async {
+  //   try {
+  //     await _firebaseAuth.currentUser?.delete();
+  //     logout();
+  //     return true;
+  //   } catch (e, s) {
+  //     if (kDebugMode) {
+  //       print(e);
+  //       print(s);
+  //     }
+  //     return false;
+  //   }
+  // }
 }

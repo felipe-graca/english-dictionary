@@ -3,14 +3,11 @@ import 'dart:convert';
 
 import 'package:english_dictionary/core/feature/auth/domain/entities/word_entity.dart';
 
-class WordModel {
-  final String word;
-  final String uid;
-
-  WordModel({
-    required this.word,
-    required this.uid,
-  });
+class WordModel extends WordEntity {
+  const WordModel({
+    required String word,
+    required String uid,
+  }) : super(word: word, uid: uid);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -30,11 +27,10 @@ class WordModel {
 
   factory WordModel.fromJson(String source) => WordModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  //fromEntity
-  factory WordModel.fromEntity(WordEntity entity) {
-    return WordModel(
-      word: entity.word,
-      uid: entity.uid,
+  WordEntity toEntity() {
+    return WordEntity(
+      word: word,
+      uid: uid,
     );
   }
 }
