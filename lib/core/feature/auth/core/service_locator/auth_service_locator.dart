@@ -46,6 +46,6 @@ class AuthServiceLocator implements IAuthServiceLocator {
     i.registerLazySingleton<IInitializeUserUsecase>(() => InitializeUserUsecase(i.get(), i.get()));
 
     /*cubits*/
-    i.registerLazySingleton(() => AuthCubit(i.get()));
+    i.registerLazySingleton(() => AuthCubit(i.get(), i.get(), i.get(), i.get()));
   }
 }

@@ -25,36 +25,41 @@ void main() {
   group('Login', () {
     test('should return true when logged user', () async {
       when(service.signInWithGoogle()).thenAnswer((_) async => true);
-      expect(() async => await service.signInWithGoogle(), true);
+      final result = await service.signInWithGoogle();
+      expect(result, true);
     });
 
     test('should return false when not logged user', () async {
       when(service.signInWithGoogle()).thenAnswer((_) async => false);
-      expect(() async => await service.signInWithGoogle(), false);
+      final result = await service.signInWithGoogle();
+      expect(result, false);
     });
   });
 
   group('Save user', () {
     test('should return true when saved user', () async {
       when(service.saveUser(userDataModel)).thenAnswer((_) async => true);
-      expect(() async => await service.saveUser(userDataModel), true);
+      final result = await service.saveUser(userDataModel);
+      expect(result, true);
     });
 
     test('should return false when not saved user', () async {
       when(service.saveUser(userDataModel)).thenAnswer((_) async => false);
-      expect(() async => await service.saveUser(userDataModel), false);
+      final result = await service.saveUser(userDataModel);
+      expect(result, false);
     });
   });
 
   group('Get user details', () {
     test('should return user details', () async {
       when(service.getUserDetails()).thenAnswer((_) async => userDataModel);
-      expect(() async => await service.getUserDetails(), userDataModel);
+      final result = await service.getUserDetails();
+      expect(result, userDataModel);
     });
 
     test('should return null when not found user details', () async {
       when(service.getUserDetails()).thenThrow(GetUserDetailsFailure());
-      expect(() async => await service.getUserDetails(), throwsA(isA<GetUserDetailsFailure>()));
+      expect(() => service.getUserDetails(), throwsA(isA<GetUserDetailsFailure>()));
     });
   });
 }

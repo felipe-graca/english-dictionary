@@ -10,11 +10,11 @@ class UserDataEntity extends Equatable {
   final List<WordModel> history;
 
   const UserDataEntity({
-    required this.name,
-    required this.email,
-    required this.base64Image,
-    required this.uid,
-    required this.history,
+    this.name = '',
+    this.email = '',
+    this.base64Image = '',
+    this.uid = '',
+    this.history = const [],
   });
 
   @override
@@ -52,4 +52,7 @@ class UserDataEntity extends Equatable {
       history: history,
     );
   }
+
+  //isEmty
+  bool get isEmpty => name.isEmpty && email.isEmpty && base64Image.isEmpty && uid.isEmpty && history.isEmpty;
 }
