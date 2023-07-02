@@ -7,7 +7,11 @@
         {
             "name": "english_dictionary",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--dart-define=WORD_SIGNIFICATION_API=https://wordsapiv1.p.rapidapi.com/words/",
+                "--dart-define=WORD_SIGNIFICATION_API_KEY=a03ed67bcemshfd1586556e002bep150f0bjsn3f87c63e840f",
+            ]
         },
         {
             "name": "english_dictionary (profile mode)",

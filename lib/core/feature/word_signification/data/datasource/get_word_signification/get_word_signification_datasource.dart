@@ -8,6 +8,7 @@ class GetWordSignificationDatasource implements IGetWordSignificationDatasource 
 
   @override
   Future<WordSignificationModel> getWordSignification(String word) async {
+    const url = String.fromEnvironment('WORD_SIGNIFICATION_API');
     return const WordSignificationModel();
   }
 }
