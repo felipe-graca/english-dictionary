@@ -10,7 +10,7 @@ enum HttpResponseStatus {
   unknownError,
 }
 
-class HttpService implements IHttpService {
+base class HttpService implements IHttpService {
   final Dio _dio;
   HttpService(this._dio) {
     _dio.interceptors.add(PrettyDioLogger(
@@ -42,15 +42,10 @@ class HttpService implements IHttpService {
 
   @override
   Future<Options> buildAuthOptions({Options? options}) async {
-    const token = String.fromEnvironment("WORD_SIGNIFICATION_API_KEY");
-
     final options0 = options ?? Options();
 
     options0.headers ??= {};
-    options0.headers!.addAll({
-      'X-RapidAPI-Key': token,
-      'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
-    });
+    options0.headers!.addAll({});
 
     return options0;
   }

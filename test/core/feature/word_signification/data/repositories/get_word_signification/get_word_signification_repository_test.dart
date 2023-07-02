@@ -58,7 +58,7 @@ main() {
       when(datasource.getWordSignification(word)).thenThrow(GetWordSignificationFailure());
       final result = await repository.getWordSignification(word);
 
-      expect(result, Left(GetWordSignificationFailure()));
+      expect(result, isA<Left<GetWordSignificationFailure, WordSignificationEntity>>());
     },
   );
 }
