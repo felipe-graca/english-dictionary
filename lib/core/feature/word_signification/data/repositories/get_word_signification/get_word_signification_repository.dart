@@ -13,7 +13,7 @@ class GetWordSignificationRepository implements IGetWordSignificationRepository 
   Future<Either<GetWordSignificationFailure, WordSignificationEntity>> getWordSignification(String word) async {
     try {
       final result = await datasource.getWordSignification(word);
-      return Right(result);
+      return Right(result.toEntity());
     } on GetWordSignificationFailure catch (e) {
       return Left(e);
     }

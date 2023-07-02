@@ -41,4 +41,14 @@ class WordSignificationModel extends WordSignificationEntity {
   String toJson() => json.encode(toMap());
 
   factory WordSignificationModel.fromJson(String source) => WordSignificationModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  WordSignificationEntity toEntity() {
+    return WordSignificationEntity(
+      word: word,
+      results: results.map((e) => e.toModel().toEntity()).toList(),
+      syllables: syllables.toModel().toEntity(),
+      pronunciation: pronunciation.toModel().toEntity(),
+      frequency: frequency,
+    );
+  }
 }

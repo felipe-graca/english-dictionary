@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:english_dictionary/core/feature/word_signification/data/model/word_signification_model.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/pronunciation_entity.dart';
@@ -38,6 +39,16 @@ class WordSignificationEntity extends Equatable {
       syllables: syllables ?? this.syllables,
       pronunciation: pronunciation ?? this.pronunciation,
       frequency: frequency ?? this.frequency,
+    );
+  }
+
+  WordSignificationModel toModel() {
+    return WordSignificationModel(
+      word: word,
+      results: results.map((e) => e.toModel()).toList(),
+      syllables: syllables.toModel(),
+      pronunciation: pronunciation.toModel(),
+      frequency: frequency,
     );
   }
 }
