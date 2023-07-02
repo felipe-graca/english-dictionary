@@ -14,19 +14,18 @@ class InnerShadow extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    final renderObject = _RenderInnerShadow();
+    final renderObject = RenderInnerShadow();
     updateRenderObject(context, renderObject);
     return renderObject;
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, _RenderInnerShadow renderObject) {
+  void updateRenderObject(BuildContext context, RenderInnerShadow renderObject) {
     renderObject.shadows = shadows;
   }
 }
 
-class _RenderInnerShadow extends RenderProxyBox {
+class RenderInnerShadow extends RenderProxyBox {
   late List<Shadow> shadows;
 
   @override
@@ -42,8 +41,7 @@ class _RenderInnerShadow extends RenderProxyBox {
       final shadowPaint = Paint()
         ..blendMode = BlendMode.srcATop
         ..colorFilter = ColorFilter.mode(shadow.color, BlendMode.srcOut)
-        ..imageFilter = ImageFilter.blur(
-            sigmaX: shadow.blurSigma, sigmaY: shadow.blurSigma);
+        ..imageFilter = ImageFilter.blur(sigmaX: shadow.blurSigma, sigmaY: shadow.blurSigma);
       context.canvas
         ..saveLayer(shadowRect, shadowPaint)
         ..translate(shadow.offset.dx, shadow.offset.dy);

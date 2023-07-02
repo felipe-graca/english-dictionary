@@ -1,3 +1,3 @@
-abstract class ILoginDatasource {
+abstract interface class ILoginDatasource {
   Future<bool> login();
 }
