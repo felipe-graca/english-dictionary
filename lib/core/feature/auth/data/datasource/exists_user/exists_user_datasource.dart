@@ -1,3 +1,3 @@
-abstract class IExistsUserDatasource {
+abstract interface class IExistsUserDatasource {
   Future<bool> existsUser();
 }

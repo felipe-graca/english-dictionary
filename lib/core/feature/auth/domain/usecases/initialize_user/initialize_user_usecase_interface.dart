@@ -3,7 +3,7 @@ import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.d
 import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 
-abstract class IInitializeUserUsecase extends UseCase<bool, UserDataEntity> {
+abstract interface class IInitializeUserUsecase extends UseCase<bool, UserDataEntity> {
   @override
   Future<Either<InitializeUserFailure, bool>> call(params);
 }
