@@ -1,5 +1,7 @@
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/presenter/word/page/word_page.dart';
 import 'package:english_dictionary/ui/global/card/card_widget.dart';
+import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:english_dictionary/ui/global/word_tile/word_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,8 +36,7 @@ class WordListWidget extends StatelessWidget {
         const SizedBox(height: 8),
         Flexible(
           child: CardWidget(
-            child: Container(
-              padding: const EdgeInsets.all(10),
+            child: SizedBox(
               width: size.width,
               height: size.height,
               child: Center(
@@ -43,11 +44,17 @@ class WordListWidget extends StatelessWidget {
                     ? const CircularProgressIndicator()
                     : ListView.separated(
                         itemCount: words.length,
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                         itemBuilder: (context, index) {
-                          return WordTileWidget(word: words[index].word);
+                          final word = words[index];
+                          return WordTileWidget(
+                            word: words[index].word,
+                            onTap: () async {
+                              await openModalBottomSheet(context: context, child: WordPage(word: word));
+                            },
+                          );
                         },
-                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10),
+                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
                       ),
               ),
             ),

@@ -2,6 +2,8 @@ import 'package:english_dictionary/core/feature/auth/core/services/service_locat
 import 'package:english_dictionary/core/feature/word_signification/core/services/service_locator/word_signification_service_locator.dart';
 import 'package:english_dictionary/core/feature/words/core/services/service_locator/words_service_locator.dart';
 import 'package:english_dictionary/core/services/service_locator/service_locator.dart';
+import 'package:english_dictionary/core/services/tts/tts_service.dart';
+import 'package:english_dictionary/core/services/tts/tts_service_interface.dart';
 import 'package:english_dictionary/core/shared/firebase/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +19,7 @@ class ServicesInitializer {
   static Future<void> initializeServices() async {
     await _initFirebase();
     await _setup().then((_) async => await GetIt.I.allReady());
+    await _iniializeTts(ttsService: TtsService());
   }
 
   static Future<void> _setup() async {
@@ -33,5 +36,11 @@ class ServicesInitializer {
     );
     // analytics = FirebaseAnalytics.instance;
     // firebaseAnalyticsObserver = FirebaseAnalyticsObserver(analytics: analytics);
+  }
+
+  static _iniializeTts({
+    required ITtsService ttsService,
+  }) async {
+    await ttsService.setup();
   }
 }

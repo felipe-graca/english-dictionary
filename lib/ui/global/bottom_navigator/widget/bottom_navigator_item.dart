@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomNavigatorItem extends StatelessWidget {
-  final String iconPath;
+  final IconData icon;
   final Function() onTap;
   final bool isActive;
   const BottomNavigatorItem({
     super.key,
-    required this.iconPath,
+    required this.icon,
     required this.onTap,
     required this.isActive,
   });
@@ -20,8 +19,8 @@ class BottomNavigatorItem extends StatelessWidget {
           ? Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: Container(
-                width: 50,
-                height: 50,
+                width: 60,
+                height: 60,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -41,7 +40,13 @@ class BottomNavigatorItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Center(child: SvgPicture.asset(iconPath, height: 40, width: 40)),
+                child: Center(
+                  child: Icon(
+                    icon,
+                    size: 40,
+                    color: const Color(0xFF797CDB),
+                  ),
+                ),
               ),
             )
           : Container(
@@ -50,7 +55,11 @@ class BottomNavigatorItem extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Center(
                 child: SizedBox(
-                  child: SvgPicture.asset(iconPath, height: 30, width: 30),
+                  child: Icon(
+                    icon,
+                    size: 30,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),

@@ -23,11 +23,11 @@ class PronunciationModel extends PronunciationEntity {
 
   factory PronunciationModel.fromMap(Map<String, dynamic> map) {
     return PronunciationModel(
-      adjective: map['adjective'] as String,
-      adverb: map['adverb'] as String,
-      all: map['all'] as String,
-      noun: map['noun'] as String,
-      verb: map['verb'] as String,
+      adjective: map['adjective'] ?? '',
+      adverb: map['adverb'] ?? '',
+      all: map['all'] ?? '',
+      noun: map['noun'] ?? '',
+      verb: map['verb'] ?? '',
     );
   }
 

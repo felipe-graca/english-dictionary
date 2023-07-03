@@ -28,12 +28,12 @@ class WordSignificationModel extends WordSignificationEntity {
     return WordSignificationModel(
       word: map['word'] as String,
       results: List<ResultsModel>.from(
-        (map['results'] as List<int>).map<ResultsModel>(
+        (map['results'] as List<dynamic>).map<ResultsModel>(
           (x) => ResultsModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      syllables: SyllablesModel.fromMap(map['syllables'] as Map<String, dynamic>),
-      pronunciation: PronunciationModel.fromMap(map['pronunciation'] as Map<String, dynamic>),
+      syllables: SyllablesModel.fromMap(map['syllables'] ?? {}),
+      pronunciation: PronunciationModel.fromMap(map['pronunciation'] is Map<String, dynamic> ? map['pronunciation'] : {}),
       frequency: map['frequency'] as double,
     );
   }

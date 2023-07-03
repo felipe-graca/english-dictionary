@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:english_dictionary/core/feature/word_signification/core/serivces/rapidapi/rapidapi_service.dart';
-import 'package:english_dictionary/core/feature/word_signification/core/serivces/rapidapi/rapidapi_service_interface.dart';
+import 'package:english_dictionary/core/feature/word_signification/core/services/rapidapi/rapidapi_service.dart';
+import 'package:english_dictionary/core/feature/word_signification/core/services/rapidapi/rapidapi_service_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

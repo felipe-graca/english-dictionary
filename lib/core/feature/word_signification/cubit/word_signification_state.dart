@@ -4,12 +4,16 @@ enum AuthStatus { authenticated, unauthenticated }
 
 class WordSignificationState extends Equatable {
   final String word;
-  final GetWordSignificationFailure? failure;
+  final dynamic failure;
   final WordSignificationEntity wordSignification;
+  final ExampleEntity? example;
+  final WordEntity wordEntity;
   const WordSignificationState({
     this.word = '',
     this.wordSignification = const WordSignificationEntity(),
     this.failure,
+    this.example,
+    this.wordEntity = const WordEntity(),
   });
 
   @override
@@ -17,17 +21,23 @@ class WordSignificationState extends Equatable {
         word,
         wordSignification,
         failure,
+        example,
+        wordEntity,
       ];
 
   WordSignificationState copyWith({
     final String? word,
     final WordSignificationEntity? wordSignification,
-    final GetWordSignificationFailure? failure,
+    final dynamic Function()? failure,
+    final ExampleEntity? example,
+    final WordEntity? wordEntity,
   }) {
     return WordSignificationState(
       word: word ?? this.word,
       wordSignification: wordSignification ?? this.wordSignification,
-      failure: failure ?? this.failure,
+      failure: failure != null ? failure() : this.failure,
+      example: example ?? this.example,
+      wordEntity: wordEntity ?? this.wordEntity,
     );
   }
 }
