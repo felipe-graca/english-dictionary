@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:english_dictionary/core/errors/failure.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
-import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,7 +14,7 @@ class FirebaseService implements IFirebaseService {
   Future<bool> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) throw FirebaseAuthException(code: 'ERROR_ABORTED_BY_USER');
+      if (googleUser == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
 
       final GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
 
@@ -31,31 +31,31 @@ class FirebaseService implements IFirebaseService {
   }
 
   @override
-  Future<bool> saveUser(UserDataModel model) async {
+  Future<bool> saveUser(Map<String, dynamic> map) async {
     try {
       final user = _auth.currentUser;
-      if (user == null) throw FirebaseAuthException(code: 'ERROR_ABORTED_BY_USER');
+      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
 
-      await _firestore.collection('users').doc(user.uid).set(model.toMap());
+      await _firestore.collection('users').doc(user.uid).set(map);
       return true;
-    } on FirebaseAuthException catch (e) {
-      throw SaveUserFailure(message: (e.message ?? '').toString());
+    } on FirebaseFailure {
+      rethrow;
     }
   }
 
   @override
-  Future<UserDataModel> getUserDetails() async {
+  Future<Map<String, dynamic>> getUserDetails() async {
     try {
       final user = _auth.currentUser;
-      if (user == null) throw FirebaseAuthException(code: 'ERROR_ABORTED_BY_USER');
+      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
 
       final snapshot = await _firestore.collection('users').doc(user.uid).get();
 
-      if (snapshot.data() == null) throw FirebaseAuthException(code: 'ERROR_ABORTED_BY_USER');
+      if (snapshot.data() == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
 
-      return UserDataModel.fromMap(snapshot.data()!);
-    } on FirebaseAuthException catch (e) {
-      throw GetUserDetailsFailure(message: (e.message ?? '').toString());
+      return snapshot.data()!;
+    } on FirebaseFailure {
+      rethrow;
     }
   }
 
@@ -63,14 +63,24 @@ class FirebaseService implements IFirebaseService {
   Future<bool> existsUser() async {
     try {
       final user = _auth.currentUser;
-      if (user == null) throw FirebaseAuthException(code: 'ERROR_ABORTED_BY_USER');
+      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
 
       final snapshot = await _firestore.collection('users').doc(user.uid).get();
 
       if (snapshot.exists) return true;
       return false;
-    } on FirebaseAuthException catch (e) {
-      throw ExistsUserFailuire(message: (e.message ?? '').toString());
+    } on FirebaseFailure {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getWords() async {
+    try {
+      final snapshot = await _firestore.collection('words').get();
+      return List.from(snapshot.docs.map((e) => e.data()));
+    } on FirebaseFailure {
+      rethrow;
     }
   }
 }

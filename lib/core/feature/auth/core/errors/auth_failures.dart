@@ -1,9 +1,7 @@
 import 'package:english_dictionary/core/errors/failure.dart';
 
 class AuthFailure extends Failure {
-  final String message;
-
-  AuthFailure({this.message = 'Something went wrong'});
+  AuthFailure({String message = 'Something went wrong'}) : super(message: message);
 }
 
 class LoginFailure extends AuthFailure {

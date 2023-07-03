@@ -11,7 +11,9 @@ class GetUserDetailsDatasource implements IGetUserDetailsDatasource {
   @override
   Future<UserDataModel> getUserDetails() async {
     try {
-      return await _firebaseService.getUserDetails();
+      final result = await _firebaseService.getUserDetails();
+
+      return UserDataModel.fromMap(result);
     } on GetUserDetailsFailure catch (e) {
       throw GetUserDetailsFailure(message: e.message);
     }

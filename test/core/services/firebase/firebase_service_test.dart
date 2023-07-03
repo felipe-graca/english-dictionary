@@ -38,21 +38,21 @@ void main() {
 
   group('Save user', () {
     test('should return true when saved user', () async {
-      when(service.saveUser(userDataModel)).thenAnswer((_) async => true);
-      final result = await service.saveUser(userDataModel);
+      when(service.saveUser(userDataModel.toMap())).thenAnswer((_) async => true);
+      final result = await service.saveUser(userDataModel.toMap());
       expect(result, true);
     });
 
     test('should return false when not saved user', () async {
-      when(service.saveUser(userDataModel)).thenAnswer((_) async => false);
-      final result = await service.saveUser(userDataModel);
+      when(service.saveUser(userDataModel.toMap())).thenAnswer((_) async => false);
+      final result = await service.saveUser(userDataModel.toMap());
       expect(result, false);
     });
   });
 
   group('Get user details', () {
     test('should return user details', () async {
-      when(service.getUserDetails()).thenAnswer((_) async => userDataModel);
+      when(service.getUserDetails()).thenAnswer((_) async => userDataModel.toMap());
       final result = await service.getUserDetails();
       expect(result, userDataModel);
     });
