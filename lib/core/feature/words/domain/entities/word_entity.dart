@@ -5,7 +5,7 @@ class WordEntity extends Equatable {
   final String word;
   final String id;
 
-  const WordEntity({required this.word, required this.id});
+  const WordEntity({this.word = '', this.id = ''});
 
   @override
   List<Object?> get props => [

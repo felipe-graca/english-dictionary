@@ -83,4 +83,66 @@ class FirebaseService implements IFirebaseService {
       rethrow;
     }
   }
+
+  @override
+  Future<Map<String, dynamic>> saveFavoriteWord(Map<String, dynamic> map) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+
+      final snapshot = await _firestore.collection('users').doc(user.uid).get();
+
+      if (snapshot.data() == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+
+      final favorites = snapshot.data()!['favorites'] as List<dynamic>;
+
+      favorites.add(map);
+
+      await _firestore.collection('users').doc(user.uid).update({'favorites': favorites});
+
+      return map;
+    } on FirebaseFailure {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getFavoritesWords() async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+
+      final snapshot = await _firestore.collection('users').doc(user.uid).get();
+
+      if (snapshot.data() == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+
+      final favorites = snapshot.data()!['favorites'] as List<dynamic>;
+
+      return List.from(favorites.map((e) => e as Map<String, dynamic>));
+    } on FirebaseFailure {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> removeFavoriteWord(Map<String, dynamic> map) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+
+      final snapshot = await _firestore.collection('users').doc(user.uid).get();
+
+      if (snapshot.data() == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+
+      final favorites = snapshot.data()!['favorites'] as List<dynamic>;
+
+      favorites.remove(map);
+
+      await _firestore.collection('users').doc(user.uid).update({'favorites': favorites});
+
+      return true;
+    } on FirebaseFailure {
+      rethrow;
+    }
+  }
 }

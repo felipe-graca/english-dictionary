@@ -1,5 +1,6 @@
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'bottom_navigator_state.dart';

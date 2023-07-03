@@ -3,11 +3,11 @@ import 'package:english_dictionary/core/feature/word_signification/data/model/sy
 import 'package:equatable/equatable.dart';
 
 class SyllablesEntity extends Equatable {
-  final String count;
+  final int count;
   final List<String> list;
 
   const SyllablesEntity({
-    this.count = '',
+    this.count = 0,
     this.list = const [],
   });
 
@@ -15,7 +15,7 @@ class SyllablesEntity extends Equatable {
   List<Object?> get props => [count, list];
 
   SyllablesEntity copyWith({
-    String? count,
+    int? count,
     List<String>? list,
   }) {
     return SyllablesEntity(
