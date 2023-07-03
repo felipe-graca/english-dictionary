@@ -4,7 +4,7 @@ import 'package:english_dictionary/core/feature/word_signification/domain/entiti
 
 class SyllablesModel extends SyllablesEntity {
   const SyllablesModel({
-    String count = '',
+    int count = 0,
     List<String> list = const [],
   }) : super(count: count, list: list);
 
@@ -17,8 +17,8 @@ class SyllablesModel extends SyllablesEntity {
 
   factory SyllablesModel.fromMap(Map<String, dynamic> map) {
     return SyllablesModel(
-      count: map['count'] as String,
-      list: List<String>.from(map['list'] as List<String>),
+      count: map['count'] ?? 0,
+      list: List<String>.from(map['list'] ?? <dynamic>[]),
     );
   }
 

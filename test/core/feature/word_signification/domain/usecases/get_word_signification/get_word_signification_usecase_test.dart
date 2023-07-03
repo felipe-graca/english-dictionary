@@ -31,7 +31,7 @@ main() {
   );
 
   const syllables = SyllablesEntity(
-    count: '1',
+    count: 1,
     list: <String>[''],
   );
 

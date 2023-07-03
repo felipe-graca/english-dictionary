@@ -35,13 +35,13 @@ class ResultsModel extends ResultsEntity {
 
   factory ResultsModel.fromMap(Map<String, dynamic> map) {
     return ResultsModel(
-      definition: map['definition'] as String,
-      partOfSpeech: map['partOfSpeech'] as String,
-      synonyms: List<String>.from(map['synonyms'] as List<String>),
-      typeOf: List<String>.from(map['typeOf'] as List<String>),
-      hasTypes: List<String>.from(map['hasTypes'] as List<String>),
-      derivation: List<String>.from(map['derivation'] as List<String>),
-      examples: List<String>.from(map['examples'] as List<String>),
+      definition: map['definition'] ?? '',
+      partOfSpeech: map['partOfSpeech'] ?? '',
+      synonyms: List<String>.from(map['synonyms'] ?? <String>[]),
+      typeOf: List<String>.from(map['typeOf'] ?? <dynamic>[]),
+      hasTypes: List<String>.from(map['hasTypes'] ?? <dynamic>[]),
+      derivation: List<String>.from(map['derivation'] ?? <String>[]),
+      examples: List<String>.from(map['examples'] ?? <String>[]),
     );
   }
 

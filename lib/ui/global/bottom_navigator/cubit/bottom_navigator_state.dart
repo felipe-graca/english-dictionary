@@ -9,7 +9,7 @@ enum BottomNavigatorPageEnum {
 
 class BottomNavigatorPageModel {
   final String title;
-  final String icon;
+  final IconData icon;
   final String route;
 
   const BottomNavigatorPageModel({
@@ -37,22 +37,22 @@ class BottomNavigatorPageModel {
 const Map<BottomNavigatorPageEnum, BottomNavigatorPageModel> bottomNavigatorPages = {
   BottomNavigatorPageEnum.profile: BottomNavigatorPageModel(
     title: 'Profile',
-    icon: 'assets/icons/profile.svg',
+    icon: Icons.account_circle,
     route: AppRoutes.profile,
   ),
   BottomNavigatorPageEnum.history: BottomNavigatorPageModel(
     title: 'History',
-    icon: 'assets/icons/history.svg',
+    icon: Icons.history,
     route: AppRoutes.history,
   ),
   BottomNavigatorPageEnum.dictionary: BottomNavigatorPageModel(
     title: 'Dictionary',
-    icon: 'assets/icons/dictionary.svg',
+    icon: Icons.book,
     route: AppRoutes.dictionary,
   ),
   BottomNavigatorPageEnum.favorites: BottomNavigatorPageModel(
     title: 'Favorites',
-    icon: 'assets/icons/favorites.svg',
+    icon: Icons.favorite,
     route: AppRoutes.favorites,
   ),
 };

@@ -28,4 +28,13 @@ class WordsCubit extends Cubit<WordsState> {
       emit(state.copyWith(failure: WordsFailure(message: 'Error while getting words: ${e.message}')));
     }
   }
+
+  Future<WordEntity> nextWord(WordEntity actualWordEntity) async {
+    final index = state.words.indexOf(actualWordEntity);
+    if (index < state.words.length - 1) {
+      return state.words[index + 1];
+    } else {
+      return state.words[0];
+    }
+  }
 }

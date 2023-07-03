@@ -70,4 +70,34 @@ class MockFirebaseService extends _i1.Mock implements _i2.FirebaseService {
         returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
             <Map<String, dynamic>>[]),
       ) as _i3.Future<List<Map<String, dynamic>>>);
+  @override
+  _i3.Future<Map<String, dynamic>> saveFavoriteWord(
+          Map<String, dynamic>? map) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveFavoriteWord,
+          [map],
+        ),
+        returnValue:
+            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i3.Future<Map<String, dynamic>>);
+  @override
+  _i3.Future<List<Map<String, dynamic>>> getFavoritesWords() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFavoritesWords,
+          [],
+        ),
+        returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
+            <Map<String, dynamic>>[]),
+      ) as _i3.Future<List<Map<String, dynamic>>>);
+  @override
+  _i3.Future<bool> removeFavoriteWord(Map<String, dynamic>? map) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeFavoriteWord,
+          [map],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
 }

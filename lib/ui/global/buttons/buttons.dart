@@ -73,17 +73,19 @@ class PrimaryButton extends StatelessWidget {
                       padding: EdgeInsets.only(right: 4),
                       child: SizedBox(
                         height: 20,
+                        width: 20,
                         child: CircularProgressIndicator(strokeWidth: 1),
                       ),
                     ),
-                  Text(label,
-                      style: GoogleFonts.lato(
-                        fontSize: 10,
-                        color: const Color(0xFF6C7185),
-                        fontWeight: FontWeight.w600,
-                        height: 0.765,
-                        letterSpacing: 2.8,
-                      )),
+                  if (!isLoading)
+                    Text(label,
+                        style: GoogleFonts.lato(
+                          fontSize: 10,
+                          color: const Color(0xFF6C7185),
+                          fontWeight: FontWeight.w600,
+                          height: 0.765,
+                          letterSpacing: 2.8,
+                        )),
                   if (rightIcon != null)
                     Padding(
                       padding: const EdgeInsets.only(right: 4),
