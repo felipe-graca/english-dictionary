@@ -36,13 +36,14 @@ class AuthServiceLocator implements IAuthServiceLocator {
     /*datasources*/
     i.registerLazySingleton<ILoginDatasource>(() => LoginDatasource(i.get()));
     i.registerLazySingleton<IGetUserDetailsDatasource>(() => GetUserDetailsDatasource(i.get()));
-    i.registerLazySingleton<ISaveUserDatasource>(() => SaveUserDatasource(i.get()));
     i.registerLazySingleton<IExistsUserDatasource>(() => ExistsUserDatasource(i.get()));
+    i.registerLazySingleton<ISaveUserDatasource>(() => SaveUserDatasource(i.get()));
 
     /*repositories*/
-    i.registerLazySingleton<ILoginRepository>(() => LoginRepository(i.get()));
-    i.registerLazySingleton<IExistsUserRepository>(() => ExistsUserRepository(i.get()));
+
     i.registerLazySingleton<IGetUserDetailsRepository>(() => GetUserDetailsRepository(i.get()));
+    i.registerLazySingleton<IExistsUserRepository>(() => ExistsUserRepository(i.get()));
+    i.registerLazySingleton<ILoginRepository>(() => LoginRepository(i.get()));
     i.registerLazySingleton<ISaveUserRepository>(() => SaveUserRepository(i.get()));
 
     /*usecases*/

@@ -1,33 +1,33 @@
-import 'package:english_dictionary/core/feature/auth/data/model/history_word_model.dart';
+import 'package:english_dictionary/core/feature/words/data/models/word_model.dart';
 import 'package:equatable/equatable.dart';
 
 class WordEntity extends Equatable {
   final String word;
-  final String uid;
+  final String id;
 
-  const WordEntity({required this.word, required this.uid});
+  const WordEntity({required this.word, required this.id});
 
   @override
   List<Object?> get props => [
         word,
-        uid,
+        id,
       ];
 
   //copyWith
   WordEntity copyWith({
     final String? word,
-    final String? uid,
+    final String? id,
   }) {
     return WordEntity(
       word: word ?? this.word,
-      uid: uid ?? this.uid,
+      id: id ?? this.id,
     );
   }
 
-  HistoryWordModel toModel() {
-    return HistoryWordModel(
+  WordModel toModel() {
+    return WordModel(
       word: word,
-      uid: uid,
+      id: id,
     );
   }
 }

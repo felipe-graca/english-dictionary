@@ -7,7 +7,7 @@ import 'package:english_dictionary/core/services/firebase/firebase_service_inter
 class GetWordsDatasource implements IGetWordsDatasource {
   final IFirebaseService firebaseService;
 
-  GetWordsDatasource({required this.firebaseService});
+  GetWordsDatasource(this.firebaseService);
 
   @override
   Future<List<WordModel>> getWords() async {

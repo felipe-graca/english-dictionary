@@ -6,20 +6,20 @@ import 'package:english_dictionary/core/feature/words/domain/entities/word_entit
 class WordModel extends WordEntity {
   const WordModel({
     required String word,
-    required String uid,
-  }) : super(word: word, uid: uid);
+    required String id,
+  }) : super(word: word, id: id);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'word': word,
-      'uid': uid,
+      'id': id,
     };
   }
 
   factory WordModel.fromMap(Map<String, dynamic> map) {
     return WordModel(
       word: map['word'] as String,
-      uid: map['uid'] as String,
+      id: map['id'] as String,
     );
   }
 
@@ -30,7 +30,7 @@ class WordModel extends WordEntity {
   WordEntity toEntity() {
     return WordEntity(
       word: word,
-      uid: uid,
+      id: id,
     );
   }
 }

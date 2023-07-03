@@ -1,5 +1,6 @@
 import 'package:english_dictionary/core/feature/auth/core/services/service_locator/auth_service_locator.dart';
 import 'package:english_dictionary/core/feature/word_signification/core/services/service_locator/word_signification_service_locator.dart';
+import 'package:english_dictionary/core/feature/words/core/services/service_locator/words_service_locator.dart';
 import 'package:english_dictionary/core/services/service_locator/service_locator.dart';
 import 'package:english_dictionary/core/shared/firebase/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,9 +20,10 @@ class ServicesInitializer {
   }
 
   static Future<void> _setup() async {
-    ServiceLocator.initializeAllFeaturesInjections(
+    await ServiceLocator.initializeAllFeaturesInjections(
       authLocator: AuthServiceLocator(),
       wordSignificationLocator: WordSignificationServiceLocator(),
+      wordsLocator: WordsServiceLocator(),
     );
   }
 

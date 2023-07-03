@@ -80,7 +80,9 @@ class AuthCubit extends Cubit<AuthState> {
             final userDetails = await initializeUser();
             emit(state.copyWith(currentUser: userDetails));
           }
-          emit(const AuthState(status: AuthStatus.authenticated));
+          emit(state.copyWith(status: AuthStatus.authenticated));
+          isLoggedStream.add(!state.currentUser.isEmpty);
+          userDetailLoading = false;
         },
       );
     } catch (e) {
@@ -88,9 +90,6 @@ class AuthCubit extends Cubit<AuthState> {
         print(e);
       }
     }
-
-    userDetailLoading = false;
-    isLoggedStream.add(!state.currentUser.isEmpty);
   }
 
   Future<UserDataEntity> getUserDetails() async {

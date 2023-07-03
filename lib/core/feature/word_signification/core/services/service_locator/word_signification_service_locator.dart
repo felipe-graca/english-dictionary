@@ -5,7 +5,7 @@ import 'package:english_dictionary/core/feature/word_signification/cubit/word_si
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification/get_word_signification_repository.dart';
-import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification/get_word_signification_trpository_interface.dart';
+import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification/get_word_signification_trpository_interface.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase_interface.dart';
 import 'package:get_it/get_it.dart';
