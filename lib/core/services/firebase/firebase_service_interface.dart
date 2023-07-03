@@ -1,8 +1,7 @@
-import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
-
 abstract interface class IFirebaseService {
   Future<bool> signInWithGoogle();
-  Future<bool> saveUser(UserDataModel model);
-  Future<UserDataModel> getUserDetails();
+  Future<bool> saveUser(Map<String, dynamic> map);
+  Future<Map<String, dynamic>> getUserDetails();
   Future<bool> existsUser();
+  Future<List<Map<String, dynamic>>> getWords();
 }
