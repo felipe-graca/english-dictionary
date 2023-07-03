@@ -3,7 +3,7 @@ import 'package:english_dictionary/ui/shared/touch_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomButton extends StatelessWidget {
+class PrimaryButton extends StatelessWidget {
   final String label;
   final void Function()? onTap;
   final IconData? leftIcon;
@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
 
   final bool fullWidth;
 
-  const CustomButton({
+  const PrimaryButton({
     Key? key,
     required this.label,
     required this.onTap,

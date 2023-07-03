@@ -1,5 +1,5 @@
 import 'package:english_dictionary/core/routes/app_router.dart';
-import 'package:english_dictionary/core/services/service_initializer.dart';
+import 'package:english_dictionary/core/services/initializer/service_initializer.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
