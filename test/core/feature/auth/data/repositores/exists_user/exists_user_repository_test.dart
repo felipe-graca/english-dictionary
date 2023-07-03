@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/data/datasource/exists_user/exists_user_datasource_interface.dart';
-import 'package:english_dictionary/core/feature/auth/data/repositores/exists_user_repository.dart';
-import 'package:english_dictionary/core/feature/auth/domain/repositores/exists_user_repository_interface.dart';
+import 'package:english_dictionary/core/feature/auth/data/repositores/exists_user/exists_user_repository.dart';
+import 'package:english_dictionary/core/feature/auth/domain/repositores/exists_user/exists_user_repository_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

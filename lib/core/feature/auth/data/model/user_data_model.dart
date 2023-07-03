@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:english_dictionary/core/feature/auth/data/model/word_model.dart';
+import 'package:english_dictionary/core/feature/auth/data/model/history_word_model.dart';
 import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
 
 class UserDataModel extends UserDataEntity {
@@ -10,7 +10,7 @@ class UserDataModel extends UserDataEntity {
     required String email,
     required String base64Image,
     required String uid,
-    required List<WordModel> history,
+    required List<HistoryWordModel> history,
   }) : super(name: name, email: email, base64Image: base64Image, uid: uid, history: history);
 
   Map<String, dynamic> toMap() {
@@ -29,7 +29,7 @@ class UserDataModel extends UserDataEntity {
       email: map['email'] as String,
       base64Image: map['photoUrl'] as String,
       uid: map['uid'] as String,
-      history: List<WordModel>.from(map['history']?.map((x) => WordModel.fromMap(x as Map<String, dynamic>)) as Iterable<dynamic>),
+      history: List<HistoryWordModel>.from(map['history']?.map((x) => HistoryWordModel.fromMap(x as Map<String, dynamic>)) as Iterable<dynamic>),
     );
   }
 

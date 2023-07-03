@@ -1,5 +1,5 @@
+import 'package:english_dictionary/core/feature/auth/data/model/history_word_model.dart';
 import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
-import 'package:english_dictionary/core/feature/auth/data/model/word_model.dart';
 import 'package:equatable/equatable.dart';
 
 class UserDataEntity extends Equatable {
@@ -7,7 +7,7 @@ class UserDataEntity extends Equatable {
   final String email;
   final String base64Image;
   final String uid;
-  final List<WordModel> history;
+  final List<HistoryWordModel> history;
 
   const UserDataEntity({
     this.name = '',
@@ -32,7 +32,7 @@ class UserDataEntity extends Equatable {
     final String? email,
     final String? base64Image,
     final String? uid,
-    final List<WordModel>? history,
+    final List<HistoryWordModel>? history,
   }) {
     return UserDataEntity(
       name: name ?? this.name,

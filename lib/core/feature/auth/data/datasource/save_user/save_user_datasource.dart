@@ -12,7 +12,7 @@ class SaveUserDatasource implements ISaveUserDatasource {
   @override
   Future<bool> saveUser(UserDataModel model) async {
     try {
-      return await _firebaseService.saveUser(model);
+      return await _firebaseService.saveUser(model.toMap());
     } on SaveUserFailure catch (e) {
       throw SaveUserFailure(message: e.message);
     }

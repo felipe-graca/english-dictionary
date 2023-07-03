@@ -8,7 +8,7 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart'
     as _i5;
-import 'package:english_dictionary/core/feature/auth/data/repositores/get_user_details_repository.dart'
+import 'package:english_dictionary/core/feature/auth/data/repositores/get_user_details/get_user_details_repository.dart'
     as _i3;
 import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart'
     as _i6;

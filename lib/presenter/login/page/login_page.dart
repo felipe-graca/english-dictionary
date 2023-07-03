@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
 import 'package:english_dictionary/core/routes/app_routes.dart';
-import 'package:english_dictionary/ui/global/custom_button/custom_buttom.dart';
+import 'package:english_dictionary/ui/global/buttons/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -71,7 +71,7 @@ class _LoginPgaeState extends State<LoginPgae> {
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomButton(
+                  child: PrimaryButton(
                     label: 'Login with Google',
                     fullWidth: true,
                     onTap: () {

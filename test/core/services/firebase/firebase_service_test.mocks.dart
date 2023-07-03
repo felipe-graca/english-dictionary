@@ -3,12 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart'
-    as _i2;
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart'
-    as _i3;
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -22,60 +20,54 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeUserDataModel_0 extends _i1.SmartFake implements _i2.UserDataModel {
-  _FakeUserDataModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [FirebaseService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFirebaseService extends _i1.Mock implements _i3.FirebaseService {
+class MockFirebaseService extends _i1.Mock implements _i2.FirebaseService {
   MockFirebaseService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<bool> signInWithGoogle() => (super.noSuchMethod(
+  _i3.Future<bool> signInWithGoogle() => (super.noSuchMethod(
         Invocation.method(
           #signInWithGoogle,
           [],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
   @override
-  _i4.Future<bool> saveUser(_i2.UserDataModel? model) => (super.noSuchMethod(
+  _i3.Future<bool> saveUser(Map<String, dynamic>? map) => (super.noSuchMethod(
         Invocation.method(
           #saveUser,
-          [model],
+          [map],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
   @override
-  _i4.Future<_i2.UserDataModel> getUserDetails() => (super.noSuchMethod(
+  _i3.Future<Map<String, dynamic>> getUserDetails() => (super.noSuchMethod(
         Invocation.method(
           #getUserDetails,
           [],
         ),
-        returnValue: _i4.Future<_i2.UserDataModel>.value(_FakeUserDataModel_0(
-          this,
-          Invocation.method(
-            #getUserDetails,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.UserDataModel>);
+        returnValue:
+            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i3.Future<Map<String, dynamic>>);
   @override
-  _i4.Future<bool> existsUser() => (super.noSuchMethod(
+  _i3.Future<bool> existsUser() => (super.noSuchMethod(
         Invocation.method(
           #existsUser,
           [],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+  @override
+  _i3.Future<List<Map<String, dynamic>>> getWords() => (super.noSuchMethod(
+        Invocation.method(
+          #getWords,
+          [],
+        ),
+        returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
+            <Map<String, dynamic>>[]),
+      ) as _i3.Future<List<Map<String, dynamic>>>);
 }
