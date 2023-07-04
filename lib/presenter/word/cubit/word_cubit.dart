@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
 import 'package:english_dictionary/core/feature/word_signification/cubit/word_signification_cubit.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
@@ -15,9 +16,14 @@ class WordCubit extends Cubit<WordState> {
   WordCubit(this._iTtsService) : super(const WordState());
 
   final wordSignificationCubit = GetIt.I.get<WordSignificationCubit>();
+  final favoritesCubit = GetIt.I.get<FavoritesCubit>();
 
   Future<void> getWordSignification(WordEntity word) async {
-    emit(state.copyWith(isLoading: true, failure: () => null));
+    emit(state.copyWith(
+      isLoading: true,
+      failure: () => null,
+      wordEntity: word,
+    ));
 
     await wordSignificationCubit.getWordSignificationAndExample(word).then(
           (value) => emit(
@@ -29,10 +35,6 @@ class WordCubit extends Cubit<WordState> {
           ),
         );
     emit(state.copyWith(isLoading: false));
-  }
-
-  void toggleFavorite() {
-    emit(state.copyWith(isFavorite: !state.isFavorite));
   }
 
   Future<bool> startSpeak(String text) async {
@@ -61,8 +63,13 @@ class WordCubit extends Cubit<WordState> {
       example: wordSignificationCubit.state.example,
       failure: () => wordSignificationCubit.state.failure,
       wasSubmitted: false,
+      wordEntity: wordSignificationCubit.state.wordEntity,
     ));
   }
 
   bool get hasFailure => state.failure != null;
+  bool get isFavorite => favoritesCubit.isFavorite(state.word);
+
+  bool get favoriteWasSubmitted => favoritesCubit.state.wasSubmitted;
+  bool get favoriteErrorMessage => favoritesCubit.state.errorMessage != '';
 }

@@ -41,9 +41,10 @@ class WordSignificationCubit extends Cubit<WordSignificationState> {
     emit(state.copyWith(wordEntity: word));
   }
 
-  Future<void> nextWord() async {
+  Future<WordEntity> nextWord() async {
     final nextWord = await wordsCubit.nextWord(state.wordEntity);
     await getWordSignificationAndExample(nextWord);
+    return nextWord;
   }
 
   bool get isFailure => state.failure != null;
