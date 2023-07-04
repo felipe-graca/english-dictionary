@@ -25,7 +25,7 @@ class WordsCubit extends Cubit<WordsState> {
         },
       );
     } on GetWordsFailure catch (e) {
-      emit(state.copyWith(failure: WordsFailure(message: 'Error while getting words: ${e.message}')));
+      emit(state.copyWith(errorMessage: e.message));
     }
   }
 

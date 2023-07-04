@@ -1,0 +1,92 @@
+import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/usecases/remove_favorite_word/remove_favorite_word_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/usecases/save_favorite_word/save_favorite_word_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/usecase/usecase.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'favorites_state.dart';
+
+class FavoritesCubit extends Cubit<FavoritesState> {
+  final IGetFavoritesWordsUsecase _getFavoritesWordsUsecase;
+  final IRemoveFavoriteWordUsecase _removeFavoriteWordUsecase;
+  final ISaveFavoriteWordUsecase _saveFavoriteWordUsecase;
+  FavoritesCubit(
+    this._getFavoritesWordsUsecase,
+    this._removeFavoriteWordUsecase,
+    this._saveFavoriteWordUsecase,
+  ) : super(const FavoritesState());
+
+  Future<void> getFavoritesWords() async {
+    emit(const FavoritesState());
+    try {
+      emit(state.copyWith(wasSubmitted: true));
+      final words = await _getFavoritesWordsUsecase.call(noParams);
+      words.fold(
+        (failure) => throw failure,
+        (success) => {
+          emit(
+            state.copyWith(
+              words: success,
+              wasSubmitted: false,
+            ),
+          ),
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+    }
+  }
+
+  Future<bool> removeFavoriteWord(WordEntity wordEntity) async {
+    try {
+      emit(state.copyWith(wasSubmitted: true));
+      final result = await _removeFavoriteWordUsecase.call(wordEntity);
+      result.fold(
+        (failure) => throw failure,
+        (success) => {
+          emit(
+            state.copyWith(
+              words: state.words.where((element) => element != wordEntity).toList(),
+              wasSubmitted: false,
+            ),
+          ),
+        },
+      );
+      return true;
+    } catch (e) {
+      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      return false;
+    }
+  }
+
+  Future<bool> saveFavoriteWord(WordEntity wordEntity) async {
+    try {
+      emit(state.copyWith(wasSubmitted: true));
+      final result = await _saveFavoriteWordUsecase.call(wordEntity);
+      result.fold(
+        (failure) => throw failure,
+        (success) => {
+          if (!state.words.contains(wordEntity))
+            {
+              emit(
+                state.copyWith(
+                  words: [...state.words, wordEntity],
+                  wasSubmitted: false,
+                ),
+              ),
+            }
+        },
+      );
+      return true;
+    } catch (e) {
+      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      return false;
+    }
+  }
+
+  bool isFavorite(WordEntity word) => state.words.contains(word);
+
+  bool get isLoading => state.wasSubmitted;
+}

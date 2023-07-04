@@ -4,26 +4,26 @@ enum AuthStatus { authenticated, unauthenticated }
 
 class WordsState extends Equatable {
   final List<WordEntity> words;
-  final WordsFailure? failure;
+  final String errorMessage;
 
   const WordsState({
     this.words = const <WordEntity>[],
-    this.failure,
+    this.errorMessage = '',
   });
 
   @override
   List<Object?> get props => [
         words,
-        failure,
+        errorMessage,
       ];
 
   WordsState copyWith({
     final List<WordEntity>? words,
-    final WordsFailure? failure,
+    final String? errorMessage,
   }) {
     return WordsState(
       words: words ?? this.words,
-      failure: failure ?? this.failure,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }

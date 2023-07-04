@@ -1,8 +1,10 @@
+import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/cubit/word_cubit.dart';
 import 'package:english_dictionary/presenter/word/page/widget/favorite_button_widget.dart';
 import 'package:english_dictionary/presenter/word/page/widget/player_word_widget.dart';
 import 'package:english_dictionary/ui/global/buttons/buttons.dart';
+import 'package:english_dictionary/ui/global/custom_snackbar/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +22,7 @@ class WordPage extends StatefulWidget {
 
 class _WordPageState extends State<WordPage> {
   final wordCubit = GetIt.I.get<WordCubit>();
+  final favoritesCubit = GetIt.I.get<FavoritesCubit>();
 
   @override
   void initState() {
@@ -37,29 +40,39 @@ class _WordPageState extends State<WordPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BlocBuilder<WordCubit, WordState>(
-      bloc: wordCubit,
-      builder: (context, state) {
-        return SizedBox(
-          width: size.width,
-          height: size.height - 50,
-          child: state.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : (wordCubit.hasFailure
-                  ? Center(
-                      child: Text(
-                        'Sorry nothing to see here 🙁',
-                        style: GoogleFonts.lato(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1.98,
-                          color: const Color(0xFF515151),
-                        ),
+    return Scaffold(
+      body: BlocBuilder<WordCubit, WordState>(
+        bloc: wordCubit,
+        builder: (context, state) {
+          return SizedBox(
+            width: size.width,
+            height: size.height - 50,
+            child: state.isLoading
+                ? const Center(
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1,
                       ),
-                    )
-                  : _buildBody(state)),
-        );
-      },
+                    ),
+                  )
+                : (wordCubit.hasFailure
+                    ? Center(
+                        child: Text(
+                          'Sorry nothing to see here 🙁',
+                          style: GoogleFonts.lato(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 1.98,
+                            color: const Color(0xFF515151),
+                          ),
+                        ),
+                      )
+                    : _buildBody(state)),
+          );
+        },
+      ),
     );
   }
 
@@ -96,9 +109,47 @@ class _WordPageState extends State<WordPage> {
                       ],
                     ),
                   ),
-                  FavoriteButtonWidget(
-                    onTap: () {},
-                    isFavorite: false,
+                  BlocBuilder<FavoritesCubit, FavoritesState>(
+                    bloc: favoritesCubit,
+                    builder: (context, state) {
+                      return FavoriteButtonWidget(
+                        onTap: () async {
+                          if (wordCubit.isFavorite) {
+                            final result = await favoritesCubit.removeFavoriteWord(widget.word);
+                            if (result) {
+                              if (!mounted) return;
+                              CustomSnackBar.show(
+                                text: '${wordCubit.state.word.word}, was removed from favorites!',
+                                status: CustomSnackbarStatus.success,
+                                context: context,
+                              );
+                              return;
+                            }
+                            if (!mounted) return;
+                            CustomSnackBar.show(text: state.errorMessage, status: CustomSnackbarStatus.error, context: context);
+                            return;
+                          }
+                          final result = await favoritesCubit.saveFavoriteWord(widget.word);
+                          if (result) {
+                            if (!mounted) return;
+                            CustomSnackBar.show(
+                              text: '${wordCubit.state.word.word}, was added to favorites ',
+                              status: CustomSnackbarStatus.success,
+                              context: context,
+                            );
+                            return;
+                          }
+                          if (!mounted) return;
+                          CustomSnackBar.show(
+                            text: state.errorMessage,
+                            status: CustomSnackbarStatus.error,
+                            context: context,
+                          );
+                        },
+                        isFavorite: wordCubit.isFavorite,
+                        isLoading: state.wasSubmitted,
+                      );
+                    },
                   ),
                 ],
               ),

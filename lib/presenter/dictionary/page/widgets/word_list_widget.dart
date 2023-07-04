@@ -48,7 +48,7 @@ class WordListWidget extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final word = words[index];
                           return WordTileWidget(
-                            word: words[index].word,
+                            word: word,
                             onTap: () async {
                               await openModalBottomSheet(context: context, child: WordPage(word: word));
                             },
