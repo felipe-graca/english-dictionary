@@ -1,6 +1,7 @@
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/presenter/base/page/base_page.dart';
 import 'package:english_dictionary/presenter/dictionary/page/dictionary_page.dart';
+import 'package:english_dictionary/presenter/favorites/page/favorites_page.dart';
 import 'package:english_dictionary/presenter/login/page/login_page.dart';
 import 'package:english_dictionary/presenter/splash/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class AppRouter {
         page = const DictionaryPage();
         break;
       case AppRoutes.favorites:
-        page = Container();
+        page = const FivoritesPage();
         break;
       case AppRoutes.history:
         page = Container();
