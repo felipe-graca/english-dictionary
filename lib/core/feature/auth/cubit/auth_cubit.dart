@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase_interface.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/initialize_user/initialize_user_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/usecases/save_user/save_user_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,12 +17,12 @@ class AuthCubit extends Cubit<AuthState> {
   final ILoginUsecase loginUsecase;
   final IGetUserDetailsUsecase getUserDetailsUsecase;
   final IExistsUserUsecase existsUserUsecase;
-  final IInitializeUserUsecase initializeUserUsecase;
+  final ISaveUserUsecase saveUserUsecase;
   AuthCubit(
     this.loginUsecase,
     this.getUserDetailsUsecase,
     this.existsUserUsecase,
-    this.initializeUserUsecase,
+    this.saveUserUsecase,
   ) : super(const AuthState()) {
     Future.delayed(const Duration(milliseconds: 500)).then((_) {
       onUserChanged();
@@ -114,10 +114,9 @@ class AuthCubit extends Cubit<AuthState> {
         email: firebaseAuth.currentUser!.email ?? '',
         name: firebaseAuth.currentUser!.displayName ?? '',
         base64Image: firebaseAuth.currentUser!.photoURL ?? '',
-        history: const [],
       );
 
-      final result = await initializeUserUsecase.call(userDataEntity);
+      final result = await saveUserUsecase.call(userDataEntity);
       result.fold(
         (failure) => throw failure,
         (success) => success,

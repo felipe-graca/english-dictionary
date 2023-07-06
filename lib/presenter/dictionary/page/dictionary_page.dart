@@ -43,15 +43,17 @@ class _DictionaryPageState extends State<DictionaryPage> {
                   child: LastestViewedWordsWidget(),
                 ),
                 const SizedBox(height: 10),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: WordListWidget(
-                      words: state.words,
-                      isLoading: state.loading,
+                Builder(builder: (context) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: WordListWidget(
+                        words: state.words,
+                        isLoading: state.loading,
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
                 const SizedBox(height: 10),
               ],
             ),

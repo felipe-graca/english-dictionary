@@ -25,7 +25,14 @@ class HistoryCubit extends Cubit<HistoryState> {
       final words = await _getFavoritesWordsUsecase.call(noParams);
       words.fold(
         (failure) => throw failure,
-        (success) => emit(state.copyWith(words: success, wasSubmitted: false)),
+        (success) => {
+          emit(
+            state.copyWith(
+              words: success,
+              wasSubmitted: false,
+            ),
+          ),
+        },
       );
     } catch (e) {
       emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
@@ -38,7 +45,7 @@ class HistoryCubit extends Cubit<HistoryState> {
       final result = await _removeFavoriteWordUsecase.call(noParams);
       result.fold(
         (failure) => throw failure,
-        (success) => emit(state.copyWith(words: [], wasSubmitted: false)),
+        (success) => {emit(state.copyWith(words: [], wasSubmitted: false))},
       );
       return true;
     } catch (e) {
@@ -53,8 +60,13 @@ class HistoryCubit extends Cubit<HistoryState> {
       final result = await _saveFavoriteWordUsecase.call(wordEntity);
       result.fold(
         (failure) => throw failure,
-        (success) => {
-          if (!state.words.contains(wordEntity)) emit(state.copyWith(words: [...state.words, wordEntity], wasSubmitted: false))
+        (success) {
+          {
+            if (state.words.contains(wordEntity)) {
+              emit(state.copyWith(words: state.words.where((element) => element != wordEntity).toList()));
+            }
+            emit(state.copyWith(words: [success, ...state.words], wasSubmitted: false));
+          }
         },
       );
       return true;
@@ -65,6 +77,6 @@ class HistoryCubit extends Cubit<HistoryState> {
   }
 
   bool isFavorite(WordEntity word) => state.words.contains(word);
-
+  bool isHistoryWord(WordEntity word) => state.words.contains(word);
   bool get isLoading => state.wasSubmitted;
 }

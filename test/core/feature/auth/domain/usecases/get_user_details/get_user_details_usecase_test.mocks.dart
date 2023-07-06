@@ -6,11 +6,11 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart'
+import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart'
     as _i5;
-import 'package:english_dictionary/core/feature/auth/data/repositores/get_user_details/get_user_details_repository.dart'
+import 'package:english_dictionary/core/feature/user_details/data/repositories/get_user_details/get_user_details_repository.dart'
     as _i3;
-import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart'
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart'
     as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -45,16 +45,16 @@ class MockGetUserDetailsRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.GetUserDetailsFailure, _i6.UserDataEntity>>
+  _i4.Future<_i2.Either<_i5.GetUserDatailsFailure, _i6.UserDataEntity>>
       getUserDetails() => (super.noSuchMethod(
             Invocation.method(
               #getUserDetails,
               [],
             ),
             returnValue: _i4.Future<
-                    _i2.Either<_i5.GetUserDetailsFailure,
+                    _i2.Either<_i5.GetUserDatailsFailure,
                         _i6.UserDataEntity>>.value(
-                _FakeEither_0<_i5.GetUserDetailsFailure, _i6.UserDataEntity>(
+                _FakeEither_0<_i5.GetUserDatailsFailure, _i6.UserDataEntity>(
               this,
               Invocation.method(
                 #getUserDetails,
@@ -62,5 +62,5 @@ class MockGetUserDetailsRepository extends _i1.Mock
               ),
             )),
           ) as _i4.Future<
-              _i2.Either<_i5.GetUserDetailsFailure, _i6.UserDataEntity>>);
+              _i2.Either<_i5.GetUserDatailsFailure, _i6.UserDataEntity>>);
 }

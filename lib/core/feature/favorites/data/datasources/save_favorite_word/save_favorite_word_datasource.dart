@@ -4,7 +4,7 @@ import 'package:english_dictionary/core/feature/words/core/errors/words_failure.
 import 'package:english_dictionary/core/feature/words/data/models/word_model.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 
-class SaveFavoriteWordDatasource implements ISaveHistoryWordDatasource {
+class SaveFavoriteWordDatasource implements ISaveFavoriteWordDatasource {
   final IFirebaseService _firebaseService;
 
   SaveFavoriteWordDatasource(this._firebaseService);

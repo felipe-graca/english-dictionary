@@ -47,22 +47,22 @@ class CustomSnackBar {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 82, 82, 90).withOpacity(0.2),
+                  color: const Color.fromARGB(255, 157, 157, 158).withOpacity(0.2),
                   blurRadius: 15,
                   offset: const Offset(2, 2),
                   spreadRadius: 0,
                 ),
                 BoxShadow(
-                  color: const Color.fromARGB(117, 49, 46, 46).withOpacity(0.2),
+                  color: const Color.fromARGB(255, 157, 157, 158).withOpacity(0.2),
                   blurRadius: 15,
                   offset: const Offset(-2, -2),
                   spreadRadius: 0,
                 ),
               ],
-              color: const Color.fromARGB(255, 236, 236, 236),
+              color: const Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(20),
             child: Row(
               children: <Widget>[
                 Container(
@@ -91,7 +91,7 @@ class CustomSnackBar {
                       style: GoogleFonts.lato(
                         color: const Color.fromARGB(255, 75, 75, 75),
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                         letterSpacing: 1.98,
                       ),
                     ),

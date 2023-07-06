@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
-import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_user_details_usecase.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/initialize_user/initialize_user_usecase.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:faker/faker.dart';
@@ -19,20 +17,18 @@ import 'auth_cubit_test.mocks.dart';
   LoginUsecase,
   FirebaseAuth,
   ExistsUserUsecase,
-  InitializeUserUsecase,
-  GetUserDetailsUsecase,
 ])
 main() {
   final loginUsecase = MockLoginUsecase();
   final getUserDetailsUsecase = MockGetUserDetailsUsecase();
   final existsUserUsecase = MockExistsUserUsecase();
-  final initializeUserUsecase = MockInitializeUserUsecase();
+  final saveUserUsecase = MockSaveUserUsecase();
 
   final authCubit = AuthCubit(
     loginUsecase,
     getUserDetailsUsecase,
     existsUserUsecase,
-    initializeUserUsecase,
+    saveUserUsecase,
   );
 
   final faker = Faker();
@@ -42,7 +38,6 @@ main() {
     name: faker.person.name(),
     base64Image: faker.image.image(),
     uid: faker.guid.guid(),
-    history: const [],
   );
 
   group('onUserChanged()', () {
@@ -88,7 +83,7 @@ main() {
 
   group('initializeUser()', () {
     test('initializeUser() Shold return true when initializeUser is success', () async {
-      when(authCubit.initializeUserUsecase.call(userDataEntity)).thenAnswer((_) async => const Right(true));
+      when(authCubit.saveUserUsecase.call(userDataEntity)).thenAnswer((_) async => const Right(true));
 
       final result = await authCubit.initializeUser();
 
@@ -96,11 +91,11 @@ main() {
     });
 
     test('initializeUser() Shold return throw when initializeUser is failure', () async {
-      when(authCubit.initializeUserUsecase.call(userDataEntity)).thenAnswer((_) async => Left(InitializeUserFailure()));
+      when(authCubit.saveUserUsecase.call(userDataEntity)).thenAnswer((_) async => Left(SaveUserFailure()));
 
       final result = await authCubit.initializeUser();
 
-      expect(result, isA<Left<InitializeUserFailure, bool>>());
+      expect(result, isA<Left<SaveUserFailure, bool>>());
     });
   });
 

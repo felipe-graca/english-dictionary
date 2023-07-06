@@ -45,20 +45,19 @@ class ServiceLocator {
     required IFavoritesServiceLocator favoritesLocator,
     required IHistoryServiceLocator historyLocator,
   }) async {
-    await _setup().then(
-      (value) async => await Future.wait(
-        [
-          authLocator.setup(),
-          wordSignificationLocator.setup(),
-          wordsLocator.setup(),
-          favoritesLocator.setup(),
-          historyLocator.setup(),
-
-          /*cubits*/
-          initializePageCubits(),
-        ],
-      ),
-    );
+    await _setup()
+        .then(
+          (value) async => await Future.wait(
+            [
+              authLocator.setup(),
+              historyLocator.setup(),
+              wordSignificationLocator.setup(),
+              wordsLocator.setup(),
+              favoritesLocator.setup(),
+            ],
+          ),
+        )
+        .then((value) async => await initializePageCubits());
   }
 
   static Future<void> initializePageCubits() async {

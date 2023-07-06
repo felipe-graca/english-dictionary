@@ -2,6 +2,7 @@ import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/presenter/base/page/base_page.dart';
 import 'package:english_dictionary/presenter/dictionary/page/dictionary_page.dart';
 import 'package:english_dictionary/presenter/favorites/page/favorites_page.dart';
+import 'package:english_dictionary/presenter/history/page/history_page.dart';
 import 'package:english_dictionary/presenter/login/page/login_page.dart';
 import 'package:english_dictionary/presenter/splash/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class AppRouter {
         page = const FivoritesPage();
         break;
       case AppRoutes.history:
-        page = Container();
+        page = const HistoryPage();
         break;
       case AppRoutes.profile:
         page = Container();
@@ -43,12 +44,9 @@ class AppRouter {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       settings: routeSettings,
-      transitionDuration: const Duration(milliseconds: 300),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(1.0, 0.0),
-          end: Offset.zero,
-        ).animate(animation),
+      transitionDuration: const Duration(milliseconds: 100),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+        opacity: animation,
         child: child,
       ),
     );

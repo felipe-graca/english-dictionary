@@ -8,14 +8,8 @@ import 'dart:async' as _i7;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart'
     as _i8;
-import 'package:english_dictionary/core/feature/auth/domain/entities/user_data_entity.dart'
-    as _i12;
 import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase.dart'
     as _i10;
-import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_user_details_usecase.dart'
-    as _i13;
-import 'package:english_dictionary/core/feature/auth/domain/usecases/initialize_user/initialize_user_usecase.dart'
-    as _i11;
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart'
     as _i6;
 import 'package:english_dictionary/core/usecase/usecase.dart' as _i9;
@@ -633,64 +627,4 @@ class MockExistsUserUsecase extends _i1.Mock implements _i10.ExistsUserUsecase {
           ),
         )),
       ) as _i7.Future<_i2.Either<_i8.ExistsUserFailuire, bool>>);
-}
-
-/// A class which mocks [InitializeUserUsecase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockInitializeUserUsecase extends _i1.Mock
-    implements _i11.InitializeUserUsecase {
-  MockInitializeUserUsecase() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i7.Future<_i2.Either<_i8.InitializeUserFailure, bool>> call(
-          _i12.UserDataEntity? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue:
-            _i7.Future<_i2.Either<_i8.InitializeUserFailure, bool>>.value(
-                _FakeEither_0<_i8.InitializeUserFailure, bool>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i7.Future<_i2.Either<_i8.InitializeUserFailure, bool>>);
-}
-
-/// A class which mocks [GetUserDetailsUsecase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockGetUserDetailsUsecase extends _i1.Mock
-    implements _i13.GetUserDetailsUsecase {
-  MockGetUserDetailsUsecase() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i7.Future<_i2.Either<_i8.GetUserDetailsFailure, _i12.UserDataEntity>> call(
-          _i9.NoParams? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue: _i7.Future<
-                _i2.Either<_i8.GetUserDetailsFailure,
-                    _i12.UserDataEntity>>.value(
-            _FakeEither_0<_i8.GetUserDetailsFailure, _i12.UserDataEntity>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i7
-          .Future<_i2.Either<_i8.GetUserDetailsFailure, _i12.UserDataEntity>>);
 }

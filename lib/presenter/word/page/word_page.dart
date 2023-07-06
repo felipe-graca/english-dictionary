@@ -1,4 +1,5 @@
 import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
+import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/cubit/word_cubit.dart';
 import 'package:english_dictionary/presenter/word/page/widget/favorite_button_widget.dart';
@@ -23,6 +24,7 @@ class WordPage extends StatefulWidget {
 class _WordPageState extends State<WordPage> {
   final wordCubit = GetIt.I.get<WordCubit>();
   final favoritesCubit = GetIt.I.get<FavoritesCubit>();
+  final historyCubit = GetIt.I.get<HistoryCubit>();
 
   @override
   void initState() {
@@ -115,7 +117,7 @@ class _WordPageState extends State<WordPage> {
                       return FavoriteButtonWidget(
                         onTap: () async {
                           if (wordCubit.isFavorite) {
-                            final result = await favoritesCubit.removeFavoriteWord(widget.word);
+                            final result = await favoritesCubit.removeFavoriteWord(wordCubit.state.word);
                             if (result) {
                               if (!mounted) return;
                               CustomSnackBar.show(
@@ -129,7 +131,7 @@ class _WordPageState extends State<WordPage> {
                             CustomSnackBar.show(text: state.errorMessage, status: CustomSnackbarStatus.error, context: context);
                             return;
                           }
-                          final result = await favoritesCubit.saveFavoriteWord(widget.word);
+                          final result = await favoritesCubit.saveFavoriteWord(wordCubit.state.word);
                           if (result) {
                             if (!mounted) return;
                             CustomSnackBar.show(
@@ -199,8 +201,9 @@ class _WordPageState extends State<WordPage> {
             child: PrimaryButton(
               label: 'Next word',
               isLoading: state.wasSubmitted,
-              onTap: () {
-                wordCubit.nextWord();
+              onTap: () async {
+                await wordCubit.nextWord();
+                await historyCubit.saveHistoryWord(wordCubit.state.word);
               },
               fullWidth: true,
             ),

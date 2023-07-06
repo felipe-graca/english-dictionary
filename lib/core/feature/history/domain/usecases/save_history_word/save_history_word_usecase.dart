@@ -5,7 +5,7 @@ import 'package:english_dictionary/core/feature/history/domain/usecases/save_his
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 
 class SaveHistoryWordUsecase implements ISaveHistoryWordsUsecase {
-  final IHistoryFavoriteWordRepository _repository;
+  final ISaveHistoryWordRepository _repository;
 
   SaveHistoryWordUsecase(this._repository);
 
