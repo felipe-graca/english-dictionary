@@ -1,9 +1,12 @@
+import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
 import 'package:english_dictionary/ui/global/card/card_widget.dart';
 import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:english_dictionary/ui/global/word_tile/word_tile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WordListWidget extends StatelessWidget {
@@ -14,6 +17,7 @@ class WordListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final historyCubit = GetIt.I.get<HistoryCubit>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,20 +46,26 @@ class WordListWidget extends StatelessWidget {
               child: Center(
                 child: isLoading
                     ? const CircularProgressIndicator()
-                    : ListView.separated(
-                        itemCount: words.length,
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                        itemBuilder: (context, index) {
-                          final word = words[index];
-                          return WordTileWidget(
-                            word: word,
-                            onTap: () async {
-                              await openModalBottomSheet(context: context, child: WordPage(word: word));
+                    : BlocBuilder<HistoryCubit, HistoryState>(
+                        bloc: historyCubit,
+                        builder: (context, state) {
+                          return ListView.separated(
+                            itemCount: words.length,
+                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                            itemBuilder: (context, index) {
+                              final word = words[index];
+                              return WordTileWidget(
+                                word: word,
+                                onTap: () async {
+                                  historyCubit.saveHistoryWord(word);
+                                  await openModalBottomSheet(context: context, child: WordPage(word: word));
+                                },
+                                isActived: historyCubit.isHistoryWord(word),
+                              );
                             },
+                            separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
                           );
-                        },
-                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
-                      ),
+                        }),
               ),
             ),
           ),

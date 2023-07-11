@@ -5,7 +5,7 @@ import 'package:english_dictionary/core/feature/words/core/errors/words_failure.
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 
 class SaveFavoriteWordRepository implements ISaveFavoriteWordRepository {
-  final ISaveHistoryWordDatasource _datasource;
+  final ISaveFavoriteWordDatasource _datasource;
 
   SaveFavoriteWordRepository(this._datasource);
   @override

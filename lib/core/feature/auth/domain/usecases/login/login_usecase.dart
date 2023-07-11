@@ -10,14 +10,6 @@ class LoginUsecase implements ILoginUsecase {
 
   @override
   Future<Either<LoginFailure, bool>> call(noParams) async {
-    try {
-      final result = await _loginRepository.login();
-      return result.fold(
-        (failure) => throw failure,
-        (success) => right(success),
-      );
-    } on LoginFailure catch (e) {
-      return left(e);
-    }
+    return await _loginRepository.login();
   }
 }

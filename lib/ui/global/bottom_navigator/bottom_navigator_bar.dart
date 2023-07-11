@@ -38,14 +38,18 @@ class BottomNavigatorBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ...state.pages.values.map(
-                  (e) => BottomNavigatorItem(
-                    icon: e.icon,
-                    onTap: () {
-                      if (state.currentPage == e.pageEnum) return;
-                      cubit.changePage(e.route);
-                      Navigator.of(AppRouter.navigatorKey.currentState!.context).pushNamed(e.route);
-                    },
-                    isActive: state.currentPage == e.pageEnum,
+                  (e) => SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: BottomNavigatorItem(
+                      icon: e.icon,
+                      onTap: () {
+                        if (state.currentPage == e.pageEnum) return;
+                        cubit.changePage(e.route);
+                        Navigator.of(AppRouter.navigatorKey.currentState!.context).pushNamed(e.route);
+                      },
+                      isActive: state.currentPage == e.pageEnum,
+                    ),
                   ),
                 ),
               ],

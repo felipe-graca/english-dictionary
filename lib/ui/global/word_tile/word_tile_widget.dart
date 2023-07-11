@@ -24,15 +24,18 @@ class WordTileWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: isActived ? const Color(0xFF00FF38) : Colors.transparent,
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Container(
+                    margin: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: isActived ? const Color(0xFF00FF38) : Colors.transparent,
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
                     ),
                   ),
                 ),

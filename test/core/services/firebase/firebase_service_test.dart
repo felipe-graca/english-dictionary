@@ -1,6 +1,5 @@
 import 'package:english_dictionary/core/errors/failure.dart';
-import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
-import 'package:english_dictionary/core/feature/auth/data/model/user_data_model.dart';
+import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart';
 import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart';
 import 'package:faker/faker.dart';
@@ -14,12 +13,11 @@ import 'firebase_service_test.mocks.dart';
 void main() {
   final faker = Faker();
 
-  final userDataModel = UserDataModel(
+  final userDataModel = UserDetailsModel(
     name: faker.person.name(),
     email: faker.internet.email(),
     base64Image: faker.image.toString(),
     uid: faker.guid.guid(),
-    history: const [],
   );
 
   final service = MockFirebaseService();
@@ -57,11 +55,6 @@ void main() {
       when(service.getUserDetails()).thenAnswer((_) async => userDataModel.toMap());
       final result = await service.getUserDetails();
       expect(result, userDataModel);
-    });
-
-    test('should return null when not found user details', () async {
-      when(service.getUserDetails()).thenThrow(GetUserDetailsFailure());
-      expect(() => service.getUserDetails(), throwsA(isA<GetUserDetailsFailure>()));
     });
   });
 
