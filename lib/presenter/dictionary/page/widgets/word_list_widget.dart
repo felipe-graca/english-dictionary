@@ -1,4 +1,5 @@
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
 import 'package:english_dictionary/ui/global/card/card_widget.dart';
@@ -55,22 +56,30 @@ class WordListWidget extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final word = words[index];
                               return WordTileWidget(
-                                word: word,
+                                word: word.word,
                                 onTap: () async {
-                                  historyCubit.saveHistoryWord(word);
+                                  historyCubit.saveHistoryWord(toHistoryWordEntity(word));
                                   await openModalBottomSheet(context: context, child: WordPage(word: word));
                                 },
-                                isActived: historyCubit.isHistoryWord(word),
+                                isActived: historyCubit.isHistoryWord(toHistoryWordEntity(word)),
                               );
                             },
                             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
                           );
-                        }),
+                        },
+                      ),
               ),
             ),
           ),
         )
       ],
+    );
+  }
+
+  HistoryWordEntity toHistoryWordEntity(WordEntity word) {
+    return HistoryWordEntity(
+      id: word.id,
+      word: word.word,
     );
   }
 }

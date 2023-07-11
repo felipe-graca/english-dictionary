@@ -1,4 +1,5 @@
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
 import 'package:english_dictionary/ui/global/card/card_widget.dart';
@@ -83,28 +84,36 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Widget _buildBody({required bool isLoading, required List<WordEntity> words}) {
+  Widget _buildBody({required bool isLoading, required List<HistoryWordEntity> words}) {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
     return BlocBuilder<HistoryCubit, HistoryState>(
-        bloc: historyCubit,
-        builder: (context, state) {
-          return ListView.separated(
-            itemCount: words.length,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-            itemBuilder: (context, index) {
-              final word = words[index];
-              return HistoryTileWidget(
-                word: word,
-                onTap: () async {
-                  historyCubit.saveHistoryWord(word);
-                  await openModalBottomSheet(context: context, child: WordPage(word: word));
-                },
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
-          );
-        });
+      bloc: historyCubit,
+      builder: (context, state) {
+        return ListView.separated(
+          itemCount: words.length,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          itemBuilder: (context, index) {
+            final word = words[index];
+            return HistoryTileWidget(
+              word: word,
+              onTap: () async {
+                historyCubit.saveHistoryWord(word);
+                await openModalBottomSheet(context: context, child: WordPage(word: toWordEntity(word)));
+              },
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
+        );
+      },
+    );
+  }
+
+  WordEntity toWordEntity(HistoryWordEntity word) {
+    return WordEntity(
+      word: word.word,
+      id: word.id,
+    );
   }
 }

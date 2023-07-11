@@ -11,8 +11,7 @@ class ClearHistoryWordRepository implements IClearHistoryWordRepository {
   @override
   Future<Either<ClearHistoryWordsFailure, bool>> clearHistoryWords() async {
     try {
-      final result = await _datasource.clearHistoryWords();
-      return Right(result);
+      return Right(await _datasource.clearHistoryWords());
     } on ClearHistoryWordsFailure catch (e) {
       return Left(e);
     }

@@ -7,7 +7,7 @@ import 'dart:async' as _i3;
 
 import 'package:english_dictionary/core/feature/favorites/data/datasources/remove_favorite_word/remove_favorite_word_datasource.dart'
     as _i2;
-import 'package:english_dictionary/core/feature/words/data/models/word_model.dart'
+import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -32,7 +32,7 @@ class MockRemoveFavoriteWordDatasource extends _i1.Mock
   }
 
   @override
-  _i3.Future<bool> removeFavoriteWord(_i4.WordModel? model) =>
+  _i3.Future<bool> removeFavoriteWord(_i4.FavoriteWordModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeFavoriteWord,

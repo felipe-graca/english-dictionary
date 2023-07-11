@@ -5,8 +5,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:english_dictionary/core/feature/user_details/data/datasources/get_user_details/get_user_details_datasource.dart.dart' as _i3;
-import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart' as _i2;
+import 'package:english_dictionary/core/feature/user_details/data/datasources/get_user_details/get_user_details_datasource.dart.dart'
+    as _i3;
+import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -20,8 +22,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeUserDataModel_0 extends _i1.SmartFake implements _i2.UserDetailsModel {
-  _FakeUserDataModel_0(
+class _FakeUserDetailsModel_0 extends _i1.SmartFake
+    implements _i2.UserDetailsModel {
+  _FakeUserDetailsModel_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -33,7 +36,8 @@ class _FakeUserDataModel_0 extends _i1.SmartFake implements _i2.UserDetailsModel
 /// A class which mocks [GetUserDetailsDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetUserDetailsDatasource extends _i1.Mock implements _i3.GetUserDetailsDatasource {
+class MockGetUserDetailsDatasource extends _i1.Mock
+    implements _i3.GetUserDetailsDatasource {
   MockGetUserDetailsDatasource() {
     _i1.throwOnMissingStub(this);
   }
@@ -44,7 +48,8 @@ class MockGetUserDetailsDatasource extends _i1.Mock implements _i3.GetUserDetail
           #getUserDetails,
           [],
         ),
-        returnValue: _i4.Future<_i2.UserDetailsModel>.value(_FakeUserDataModel_0(
+        returnValue:
+            _i4.Future<_i2.UserDetailsModel>.value(_FakeUserDetailsModel_0(
           this,
           Invocation.method(
             #getUserDetails,

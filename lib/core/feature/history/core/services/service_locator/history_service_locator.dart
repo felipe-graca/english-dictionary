@@ -30,7 +30,7 @@ class HistoryServiceLocator implements IHistoryServiceLocator {
     /*datasources*/
 
     i.registerLazySingleton<ISaveHistoryWordDatasource>(() => SaveHistoryWordDatasource(i.get()));
-    i.registerLazySingleton<IClearHistoryWordsDatasource>(() => RemoveHistoryWordsDatasource(i.get()));
+    i.registerLazySingleton<IClearHistoryWordsDatasource>(() => ClearHistoryWordsDatasource(i.get()));
     i.registerLazySingleton<IGetHistoryWordsDatasource>(() => GetHistoryWordsDatasource(i.get()));
 
     /*repositories*/
@@ -41,8 +41,8 @@ class HistoryServiceLocator implements IHistoryServiceLocator {
 
     /*usecases*/
 
-    i.registerLazySingleton<ISaveHistoryWordsUsecase>(() => SaveHistoryWordUsecase(i.get()));
-    i.registerLazySingleton<IClearHistoryWordsUsecase>(() => ClearHistoryWordUsecase(i.get()));
+    i.registerLazySingleton<ISaveHistoryWordUsecase>(() => SaveHistoryWordUsecase(i.get()));
+    i.registerLazySingleton<IClearHistoryWordsUsecase>(() => ClearHistoryWordsUsecase(i.get()));
     i.registerLazySingleton<IGetHistoryWordsUsecase>(() => GetHistoryWordsUsecase(i.get()));
 
     /*cubits*/

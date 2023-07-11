@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/datasources/get_favorites_words/get_favorites_words_datasource_interface.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/repositories/get_favorites_words/get_favorites_words_repository_interface.dart';
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 
 class GetFavoritesWordsRepository implements IGetFavoritesWordsRepository {
   final IGetFavoritesWordsDatasource _datasource;
@@ -10,7 +10,7 @@ class GetFavoritesWordsRepository implements IGetFavoritesWordsRepository {
   GetFavoritesWordsRepository(this._datasource);
 
   @override
-  Future<Either<GetFavoritesWordsFailure, List<WordEntity>>> getFavoritesWords() async {
+  Future<Either<GetFavoritesWordsFailure, List<FavoriteWordEntity>>> getFavoritesWords() async {
     try {
       return Right(await _datasource.getFavoritesWords());
     } on GetFavoritesWordsFailure catch (e) {

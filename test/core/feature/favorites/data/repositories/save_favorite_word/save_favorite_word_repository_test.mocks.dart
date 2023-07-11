@@ -7,7 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:english_dictionary/core/feature/favorites/data/datasources/save_favorite_word/save_favorite_word_datasource.dart'
     as _i3;
-import 'package:english_dictionary/core/feature/words/data/models/word_model.dart'
+import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -22,8 +22,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeWordModel_0 extends _i1.SmartFake implements _i2.WordModel {
-  _FakeWordModel_0(
+class _FakeFavoriteWordModel_0 extends _i1.SmartFake
+    implements _i2.FavoriteWordModel {
+  _FakeFavoriteWordModel_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -42,18 +43,20 @@ class MockSaveFavoriteWordDatasource extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.WordModel> saveFavoriteWord(_i2.WordModel? model) =>
+  _i4.Future<_i2.FavoriteWordModel> saveFavoriteWord(
+          _i2.FavoriteWordModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveFavoriteWord,
           [model],
         ),
-        returnValue: _i4.Future<_i2.WordModel>.value(_FakeWordModel_0(
+        returnValue:
+            _i4.Future<_i2.FavoriteWordModel>.value(_FakeFavoriteWordModel_0(
           this,
           Invocation.method(
             #saveFavoriteWord,
             [model],
           ),
         )),
-      ) as _i4.Future<_i2.WordModel>);
+      ) as _i4.Future<_i2.FavoriteWordModel>);
 }

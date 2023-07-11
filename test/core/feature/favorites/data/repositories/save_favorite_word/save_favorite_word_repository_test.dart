@@ -1,8 +1,8 @@
+import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/datasources/save_favorite_word/save_favorite_word_datasource.dart';
 import 'package:english_dictionary/core/feature/favorites/data/repositories/save_favorite_word/save_favorite_word_repository.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/repositories/save_favorite_word/save_favorite_word_interface.dart';
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -17,7 +17,7 @@ main() {
 
   final faker = Faker();
 
-  final wordEntity = WordEntity(
+  final wordEntity = FavoriteWordEntity(
     id: faker.guid.guid(),
     word: faker.lorem.word(),
   );

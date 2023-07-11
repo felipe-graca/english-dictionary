@@ -1,6 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
-import 'package:english_dictionary/core/feature/user_details/data/repositories/exists_user/exists_user_repository.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/repositories/save_user/save_user_repository.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
@@ -14,90 +12,34 @@ import 'package:mockito/mockito.dart';
 import 'save_user_usecase_test.mocks.dart';
 
 @GenerateMocks([SaveUserRepository])
-@GenerateMocks([ExistsUserRepository])
 main() {
-  final faker = Faker();
+  final saveUserRepository = MockSaveUserRepository();
 
-  final userDataEntity = UserDetailsEntity(
+  final ISaveUserUsecase saveUserUsecase = SaveUserUsecase(saveUserRepository);
+
+  final faker = Faker();
+  final userDetails = UserDetailsEntity(
     name: faker.person.name(),
     email: faker.internet.email(),
-    base64Image: faker.image.toString(),
+    base64Image: faker.internet.httpUrl(),
     uid: faker.guid.guid(),
   );
 
-  final saveUserRepository = MockSaveUserRepository();
-  final getUserDetailsRepository = MockExistsUserRepository();
+  test('Should return true when saveUser is success', () async {
+    when(saveUserRepository.saveUser(any)).thenAnswer((_) async => const Right(true));
 
-  final ISaveUserUsecase usecase = SaveUserUsecase(saveUserRepository);
+    final result = await saveUserUsecase(userDetails);
 
-  group(
-    'success results',
-    () {
-      test(
-        'should return true when saved user',
-        () async {
-          when(saveUserRepository.saveUser(userDataEntity)).thenAnswer((_) async => const Right(true));
-          when(getUserDetailsRepository.existsUser()).thenAnswer((_) async => const Right(false));
+    expect(result, isA<Right<SaveUserFailure, bool>>());
+    expect(result, const Right(true));
+  });
 
-          final result = await usecase.call(userDataEntity);
-          final folded = result.fold((failure) => failure, (success) => success);
+  test('Should return failure when saveUser is failure', () async {
+    when(saveUserRepository.saveUser(any)).thenAnswer((_) async => Left(SaveUserFailure()));
 
-          expect(folded, true);
-        },
-      );
-    },
-  );
+    final result = await saveUserUsecase(userDetails);
 
-  group('failure results', () {
-    test(
-      'Should return false with exists user',
-      () async {
-        when(saveUserRepository.saveUser(userDataEntity)).thenAnswer((_) async => const Right(false));
-        when(getUserDetailsRepository.existsUser()).thenAnswer((_) async => const Right(true));
-
-        final result = await usecase.call(userDataEntity);
-
-        expect(result, const Right(false));
-      },
-    );
-
-    test(
-      'Should return false when not saved user',
-      () async {
-        when(saveUserRepository.saveUser(userDataEntity)).thenAnswer((_) async => const Right(false));
-        when(getUserDetailsRepository.existsUser()).thenAnswer((_) async => const Right(false));
-
-        final result = await usecase.call(userDataEntity);
-        final folded = result.fold((failure) => failure, (success) => success);
-
-        expect(folded, false);
-      },
-    );
-
-    test(
-      'Shold return throw when save user',
-      () async {
-        when(saveUserRepository.saveUser(userDataEntity)).thenAnswer((_) async => Left(SaveUserFailure()));
-        when(getUserDetailsRepository.existsUser()).thenAnswer((_) async => const Right(false));
-
-        final result = await usecase.call(userDataEntity);
-        final folded = result.fold((failure) => failure, (success) => success);
-
-        expect(folded, isA<SaveUserFailure>());
-      },
-    );
-
-    test(
-      'Should return throw when exists user',
-      () async {
-        when(saveUserRepository.saveUser(userDataEntity)).thenAnswer((_) async => const Right(false));
-        when(getUserDetailsRepository.existsUser()).thenAnswer((_) async => Left(ExistsUserFailuire()));
-
-        final result = await usecase.call(userDataEntity);
-        final folded = result.fold((failure) => failure, (success) => success);
-
-        expect(folded, isA<SaveUserFailure>());
-      },
-    );
+    expect(result, isA<Left<SaveUserFailure, bool>>());
+    expect(result.fold((failure) => failure, (success) => success), isA<SaveUserFailure>());
   });
 }

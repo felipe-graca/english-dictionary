@@ -2,32 +2,35 @@ import 'package:english_dictionary/core/feature/history/data/models/history_word
 import 'package:equatable/equatable.dart';
 
 class HistoryWordEntity extends Equatable {
+  final String id;
   final String word;
-  final String uid;
 
-  const HistoryWordEntity({required this.word, required this.uid});
+  const HistoryWordEntity({
+    required this.id,
+    required this.word,
+  });
 
   @override
   List<Object?> get props => [
+        id,
         word,
-        uid,
       ];
 
   //copyWith
   HistoryWordEntity copyWith({
     final String? word,
-    final String? uid,
+    final String? id,
   }) {
     return HistoryWordEntity(
+      id: id ?? this.id,
       word: word ?? this.word,
-      uid: uid ?? this.uid,
     );
   }
 
   HistoryWordModel toModel() {
     return HistoryWordModel(
       word: word,
-      uid: uid,
+      id: id,
     );
   }
 }
