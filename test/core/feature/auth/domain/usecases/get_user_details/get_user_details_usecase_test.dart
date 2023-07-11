@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/repositories/get_user_details/get_user_details_repository.dart';
-import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/get_user_details/get_user_details_usecase.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
@@ -16,7 +16,7 @@ import 'get_user_details_usecase_test.mocks.dart';
 main() {
   final faker = Faker();
 
-  final userDataEntity = UserDataEntity(
+  final userDataEntity = UserDetailsEntity(
     name: faker.person.name(),
     email: faker.internet.email(),
     base64Image: faker.image.toString(),

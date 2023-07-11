@@ -1,18 +1,11 @@
 import 'package:english_dictionary/core/feature/auth/core/services/service_locator/auth_service_locator_interface.dart';
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
-import 'package:english_dictionary/core/feature/auth/data/datasource/exists_user/exists_user_datasource.dart';
-import 'package:english_dictionary/core/feature/auth/data/datasource/exists_user/exists_user_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource.dart';
 import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource_interface.dart';
 
-import 'package:english_dictionary/core/feature/auth/data/repositores/exists_user/exists_user_repository.dart';
-
 import 'package:english_dictionary/core/feature/auth/data/repositores/login/login_repository.dart';
 
-import 'package:english_dictionary/core/feature/auth/domain/repositores/exists_user/exists_user_repository_interface.dart';
 import 'package:english_dictionary/core/feature/auth/domain/repositores/login/login_repository_interface.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
 import 'package:get_it/get_it.dart';
@@ -26,17 +19,14 @@ class AuthServiceLocator implements IAuthServiceLocator {
 
     /*datasources*/
     i.registerLazySingleton<ILoginDatasource>(() => LoginDatasource(i.get()));
-    i.registerLazySingleton<IExistsUserDatasource>(() => ExistsUserDatasource(i.get()));
 
     /*repositories*/
-    i.registerLazySingleton<IExistsUserRepository>(() => ExistsUserRepository(i.get()));
     i.registerLazySingleton<ILoginRepository>(() => LoginRepository(i.get()));
 
     /*usecases*/
     i.registerLazySingleton<ILoginUsecase>(() => LoginUsecase(i.get()));
-    i.registerLazySingleton<IExistsUserUsecase>(() => ExistsUserUsecase(i.get()));
 
     /*cubits*/
-    i.registerLazySingleton(() => AuthCubit(i.get(), i.get(), i.get(), i.get()));
+    i.registerLazySingleton(() => AuthCubit(i.get()));
   }
 }

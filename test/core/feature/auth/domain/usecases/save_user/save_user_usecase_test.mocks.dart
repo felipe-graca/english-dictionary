@@ -6,16 +6,11 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart'
-    as _i8;
-import 'package:english_dictionary/core/feature/auth/data/repositores/exists_user/exists_user_repository.dart'
-    as _i7;
-import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart'
-    as _i5;
-import 'package:english_dictionary/core/feature/user_details/data/repositories/save_user/save_user_repository.dart'
-    as _i3;
-import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart'
-    as _i6;
+import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart' as _i8;
+import 'package:english_dictionary/core/feature/user_details/data/repositories/exists_user/exists_user_repository.dart' as _i7;
+import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart' as _i5;
+import 'package:english_dictionary/core/feature/user_details/data/repositories/save_user/save_user_repository.dart' as _i3;
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -42,22 +37,18 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 /// A class which mocks [SaveUserRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveUserRepository extends _i1.Mock
-    implements _i3.SaveUserRepository {
+class MockSaveUserRepository extends _i1.Mock implements _i3.SaveUserRepository {
   MockSaveUserRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>> saveUser(
-          _i6.UserDataEntity? userDataEntity) =>
-      (super.noSuchMethod(
+  _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>> saveUser(_i6.UserDetailsEntity? userDataEntity) => (super.noSuchMethod(
         Invocation.method(
           #saveUser,
           [userDataEntity],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>>.value(
-            _FakeEither_0<_i5.SaveUserFailure, bool>(
+        returnValue: _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>>.value(_FakeEither_0<_i5.SaveUserFailure, bool>(
           this,
           Invocation.method(
             #saveUser,
@@ -70,21 +61,18 @@ class MockSaveUserRepository extends _i1.Mock
 /// A class which mocks [ExistsUserRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockExistsUserRepository extends _i1.Mock
-    implements _i7.ExistsUserRepository {
+class MockExistsUserRepository extends _i1.Mock implements _i7.ExistsUserRepository {
   MockExistsUserRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i8.ExistsUserFailuire, bool>> existsUser() =>
-      (super.noSuchMethod(
+  _i4.Future<_i2.Either<_i8.ExistsUserFailuire, bool>> existsUser() => (super.noSuchMethod(
         Invocation.method(
           #existsUser,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i8.ExistsUserFailuire, bool>>.value(
-            _FakeEither_0<_i8.ExistsUserFailuire, bool>(
+        returnValue: _i4.Future<_i2.Either<_i8.ExistsUserFailuire, bool>>.value(_FakeEither_0<_i8.ExistsUserFailuire, bool>(
           this,
           Invocation.method(
             #existsUser,

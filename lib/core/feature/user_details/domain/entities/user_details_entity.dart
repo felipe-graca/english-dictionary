@@ -1,14 +1,14 @@
 import 'package:english_dictionary/core/feature/history/data/models/history_word_model.dart';
-import 'package:english_dictionary/core/feature/user_details/data/models/user_data_model.dart';
+import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart';
 import 'package:equatable/equatable.dart';
 
-class UserDataEntity extends Equatable {
+class UserDetailsEntity extends Equatable {
   final String name;
   final String email;
   final String base64Image;
   final String uid;
 
-  const UserDataEntity({
+  const UserDetailsEntity({
     this.name = '',
     this.email = '',
     this.base64Image = '',
@@ -24,14 +24,14 @@ class UserDataEntity extends Equatable {
       ];
 
   //copyWith
-  UserDataEntity copyWith({
+  UserDetailsEntity copyWith({
     final String? name,
     final String? email,
     final String? base64Image,
     final String? uid,
     final List<HistoryWordModel>? history,
   }) {
-    return UserDataEntity(
+    return UserDetailsEntity(
       name: name ?? this.name,
       email: email ?? this.email,
       base64Image: base64Image ?? this.base64Image,
@@ -39,8 +39,8 @@ class UserDataEntity extends Equatable {
     );
   }
 
-  UserDataModel toModel() {
-    return UserDataModel(
+  UserDetailsModel toModel() {
+    return UserDetailsModel(
       name: name,
       email: email,
       base64Image: base64Image,

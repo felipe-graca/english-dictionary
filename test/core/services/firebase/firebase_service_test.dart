@@ -1,5 +1,5 @@
 import 'package:english_dictionary/core/errors/failure.dart';
-import 'package:english_dictionary/core/feature/user_details/data/models/user_data_model.dart';
+import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart';
 import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart';
 import 'package:faker/faker.dart';
@@ -13,7 +13,7 @@ import 'firebase_service_test.mocks.dart';
 void main() {
   final faker = Faker();
 
-  final userDataModel = UserDataModel(
+  final userDataModel = UserDetailsModel(
     name: faker.person.name(),
     email: faker.internet.email(),
     base64Image: faker.image.toString(),

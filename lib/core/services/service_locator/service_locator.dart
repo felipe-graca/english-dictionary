@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:english_dictionary/core/feature/auth/core/services/service_locator/auth_service_locator_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/core/services/service_locator/favorites_service_locator_interface.dart';
 import 'package:english_dictionary/core/feature/history/core/services/service_locator/history_service_locator_interface.dart';
+import 'package:english_dictionary/core/feature/user_details/core/services/service_locator/user_details_service_locator_interface.dart';
 import 'package:english_dictionary/core/feature/word_signification/core/services/service_locator/word_signification_service_locator_interface.dart';
 import 'package:english_dictionary/core/feature/words/core/services/service_locator/words_service_locator_interface.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service.dart';
@@ -40,6 +41,7 @@ class ServiceLocator {
 
   static Future<void> initializeAllFeaturesInjections({
     required IAuthServiceLocator authLocator,
+    required IUserDetailsServiceLocator userDetailsServiceLocator,
     required IWordSignificationServiceLocator wordSignificationLocator,
     required IWordsServiceLocator wordsLocator,
     required IFavoritesServiceLocator favoritesLocator,
@@ -54,6 +56,7 @@ class ServiceLocator {
               wordSignificationLocator.setup(),
               wordsLocator.setup(),
               favoritesLocator.setup(),
+              userDetailsServiceLocator.setup(),
             ],
           ),
         )

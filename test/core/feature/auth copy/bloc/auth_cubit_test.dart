@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
-import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart';
-import 'package:english_dictionary/core/feature/auth/domain/usecases/exists_user/exists_user_usecase.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/usecases/exists_user/exists_user_usecase.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/get_user_details/get_user_details_usecase.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/save_user/save_user_usecase.dart';
@@ -37,7 +37,7 @@ main() {
 
   final faker = Faker();
 
-  final userDataEntity = UserDataEntity(
+  final userDataEntity = UserDetailsEntity(
     email: faker.internet.email(),
     name: faker.person.name(),
     base64Image: faker.image.image(),
@@ -117,7 +117,7 @@ main() {
 
       final result = await authCubit.getUserDetails();
 
-      expect(result, isA<Left<GetUserDetailsFailure, UserDataEntity>>());
+      expect(result, isA<Left<GetUserDetailsFailure, UserDetailsEntity>>());
     });
   });
 }

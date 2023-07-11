@@ -1,5 +1,5 @@
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
-import 'package:english_dictionary/core/feature/auth/data/datasource/exists_user/exists_user_datasource.dart';
+import 'package:english_dictionary/core/feature/user_details/data/datasources/exists_user/exists_user_datasource.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 
 class ExistsUserDatasource implements IExistsUserDatasource {

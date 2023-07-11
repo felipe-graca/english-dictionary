@@ -6,12 +6,9 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart'
-    as _i5;
-import 'package:english_dictionary/core/feature/user_details/data/repositories/get_user_details/get_user_details_repository.dart'
-    as _i3;
-import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart'
-    as _i6;
+import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart' as _i5;
+import 'package:english_dictionary/core/feature/user_details/data/repositories/get_user_details/get_user_details_repository.dart' as _i3;
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -38,29 +35,24 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 /// A class which mocks [GetUserDetailsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetUserDetailsRepository extends _i1.Mock
-    implements _i3.GetUserDetailsRepository {
+class MockGetUserDetailsRepository extends _i1.Mock implements _i3.GetUserDetailsRepository {
   MockGetUserDetailsRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.GetUserDatailsFailure, _i6.UserDataEntity>>
-      getUserDetails() => (super.noSuchMethod(
-            Invocation.method(
-              #getUserDetails,
-              [],
-            ),
-            returnValue: _i4.Future<
-                    _i2.Either<_i5.GetUserDatailsFailure,
-                        _i6.UserDataEntity>>.value(
-                _FakeEither_0<_i5.GetUserDatailsFailure, _i6.UserDataEntity>(
-              this,
-              Invocation.method(
-                #getUserDetails,
-                [],
-              ),
-            )),
-          ) as _i4.Future<
-              _i2.Either<_i5.GetUserDatailsFailure, _i6.UserDataEntity>>);
+  _i4.Future<_i2.Either<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>> getUserDetails() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserDetails,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>>.value(
+            _FakeEither_0<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>(
+          this,
+          Invocation.method(
+            #getUserDetails,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>>);
 }

@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/save_user/save_user_datasource.dart';
 import 'package:english_dictionary/core/feature/user_details/data/repositories/save_user/save_user_repository.dart';
-import 'package:english_dictionary/core/feature/user_details/domain/entities/user_data_entity.dart';
+import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/repositories/save_user/save_user_repository_interface.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,7 +15,7 @@ import 'save_user_repository_test.mocks.dart';
 void main() {
   final faker = Faker();
 
-  final userDataEntity = UserDataEntity(
+  final userDataEntity = UserDetailsEntity(
     name: faker.person.name(),
     email: faker.internet.email(),
     base64Image: faker.image.toString(),

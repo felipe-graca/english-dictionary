@@ -3,25 +3,25 @@ part of 'auth_cubit.dart';
 enum AuthStatus { authenticated, unauthenticated }
 
 class AuthState extends Equatable {
-  final UserDataEntity currentUser;
+  final User? userAuthDetails;
   final AuthStatus status;
   const AuthState({
-    this.currentUser = const UserDataEntity(),
+    this.userAuthDetails,
     this.status = AuthStatus.unauthenticated,
   }) : super();
 
   @override
-  List<Object> get props => [
-        currentUser,
+  List<Object?> get props => [
+        userAuthDetails,
         status,
       ];
 
   AuthState copyWith({
-    final UserDataEntity? currentUser,
+    final User? Function()? userAuthDetails,
     final AuthStatus? status,
   }) {
     return AuthState(
-      currentUser: currentUser ?? this.currentUser,
+      userAuthDetails: userAuthDetails != null ? userAuthDetails() : this.userAuthDetails,
       status: status ?? this.status,
     );
   }

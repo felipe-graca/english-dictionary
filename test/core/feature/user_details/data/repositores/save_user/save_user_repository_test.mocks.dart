@@ -5,10 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:english_dictionary/core/feature/user_details/data/datasources/save_user/save_user_datasource.dart'
-    as _i2;
-import 'package:english_dictionary/core/feature/user_details/data/models/user_data_model.dart'
-    as _i4;
+import 'package:english_dictionary/core/feature/user_details/data/datasources/save_user/save_user_datasource.dart' as _i2;
+import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,14 +23,13 @@ import 'package:mockito/mockito.dart' as _i1;
 /// A class which mocks [SaveUserDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveUserDatasource extends _i1.Mock
-    implements _i2.SaveUserDatasource {
+class MockSaveUserDatasource extends _i1.Mock implements _i2.SaveUserDatasource {
   MockSaveUserDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<bool> saveUser(_i4.UserDataModel? model) => (super.noSuchMethod(
+  _i3.Future<bool> saveUser(_i4.UserDetailsModel? model) => (super.noSuchMethod(
         Invocation.method(
           #saveUser,
           [model],
