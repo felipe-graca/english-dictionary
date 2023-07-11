@@ -3,12 +3,12 @@ part of 'history_cubit.dart';
 enum AuthStatus { authenticated, unauthenticated }
 
 class HistoryState extends Equatable {
-  final List<WordEntity> words;
+  final List<HistoryWordEntity> words;
   final bool wasSubmitted;
   final String errorMessage;
 
   const HistoryState({
-    this.words = const <WordEntity>[],
+    this.words = const <HistoryWordEntity>[],
     this.wasSubmitted = false,
     this.errorMessage = '',
   });
@@ -21,7 +21,7 @@ class HistoryState extends Equatable {
       ];
 
   HistoryState copyWith({
-    final List<WordEntity>? words,
+    final List<HistoryWordEntity>? words,
     final bool? wasSubmitted,
     final String? errorMessage,
   }) {

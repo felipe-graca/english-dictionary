@@ -1,9 +1,9 @@
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HistoryTileWidget extends StatelessWidget {
-  final WordEntity word;
+  final HistoryWordEntity word;
   final Function()? onTap;
   final bool isActived;
   const HistoryTileWidget({super.key, required this.word, this.isActived = false, required this.onTap});

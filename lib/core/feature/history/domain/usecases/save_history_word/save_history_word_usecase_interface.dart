@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 
-abstract interface class ISaveHistoryWordsUsecase implements UseCase<WordEntity, WordEntity> {
+abstract interface class ISaveHistoryWordsUsecase implements UseCase<HistoryWordEntity, HistoryWordEntity> {
   @override
-  Future<Either<SaveHistoryWordFailure, WordEntity>> call(WordEntity model);
+  Future<Either<SaveHistoryWordFailure, HistoryWordEntity>> call(entity);
 }

@@ -1,5 +1,6 @@
 import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/cubit/word_cubit.dart';
 import 'package:english_dictionary/presenter/word/page/widget/favorite_button_widget.dart';
@@ -203,7 +204,7 @@ class _WordPageState extends State<WordPage> {
               isLoading: state.wasSubmitted,
               onTap: () async {
                 await wordCubit.nextWord();
-                await historyCubit.saveHistoryWord(wordCubit.state.word);
+                await historyCubit.saveHistoryWord(toHistoryWordEntity(wordCubit.state.word));
               },
               fullWidth: true,
             ),
@@ -271,6 +272,13 @@ class _WordPageState extends State<WordPage> {
           ),
         ),
       ],
+    );
+  }
+
+  HistoryWordEntity toHistoryWordEntity(WordEntity word) {
+    return HistoryWordEntity(
+      id: word.id,
+      word: word.word,
     );
   }
 }

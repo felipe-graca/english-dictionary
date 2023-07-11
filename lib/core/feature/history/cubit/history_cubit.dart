@@ -1,7 +1,8 @@
+import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/get_history_words/get_history_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/clear_history_word/clear_history_word_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/save_history_word/save_history_word_usecase_interface.dart';
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,11 +11,11 @@ part 'history_state.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {
   final IGetHistoryWordsUsecase _getFavoritesWordsUsecase;
-  final IClearHistoryWordsUsecase _removeFavoriteWordUsecase;
+  final IClearHistoryWordsUsecase _clearHistoryWordsUsecase;
   final ISaveHistoryWordsUsecase _saveFavoriteWordUsecase;
   HistoryCubit(
     this._getFavoritesWordsUsecase,
-    this._removeFavoriteWordUsecase,
+    this._clearHistoryWordsUsecase,
     this._saveFavoriteWordUsecase,
   ) : super(const HistoryState());
 
@@ -34,15 +35,15 @@ class HistoryCubit extends Cubit<HistoryState> {
           ),
         },
       );
-    } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+    } on GetHistoryWordsFailure catch (e) {
+      emit(state.copyWith(errorMessage: e.message, wasSubmitted: false));
     }
   }
 
   Future<bool> clearHistoryWords() async {
     try {
       emit(state.copyWith(wasSubmitted: true));
-      final result = await _removeFavoriteWordUsecase.call(noParams);
+      final result = await _clearHistoryWordsUsecase.call(noParams);
       result.fold(
         (failure) => throw failure,
         (success) => {emit(state.copyWith(words: [], wasSubmitted: false))},
@@ -54,7 +55,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     }
   }
 
-  Future<bool> saveHistoryWord(WordEntity wordEntity) async {
+  Future<bool> saveHistoryWord(HistoryWordEntity wordEntity) async {
     try {
       emit(state.copyWith(wasSubmitted: true));
       final result = await _saveFavoriteWordUsecase.call(wordEntity);
@@ -76,7 +77,6 @@ class HistoryCubit extends Cubit<HistoryState> {
     }
   }
 
-  bool isFavorite(WordEntity word) => state.words.contains(word);
-  bool isHistoryWord(WordEntity word) => state.words.contains(word);
+  bool isHistoryWord(HistoryWordEntity word) => state.words.contains(word);
   bool get isLoading => state.wasSubmitted;
 }
