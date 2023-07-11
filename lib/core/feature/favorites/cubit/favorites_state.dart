@@ -3,12 +3,12 @@ part of 'favorites_cubit.dart';
 enum AuthStatus { authenticated, unauthenticated }
 
 class FavoritesState extends Equatable {
-  final List<WordEntity> words;
+  final List<FavoriteWordEntity> words;
   final bool wasSubmitted;
   final String errorMessage;
 
   const FavoritesState({
-    this.words = const <WordEntity>[],
+    this.words = const <FavoriteWordEntity>[],
     this.wasSubmitted = false,
     this.errorMessage = '',
   });
@@ -21,7 +21,7 @@ class FavoritesState extends Equatable {
       ];
 
   FavoritesState copyWith({
-    final List<WordEntity>? words,
+    final List<FavoriteWordEntity>? words,
     final bool? wasSubmitted,
     final String? errorMessage,
   }) {

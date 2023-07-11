@@ -6,11 +6,11 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
+import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart'
+    as _i5;
 import 'package:english_dictionary/core/feature/favorites/data/repositories/save_favorite_word/save_favorite_word_repository.dart'
     as _i3;
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart'
-    as _i5;
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart'
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart'
     as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -45,22 +45,22 @@ class MockSaveFavoriteWordRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<
-      _i2.Either<_i5.SaveFavoriteWordFailure, _i6.WordEntity>> saveFavoriteWord(
-          _i6.WordEntity? model) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #saveFavoriteWord,
-          [model],
-        ),
-        returnValue: _i4.Future<
-                _i2.Either<_i5.SaveFavoriteWordFailure, _i6.WordEntity>>.value(
-            _FakeEither_0<_i5.SaveFavoriteWordFailure, _i6.WordEntity>(
-          this,
-          Invocation.method(
-            #saveFavoriteWord,
-            [model],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.SaveFavoriteWordFailure, _i6.WordEntity>>);
+  _i4.Future<_i2.Either<_i5.SaveFavoriteWordFailure, _i6.FavoriteWordEntity>>
+      saveFavoriteWord(_i6.FavoriteWordEntity? entity) => (super.noSuchMethod(
+            Invocation.method(
+              #saveFavoriteWord,
+              [entity],
+            ),
+            returnValue: _i4.Future<
+                _i2.Either<_i5.SaveFavoriteWordFailure,
+                    _i6.FavoriteWordEntity>>.value(_FakeEither_0<
+                _i5.SaveFavoriteWordFailure, _i6.FavoriteWordEntity>(
+              this,
+              Invocation.method(
+                #saveFavoriteWord,
+                [entity],
+              ),
+            )),
+          ) as _i4.Future<
+              _i2.Either<_i5.SaveFavoriteWordFailure, _i6.FavoriteWordEntity>>);
 }

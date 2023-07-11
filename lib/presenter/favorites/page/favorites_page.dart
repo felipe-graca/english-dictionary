@@ -1,4 +1,5 @@
 import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
 import 'package:english_dictionary/ui/global/card/card_widget.dart';
@@ -83,7 +84,7 @@ class _FivoritesPageState extends State<FivoritesPage> {
     );
   }
 
-  Widget _buildBody({required bool isLoading, required List<WordEntity> words}) {
+  Widget _buildBody({required bool isLoading, required List<FavoriteWordEntity> words}) {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -93,13 +94,17 @@ class _FivoritesPageState extends State<FivoritesPage> {
       itemBuilder: (context, index) {
         final word = words[index];
         return WordTileWidget(
-          word: word,
+          word: word.word,
           onTap: () async {
-            await openModalBottomSheet(context: context, child: WordPage(word: word));
+            await openModalBottomSheet(context: context, child: WordPage(word: convertFavoriteWordEntityToWordEntity(word)));
           },
         );
       },
       separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
     );
+  }
+
+  WordEntity convertFavoriteWordEntityToWordEntity(FavoriteWordEntity favoriteWordEntity) {
+    return WordEntity(id: favoriteWordEntity.id, word: favoriteWordEntity.word);
   }
 }

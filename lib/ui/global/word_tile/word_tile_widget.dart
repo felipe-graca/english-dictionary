@@ -1,9 +1,8 @@
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WordTileWidget extends StatelessWidget {
-  final WordEntity word;
+  final String word;
   final Function()? onTap;
   final bool isActived;
   const WordTileWidget({super.key, required this.word, this.isActived = false, required this.onTap});
@@ -41,7 +40,7 @@ class WordTileWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  word.word,
+                  word,
                   style: GoogleFonts.lato(
                     color: Colors.white,
                     fontSize: 15,

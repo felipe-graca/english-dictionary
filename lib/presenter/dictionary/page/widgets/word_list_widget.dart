@@ -55,7 +55,7 @@ class WordListWidget extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final word = words[index];
                               return WordTileWidget(
-                                word: word,
+                                word: word.word,
                                 onTap: () async {
                                   historyCubit.saveHistoryWord(word);
                                   await openModalBottomSheet(context: context, child: WordPage(word: word));

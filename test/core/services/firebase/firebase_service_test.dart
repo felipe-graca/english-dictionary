@@ -51,10 +51,16 @@ void main() {
   });
 
   group('Get user details', () {
-    test('should return user details', () async {
+    test('should return UserDetailsModel when get user details', () async {
       when(service.getUserDetails()).thenAnswer((_) async => userDataModel.toMap());
       final result = await service.getUserDetails();
-      expect(result, userDataModel);
+      expect(result, userDataModel.toMap());
+      expect(result, isA<Map<String, dynamic>>());
+    });
+
+    test('should return null when not get user details', () async {
+      when(service.getUserDetails()).thenThrow(FirebaseFailure(plugin: ''));
+      expect(() => service.getUserDetails(), throwsA(isA<FirebaseFailure>()));
     });
   });
 

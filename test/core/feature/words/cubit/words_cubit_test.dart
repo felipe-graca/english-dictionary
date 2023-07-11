@@ -30,12 +30,12 @@ main() {
     test('should get words failure', () async {
       when(mockGetWordsUsecase.call(noParams)).thenAnswer((_) async => Left(GetWordsFailure()));
 
-      wordsCubit.getWords();
+      await wordsCubit.getWords();
 
       await untilCalled(mockGetWordsUsecase.call(noParams));
       verify(mockGetWordsUsecase.call(noParams));
 
-      expect(wordsCubit.state.errorMessage, WordsFailure());
+      expect(wordsCubit.state.errorMessage, GetWordsFailure().message);
     });
   });
 }

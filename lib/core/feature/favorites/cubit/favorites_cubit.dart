@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/remove_favorite_word/remove_favorite_word_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/save_favorite_word/save_favorite_word_usecase_interface.dart';
@@ -40,9 +41,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   Future<bool> removeFavoriteWord(WordEntity wordEntity) async {
+    final favoriteWordEntity = FavoriteWordEntity(id: wordEntity.id, word: wordEntity.word);
     try {
       emit(state.copyWith(wasSubmitted: true));
-      final result = await _removeFavoriteWordUsecase.call(wordEntity);
+      final result = await _removeFavoriteWordUsecase.call(favoriteWordEntity);
+
       result.fold(
         (failure) => throw failure,
         (success) => {
@@ -62,17 +65,19 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   Future<bool> saveFavoriteWord(WordEntity wordEntity) async {
+    final favoriteWordEntity = FavoriteWordEntity(id: wordEntity.id, word: wordEntity.word);
+
     try {
       emit(state.copyWith(wasSubmitted: true));
-      final result = await _saveFavoriteWordUsecase.call(wordEntity);
+      final result = await _saveFavoriteWordUsecase.call(favoriteWordEntity);
       result.fold(
         (failure) => throw failure,
         (success) => {
-          if (!state.words.contains(wordEntity))
+          if (!state.words.contains(favoriteWordEntity))
             {
               emit(
                 state.copyWith(
-                  words: [...state.words, wordEntity],
+                  words: [...state.words, favoriteWordEntity],
                   wasSubmitted: false,
                 ),
               ),
