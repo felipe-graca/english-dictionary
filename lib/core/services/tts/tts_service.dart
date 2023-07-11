@@ -9,7 +9,7 @@ class TtsService implements ITtsService {
   @override
   Future<void> setup() async {
     await _flutterTts.setLanguage('en-US');
-    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.setSpeechRate(0.7);
     await _flutterTts.setVolume(1);
     await _flutterTts.setPitch(1);
   }

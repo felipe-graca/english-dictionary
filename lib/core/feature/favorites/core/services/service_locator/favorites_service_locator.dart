@@ -29,7 +29,7 @@ class FavoritesServiceLocator implements IFavoritesServiceLocator {
 
     /*datasources*/
 
-    i.registerLazySingleton<ISaveHistoryWordDatasource>(() => SaveFavoriteWordDatasource(i.get()));
+    i.registerLazySingleton<ISaveFavoriteWordDatasource>(() => SaveFavoriteWordDatasource(i.get()));
     i.registerLazySingleton<IRemoveFavoriteWordDatasource>(() => RemoveFavoriteWordDatasource(i.get()));
     i.registerLazySingleton<IGetFavoritesWordsDatasource>(() => GetFavoritesWordsDatasource(i.get()));
 

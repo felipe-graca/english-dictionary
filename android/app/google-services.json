@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "571655594202-gintrpcg6gqpiena0kf8f1ja77umvhgt.apps.googleusercontent.com",
+          "client_id": "571655594202-hqi122n8952eqhgpksoe4k3iq5g2rv86.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.english_dictorionary.gcapps.english_dictionary",
-            "certificate_hash": "4e812c2f28a2bb9ac647c831263940995590c65c"
+            "certificate_hash": "6371795e1da77a3ba9fa974c8db52b9e8192caf5"
           }
         },
         {

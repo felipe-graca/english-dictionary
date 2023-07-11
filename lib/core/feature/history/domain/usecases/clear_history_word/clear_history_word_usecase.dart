@@ -3,10 +3,10 @@ import 'package:english_dictionary/core/feature/history/core/errors/hisotry_fail
 import 'package:english_dictionary/core/feature/history/domain/repositories/clear_history_words/clear_history_word_repository_interface.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/clear_history_word/clear_history_word_usecase_interface.dart';
 
-class RemoveHistoryWordUsecase implements IClearHistoryWordsUsecase {
+class ClearHistoryWordUsecase implements IClearHistoryWordsUsecase {
   final IClearHistoryWordRepository repository;
 
-  RemoveHistoryWordUsecase(this.repository);
+  ClearHistoryWordUsecase(this.repository);
 
   @override
   Future<Either<ClearHistoryWordsFailure, bool>> call(noParams) async {

@@ -92,12 +92,7 @@ class FirebaseService implements IFirebaseService {
         throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
       }
 
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).get();
-
-      if (!snapshot.exists) {
-        await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).set(map);
-        return map;
-      }
+      await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).set(map);
 
       return map;
     } on FirebaseFailure {
@@ -148,12 +143,13 @@ class FirebaseService implements IFirebaseService {
         throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
       }
 
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).get();
+      final snapShot = await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).get();
+      if (snapShot.exists) await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).delete();
 
-      if (!snapshot.exists) {
-        await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).set(map);
-        return map;
-      }
+      await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).set({
+        ...map,
+        'date': DateTime.now().millisecondsSinceEpoch,
+      });
 
       return map;
     } on FirebaseFailure {
@@ -167,7 +163,7 @@ class FirebaseService implements IFirebaseService {
       final user = _auth.currentUser;
       if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
 
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('history').get();
+      final snapshot = await _firestore.collection('users').doc(user.uid).collection('history').orderBy('date', descending: true).get();
       if (snapshot.docs.isEmpty) return [];
 
       return snapshot.docs.map((e) => e.data()).toList();

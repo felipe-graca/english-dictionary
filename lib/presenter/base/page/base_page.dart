@@ -1,4 +1,5 @@
 import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
+import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/routes/app_routes.dart';
 
@@ -16,7 +17,10 @@ class BasePage extends StatefulWidget {
 class _BasePageState extends State<BasePage> {
   @override
   void initState() {
-    Future.wait([GetIt.I.get<FavoritesCubit>().getFavoritesWords()]);
+    Future.wait([
+      GetIt.I.get<FavoritesCubit>().getFavoritesWords(),
+      GetIt.I.get<HistoryCubit>().getHistoryWords(),
+    ]);
     super.initState();
   }
 
