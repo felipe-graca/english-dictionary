@@ -12,43 +12,33 @@ import 'package:mockito/mockito.dart';
 import 'get_user_details_repository_test.mocks.dart';
 
 @GenerateMocks([GetUserDetailsDatasource])
-void main() {
-  final faker = Faker();
+main() {
+  final getUserDetailsDatasource = MockGetUserDetailsDatasource();
+  final IGetUserDetailsRepository getUserDetailsRepository = GetUserDetailsRepository(getUserDetailsDatasource);
 
-  final userDataEntity = UserDetailsEntity(
+  final faker = Faker();
+  final userDetails = UserDetailsEntity(
     name: faker.person.name(),
     email: faker.internet.email(),
-    base64Image: faker.image.toString(),
+    base64Image: faker.internet.httpUrl(),
     uid: faker.guid.guid(),
   );
 
-  final datasource = MockGetUserDetailsDatasource();
-  final IGetUserDetailsRepository repository = GetUserDetailsRepository(datasource);
+  test('Should return entity when getUserDetails is success', () async {
+    when(getUserDetailsDatasource.getUserDetails()).thenAnswer((_) async => userDetails.toModel());
 
-  group(
-    'Get user details repository',
-    () {
-      test(
-        'should return user details',
-        () async {
-          when(datasource.getUserDetails()).thenAnswer((_) async => userDataEntity.toModel());
+    final result = await getUserDetailsRepository.getUserDetails();
 
-          final result = await repository.getUserDetails();
+    expect(result, isA<Right<GetUserDatailsFailure, UserDetailsEntity>>());
+    expect(result, Right(userDetails));
+  });
 
-          expect(result, isA<Right<GetUserDatailsFailure, UserDetailsEntity>>());
-        },
-      );
+  test('Should return failure when getUserDetails is failure', () async {
+    when(getUserDetailsDatasource.getUserDetails()).thenThrow(GetUserDatailsFailure());
 
-      test(
-        'should return throw when not found user details',
-        () async {
-          when(datasource.getUserDetails()).thenThrow(GetUserDetailsFailure());
+    final result = await getUserDetailsRepository.getUserDetails();
 
-          final result = await repository.getUserDetails();
-
-          expect(result, isA<Left<GetUserDetailsFailure, UserDetailsEntity>>());
-        },
-      );
-    },
-  );
+    expect(result, isA<Left<GetUserDatailsFailure, UserDetailsEntity>>());
+    expect(result, Left<GetUserDatailsFailure, UserDetailsEntity>(GetUserDatailsFailure()));
+  });
 }

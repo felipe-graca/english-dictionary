@@ -5,21 +5,21 @@ import 'package:english_dictionary/core/feature/history/domain/entities/history_
 
 class HistoryWordModel extends HistoryWordEntity {
   const HistoryWordModel({
+    required String id,
     required String word,
-    required String uid,
-  }) : super(word: word, uid: uid);
+  }) : super(id: id, word: word);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'uid': id,
       'word': word,
-      'uid': uid,
     };
   }
 
   factory HistoryWordModel.fromMap(Map<String, dynamic> map) {
     return HistoryWordModel(
+      id: map['uid'] as String,
       word: map['word'] as String,
-      uid: map['uid'] as String,
     );
   }
 
@@ -29,8 +29,8 @@ class HistoryWordModel extends HistoryWordEntity {
 
   HistoryWordEntity toEntity() {
     return HistoryWordEntity(
+      id: id,
       word: word,
-      uid: uid,
     );
   }
 }

@@ -6,11 +6,11 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
+import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart'
+    as _i5;
 import 'package:english_dictionary/core/feature/favorites/data/repositories/remove_favorite_word/remove_favorite_word_repository.dart'
     as _i3;
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart'
-    as _i5;
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart'
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart'
     as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -47,11 +47,11 @@ class MockRemoveFavoriteWordRepository extends _i1.Mock
   @override
   _i4.Future<
       _i2.Either<_i5.RemoveFavoriteWordFailure, bool>> removeFavoriteWord(
-          _i6.WordEntity? model) =>
+          _i6.FavoriteWordEntity? entity) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeFavoriteWord,
-          [model],
+          [entity],
         ),
         returnValue:
             _i4.Future<_i2.Either<_i5.RemoveFavoriteWordFailure, bool>>.value(
@@ -59,7 +59,7 @@ class MockRemoveFavoriteWordRepository extends _i1.Mock
           this,
           Invocation.method(
             #removeFavoriteWord,
-            [model],
+            [entity],
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.RemoveFavoriteWordFailure, bool>>);

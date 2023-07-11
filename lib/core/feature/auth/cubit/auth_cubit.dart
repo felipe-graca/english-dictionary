@@ -35,7 +35,10 @@ class AuthCubit extends Cubit<AuthState> {
       (failure) => throw failure,
       (success) {
         if (firebaseAuth.currentUser != null) {
-          state.copyWith(userAuthDetails: () => firebaseAuth.currentUser, status: AuthStatus.authenticated);
+          state.copyWith(
+            userAuthDetails: () => firebaseAuth.currentUser,
+            status: AuthStatus.authenticated,
+          );
         }
         emit(state.copyWith(status: AuthStatus.unauthenticated));
         return;

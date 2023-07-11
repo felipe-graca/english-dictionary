@@ -11,15 +11,5 @@ class GetUserDetailsUsecase implements IGetUserDetailsUsecase {
   GetUserDetailsUsecase(this._getLoggedUserRepository);
 
   @override
-  Future<Either<GetUserDatailsFailure, UserDetailsEntity>> call(NoParams params) async {
-    try {
-      final user = await _getLoggedUserRepository.getUserDetails();
-      return user.fold(
-        (failure) => throw failure,
-        (success) => Right(success),
-      );
-    } on GetUserDatailsFailure catch (e) {
-      return Left(e);
-    }
-  }
+  Future<Either<GetUserDatailsFailure, UserDetailsEntity>> call(NoParams params) async => await _getLoggedUserRepository.getUserDetails();
 }

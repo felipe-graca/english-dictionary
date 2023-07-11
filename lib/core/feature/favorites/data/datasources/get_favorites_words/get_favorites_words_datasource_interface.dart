@@ -1,5 +1,5 @@
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart';
 
 abstract interface class IGetFavoritesWordsDatasource {
-  Future<List<WordEntity>> getFavoritesWords();
+  Future<List<FavoriteWordModel>> getFavoritesWords();
 }

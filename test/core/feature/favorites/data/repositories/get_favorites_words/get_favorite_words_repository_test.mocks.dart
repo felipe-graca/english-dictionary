@@ -7,7 +7,7 @@ import 'dart:async' as _i3;
 
 import 'package:english_dictionary/core/feature/favorites/data/datasources/get_favorites_words/get_favorites_words_datasource.dart'
     as _i2;
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart'
+import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -32,11 +32,13 @@ class MockGetFavoritesWordsDatasource extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.WordEntity>> getFavoritesWords() => (super.noSuchMethod(
+  _i3.Future<List<_i4.FavoriteWordModel>> getFavoritesWords() =>
+      (super.noSuchMethod(
         Invocation.method(
           #getFavoritesWords,
           [],
         ),
-        returnValue: _i3.Future<List<_i4.WordEntity>>.value(<_i4.WordEntity>[]),
-      ) as _i3.Future<List<_i4.WordEntity>>);
+        returnValue: _i3.Future<List<_i4.FavoriteWordModel>>.value(
+            <_i4.FavoriteWordModel>[]),
+      ) as _i3.Future<List<_i4.FavoriteWordModel>>);
 }

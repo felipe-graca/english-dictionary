@@ -10,7 +10,5 @@ class SaveUserUsecase implements ISaveUserUsecase {
   SaveUserUsecase(this._saveUserRepository);
 
   @override
-  Future<Either<SaveUserFailure, bool>> call(UserDetailsEntity params) async {
-    return await _saveUserRepository.saveUser(params);
-  }
+  Future<Either<SaveUserFailure, bool>> call(UserDetailsEntity params) async => await _saveUserRepository.saveUser(params);
 }

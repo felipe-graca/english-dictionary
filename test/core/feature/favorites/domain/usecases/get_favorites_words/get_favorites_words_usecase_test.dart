@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/repositories/get_favorites_words/get_favorites_words_repository.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase_interface.dart';
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:faker/faker.dart';
@@ -19,7 +20,7 @@ main() {
 
   final faker = Faker();
 
-  final wordEntity = WordEntity(
+  final wordEntity = FavoriteWordEntity(
     id: faker.guid.guid(),
     word: faker.lorem.word(),
   );
