@@ -12,7 +12,7 @@ part 'history_state.dart';
 class HistoryCubit extends Cubit<HistoryState> {
   final IGetHistoryWordsUsecase _getFavoritesWordsUsecase;
   final IClearHistoryWordsUsecase _clearHistoryWordsUsecase;
-  final ISaveHistoryWordsUsecase _saveFavoriteWordUsecase;
+  final ISaveHistoryWordUsecase _saveFavoriteWordUsecase;
   HistoryCubit(
     this._getFavoritesWordsUsecase,
     this._clearHistoryWordsUsecase,

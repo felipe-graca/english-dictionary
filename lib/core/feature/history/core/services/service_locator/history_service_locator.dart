@@ -41,7 +41,7 @@ class HistoryServiceLocator implements IHistoryServiceLocator {
 
     /*usecases*/
 
-    i.registerLazySingleton<ISaveHistoryWordsUsecase>(() => SaveHistoryWordUsecase(i.get()));
+    i.registerLazySingleton<ISaveHistoryWordUsecase>(() => SaveHistoryWordUsecase(i.get()));
     i.registerLazySingleton<IClearHistoryWordsUsecase>(() => ClearHistoryWordsUsecase(i.get()));
     i.registerLazySingleton<IGetHistoryWordsUsecase>(() => GetHistoryWordsUsecase(i.get()));
 

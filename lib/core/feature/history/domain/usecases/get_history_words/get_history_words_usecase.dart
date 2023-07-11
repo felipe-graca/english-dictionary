@@ -10,12 +10,5 @@ class GetHistoryWordsUsecase implements IGetHistoryWordsUsecase {
   GetHistoryWordsUsecase(this.repository);
 
   @override
-  Future<Either<GetHistoryWordsFailure, List<HistoryWordEntity>>> call(noParams) async {
-    try {
-      final result = await repository.getHistoryWords();
-      return result.fold((failure) => throw failure, (success) => Right(success));
-    } on GetHistoryWordsFailure catch (e) {
-      return Left(e);
-    }
-  }
+  Future<Either<GetHistoryWordsFailure, List<HistoryWordEntity>>> call(noParams) async => await repository.getHistoryWords();
 }
