@@ -1,8 +1,9 @@
 import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.dart';
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
+import 'package:english_dictionary/core/feature/word_signification/cubit/word_signification_cubit.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
-import 'package:english_dictionary/presenter/word/cubit/word_cubit.dart';
 import 'package:english_dictionary/presenter/word/page/widget/favorite_button_widget.dart';
 import 'package:english_dictionary/presenter/word/page/widget/player_word_widget.dart';
 import 'package:english_dictionary/ui/global/buttons/buttons.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class WordPage extends StatefulWidget {
   final WordEntity word;
@@ -23,14 +25,14 @@ class WordPage extends StatefulWidget {
 }
 
 class _WordPageState extends State<WordPage> {
-  final wordCubit = GetIt.I.get<WordCubit>();
+  final wordSignificationCubit = GetIt.I.get<WordSignificationCubit>();
   final favoritesCubit = GetIt.I.get<FavoritesCubit>();
   final historyCubit = GetIt.I.get<HistoryCubit>();
 
   @override
   void initState() {
     Future.wait([
-      wordCubit.getWordSignification(widget.word),
+      wordSignificationCubit.init(widget.word),
     ]);
     super.initState();
   }
@@ -44,13 +46,13 @@ class _WordPageState extends State<WordPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: BlocBuilder<WordCubit, WordState>(
-        bloc: wordCubit,
+      body: BlocBuilder<WordSignificationCubit, WordSignificationState>(
+        bloc: wordSignificationCubit,
         builder: (context, state) {
           return SizedBox(
             width: size.width,
             height: size.height - 50,
-            child: state.isLoading
+            child: state.loading
                 ? const Center(
                     child: SizedBox(
                       width: 30,
@@ -60,164 +62,156 @@ class _WordPageState extends State<WordPage> {
                       ),
                     ),
                   )
-                : (wordCubit.hasFailure
-                    ? Center(
-                        child: Text(
-                          'Sorry nothing to see here 🙁',
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 1.98,
-                            color: const Color(0xFF515151),
+                : Stack(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 50,
+                                ),
+                                Flexible(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        state.wordSignification.word.isEmpty
+                                            ? 'No data'
+                                            : state.wordSignification.word.substring(0, 1).toUpperCase() +
+                                                state.wordSignification.word.substring(1, state.wordSignification.word.length),
+                                        style: GoogleFonts.lato(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.98,
+                                          color: const Color(0xFF515151),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                BlocBuilder<FavoritesCubit, FavoritesState>(
+                                  bloc: favoritesCubit,
+                                  builder: (context, state) {
+                                    return FavoriteButtonWidget(
+                                      onTap: () async {
+                                        if (state.words.contains(toFavoriteWordEntity(wordSignificationCubit.state.word))) {
+                                          final result = await favoritesCubit.removeFavoriteWord(wordSignificationCubit.state.word);
+                                          if (result) {
+                                            if (!mounted) return;
+                                            CustomSnackBar.show(
+                                              text: '${wordSignificationCubit.state.word.word}, was removed from favorites!',
+                                              status: CustomSnackbarStatus.success,
+                                              context: context,
+                                            );
+                                            return;
+                                          }
+                                          if (!mounted) return;
+                                          CustomSnackBar.show(text: state.errorMessage, status: CustomSnackbarStatus.error, context: context);
+                                          return;
+                                        }
+                                        final result = await favoritesCubit.saveFavoriteWord(wordSignificationCubit.state.word);
+                                        if (result) {
+                                          if (!mounted) return;
+                                          CustomSnackBar.show(
+                                            text: '${wordSignificationCubit.state.word.word}, was added to favorites ',
+                                            status: CustomSnackbarStatus.success,
+                                            context: context,
+                                          );
+                                          return;
+                                        }
+                                        if (!mounted) return;
+                                        CustomSnackBar.show(
+                                          text: state.errorMessage,
+                                          status: CustomSnackbarStatus.error,
+                                          context: context,
+                                        );
+                                      },
+                                      isFavorite: state.words.contains(toFavoriteWordEntity(wordSignificationCubit.state.word)),
+                                      isLoading: state.loading,
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          if (state.loadingStatus == LoadingStatus.isLoading) ...[
+                            Center(
+                              child: Lottie.asset('assets/jsons/loading_animation.json', width: 300, height: 300),
+                            )
+                          ] else ...[
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: buildOptions(
+                                path: 'assets/icons/pronunciation.svg',
+                                title: 'Pronunciation',
+                                value: decodeSpecialCharacters(state.wordSignification.pronunciation.all),
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: buildOptions(
+                                path: 'assets/icons/word.svg',
+                                title: 'Word',
+                                value: state.wordSignification.word,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: buildOptions(
+                                path: 'assets/icons/definition.svg',
+                                title: 'Definition',
+                                value: state.wordSignification.results.isEmpty ? 'No definition' : state.wordSignification.results.first.definition,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: buildOptions(
+                                path: 'assets/icons/example.svg',
+                                title: 'Example',
+                                value: state.example.examples.isEmpty ? 'No example' : state.example.examples.first,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 60, right: 60, bottom: 60),
+                          child: PrimaryButton(
+                            label: 'Next word',
+                            isLoading: state.loading,
+                            onTap: () async {
+                              await wordSignificationCubit.nextWord();
+                              await historyCubit.saveHistoryWord(toHistoryWordEntity(wordSignificationCubit.state.word));
+                            },
+                            fullWidth: true,
                           ),
                         ),
-                      )
-                    : _buildBody(state)),
+                      ),
+                      const Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: PlayerWordWidget(),
+                        ),
+                      ),
+                    ],
+                  ),
           );
         },
       ),
-    );
-  }
-
-  Widget _buildBody(WordState state) {
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Flexible(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          state.wordSignificationEntity.word.substring(0, 1).toUpperCase() +
-                              state.wordSignificationEntity.word.substring(1, state.wordSignificationEntity.word.length),
-                          style: GoogleFonts.lato(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.98,
-                            color: const Color(0xFF515151),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  BlocBuilder<FavoritesCubit, FavoritesState>(
-                    bloc: favoritesCubit,
-                    builder: (context, state) {
-                      return FavoriteButtonWidget(
-                        onTap: () async {
-                          if (wordCubit.isFavorite) {
-                            final result = await favoritesCubit.removeFavoriteWord(wordCubit.state.word);
-                            if (result) {
-                              if (!mounted) return;
-                              CustomSnackBar.show(
-                                text: '${wordCubit.state.word.word}, was removed from favorites!',
-                                status: CustomSnackbarStatus.success,
-                                context: context,
-                              );
-                              return;
-                            }
-                            if (!mounted) return;
-                            CustomSnackBar.show(text: state.errorMessage, status: CustomSnackbarStatus.error, context: context);
-                            return;
-                          }
-                          final result = await favoritesCubit.saveFavoriteWord(wordCubit.state.word);
-                          if (result) {
-                            if (!mounted) return;
-                            CustomSnackBar.show(
-                              text: '${wordCubit.state.word.word}, was added to favorites ',
-                              status: CustomSnackbarStatus.success,
-                              context: context,
-                            );
-                            return;
-                          }
-                          if (!mounted) return;
-                          CustomSnackBar.show(
-                            text: state.errorMessage,
-                            status: CustomSnackbarStatus.error,
-                            context: context,
-                          );
-                        },
-                        isFavorite: wordCubit.isFavorite,
-                        isLoading: state.wasSubmitted,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: buildOptions(
-                path: 'assets/icons/pronunciation.svg',
-                title: 'Pronunciation',
-                value: decodeSpecialCharacters(state.wordSignificationEntity.pronunciation.all),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: buildOptions(
-                path: 'assets/icons/word.svg',
-                title: 'Word',
-                value: state.wordSignificationEntity.word,
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: buildOptions(
-                path: 'assets/icons/definition.svg',
-                title: 'Definition',
-                value: state.wordSignificationEntity.results.first.definition,
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: buildOptions(
-                path: 'assets/icons/example.svg',
-                title: 'Example',
-                value: state.example.examples.isEmpty ? 'No example' : state.example.examples.first,
-              ),
-            ),
-          ],
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 60, right: 60, bottom: 60),
-            child: PrimaryButton(
-              label: 'Next word',
-              isLoading: state.wasSubmitted,
-              onTap: () async {
-                await wordCubit.nextWord();
-                await historyCubit.saveHistoryWord(toHistoryWordEntity(wordCubit.state.word));
-              },
-              fullWidth: true,
-            ),
-          ),
-        ),
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 20),
-            child: PlayerWordWidget(),
-          ),
-        ),
-      ],
     );
   }
 
@@ -277,6 +271,13 @@ class _WordPageState extends State<WordPage> {
 
   HistoryWordEntity toHistoryWordEntity(WordEntity word) {
     return HistoryWordEntity(
+      id: word.id,
+      word: word.word,
+    );
+  }
+
+  FavoriteWordEntity toFavoriteWordEntity(WordEntity word) {
+    return FavoriteWordEntity(
       id: word.id,
       word: word.word,
     );

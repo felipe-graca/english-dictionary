@@ -4,30 +4,30 @@ enum AuthStatus { authenticated, unauthenticated }
 
 class HistoryState extends Equatable {
   final List<HistoryWordEntity> words;
-  final bool wasSubmitted;
+  final bool loading;
   final String errorMessage;
 
   const HistoryState({
     this.words = const <HistoryWordEntity>[],
-    this.wasSubmitted = false,
+    this.loading = false,
     this.errorMessage = '',
   });
 
   @override
   List<Object?> get props => [
         words,
-        wasSubmitted,
+        loading,
         errorMessage,
       ];
 
   HistoryState copyWith({
     final List<HistoryWordEntity>? words,
-    final bool? wasSubmitted,
+    final bool? loading,
     final String? errorMessage,
   }) {
     return HistoryState(
       words: words ?? this.words,
-      wasSubmitted: wasSubmitted ?? this.wasSubmitted,
+      loading: loading ?? this.loading,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

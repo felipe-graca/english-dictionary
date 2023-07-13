@@ -1,4 +1,4 @@
-import 'package:english_dictionary/presenter/word/cubit/word_cubit.dart';
+import 'package:english_dictionary/core/feature/word_signification/cubit/word_signification_cubit.dart';
 import 'package:english_dictionary/presenter/word/page/widget/play_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +11,7 @@ class PlayerWordWidget extends StatefulWidget {
 }
 
 class _PlayerWordWidgetState extends State<PlayerWordWidget> with SingleTickerProviderStateMixin {
-  final wordCubit = GetIt.I.get<WordCubit>();
+  final wordSignificationCubit = GetIt.I.get<WordSignificationCubit>();
 
   late AnimationController _animationController;
   bool _isPlaying = false;
@@ -41,14 +41,14 @@ class _PlayerWordWidgetState extends State<PlayerWordWidget> with SingleTickerPr
   void _togglePlayPause() {
     if (_isPlaying) {
       _animationController.reset();
-      wordCubit.pauseSpeak();
+      wordSignificationCubit.pauseSpeak();
     } else {
       if (_animationController.status == AnimationStatus.completed) {
         _animationController.reset();
-        wordCubit.stopSpeak();
+        wordSignificationCubit.stopSpeak();
       }
       _animationController.forward();
-      wordCubit.startSpeak(wordCubit.state.wordSignificationEntity.word);
+      wordSignificationCubit.startSpeak(wordSignificationCubit.state.word.word);
     }
     setState(() {
       _isPlaying = !_isPlaying;

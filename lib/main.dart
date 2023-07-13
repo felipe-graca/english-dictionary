@@ -1,6 +1,8 @@
+import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
 import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/services/initializer/service_initializer.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +17,7 @@ void main() async {
 
         return Container(
           decoration: const BoxDecoration(color: Colors.white),
-          child: const Center(
-            child: CircularProgressIndicator(
-              color: Colors.black,
-              strokeWidth: 1,
-            ),
-          ),
+          child: const SizedBox.shrink(),
         );
       },
     ),
@@ -35,8 +32,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final authCubit = GetIt.I.get<AuthCubit>();
+
   @override
   void initState() {
+    authCubit.startListenAuthChanges();
     super.initState();
   }
 

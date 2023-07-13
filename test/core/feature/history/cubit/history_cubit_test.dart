@@ -37,18 +37,18 @@ main() {
     'getHistoryWords()',
     () {
       test(
-        'should emit [HistoryState] with [wasSubmitted] = true when called',
+        'should emit [HistoryState] with [loading] = true when called',
         () async {
           when(getHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => Right([historyWord]));
 
           historyCubit.getHistoryWords();
 
-          expect(historyCubit.state, const HistoryState(wasSubmitted: true));
+          expect(historyCubit.state, const HistoryState(loading: true));
         },
       );
 
       test(
-        'should emit [HistoryState] with [wasSubmitted] = false and [words] = [List<HistoryWordEntity>] when called',
+        'should emit [HistoryState] with [loading] = false and [words] = [List<HistoryWordEntity>] when called',
         () async {
           when(getHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => Right([historyWord]));
 
@@ -57,14 +57,14 @@ main() {
           expect(
             historyCubit.state,
             const HistoryState(
-              wasSubmitted: false,
+              loading: false,
             ),
           );
         },
       );
 
       test(
-        'should emit [HistoryState] with [wasSubmitted] = false and [errorMessage] = [String] when called',
+        'should emit [HistoryState] with [loading] = false and [errorMessage] = [String] when called',
         () async {
           when(getHistoryWordsUsecase.call(noParams)).thenThrow(GetHistoryWordsFailure());
 
@@ -73,7 +73,7 @@ main() {
           expect(
             historyCubit.state,
             const HistoryState(
-              wasSubmitted: false,
+              loading: false,
               errorMessage: 'Something went wrong at get history words',
             ),
           );
@@ -86,18 +86,18 @@ main() {
     'clearHistoryWords()',
     () {
       test(
-        'should emit [HistoryState] with [wasSubmitted] = true when called',
+        'should emit [HistoryState] with [loading] = true when called',
         () async {
           when(clearHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => const Right(true));
 
           historyCubit.clearHistoryWords();
 
-          expect(historyCubit.state, const HistoryState(wasSubmitted: true));
+          expect(historyCubit.state, const HistoryState(loading: true));
         },
       );
 
       test(
-        'should emit [HistoryState] with [wasSubmitted] = false and [words] = [] when called',
+        'should emit [HistoryState] with [loading] = false and [words] = [] when called',
         () async {
           when(clearHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => const Right(true));
 
@@ -106,7 +106,7 @@ main() {
           expect(
             historyCubit.state,
             const HistoryState(
-              wasSubmitted: false,
+              loading: false,
               words: [],
             ),
           );
@@ -114,7 +114,7 @@ main() {
       );
 
       test(
-        'should emit [HistoryState] with [wasSubmitted] = false and [errorMessage] = [String] when called',
+        'should emit [HistoryState] with [loading] = false and [errorMessage] = [String] when called',
         () async {
           when(clearHistoryWordsUsecase.call(noParams)).thenThrow(ClearHistoryWordsFailure());
 
@@ -123,7 +123,7 @@ main() {
           expect(
             historyCubit.state,
             const HistoryState(
-              wasSubmitted: false,
+              loading: false,
               errorMessage: 'Something went wrong at clear history words',
             ),
           );
@@ -136,30 +136,30 @@ main() {
     'saveHistoryWord()',
     () {
       test(
-        'should emit [HistoryState] with [wasSubmitted] = true when called',
+        'should emit [HistoryState] with [loading] = true when called',
         () async {
           when(saveHistoryWordUsecase.call(any)).thenAnswer((_) async => Right(historyWord));
 
           historyCubit.saveHistoryWord(historyWord);
 
-          expect(historyCubit.state, const HistoryState(wasSubmitted: true));
+          expect(historyCubit.state, const HistoryState(loading: true));
         },
       );
 
       test(
-        'should emit [HistoryState] with [wasSubmitted] = false and [words] = [] when called',
+        'should emit [HistoryState] with [loading] = false and [words] = [] when called',
         () async {
           when(saveHistoryWordUsecase.call(any)).thenAnswer((_) async => Right(historyWord));
 
           await historyCubit.saveHistoryWord(historyWord);
 
-          expect(historyCubit.state, const HistoryState(wasSubmitted: false));
+          expect(historyCubit.state, const HistoryState(loading: false));
           expect(historyCubit.state.words, [historyWord]);
         },
       );
 
       test(
-        'should emit [HistoryState] with [wasSubmitted] = false and [errorMessage] = [String] when called',
+        'should emit [HistoryState] with [loading] = false and [errorMessage] = [String] when called',
         () async {
           when(saveHistoryWordUsecase.call(any)).thenThrow(SaveHistoryWordFailure());
 
@@ -168,7 +168,7 @@ main() {
           expect(
             historyCubit.state,
             const HistoryState(
-              wasSubmitted: false,
+              loading: false,
               errorMessage: 'Something went wrong at save history word',
             ),
           );

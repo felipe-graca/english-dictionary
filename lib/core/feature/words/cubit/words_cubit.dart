@@ -13,19 +13,18 @@ class WordsCubit extends Cubit<WordsState> {
 
   Future<void> getWords() async {
     try {
+      emit(state.copyWith(loading: true));
       final words = await _getWordsUsecase.call(noParams);
       words.fold(
         (failure) => throw failure,
         (success) => {
           emit(
-            state.copyWith(
-              words: success,
-            ),
+            state.copyWith(words: success, loading: false),
           ),
         },
       );
     } on GetWordsFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message));
+      emit(state.copyWith(errorMessage: e.message, loading: false));
     }
   }
 

@@ -56,4 +56,7 @@ class ResultsEntity extends Equatable {
       examples: examples,
     );
   }
+
+  bool get isEmpty =>
+      definition.isEmpty && partOfSpeech.isEmpty && synonyms.isEmpty && typeOf.isEmpty && hasTypes.isEmpty && derivation.isEmpty && examples.isEmpty;
 }

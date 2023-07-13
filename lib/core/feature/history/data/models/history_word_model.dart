@@ -11,14 +11,14 @@ class HistoryWordModel extends HistoryWordEntity {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'uid': id,
+      'id': id,
       'word': word,
     };
   }
 
   factory HistoryWordModel.fromMap(Map<String, dynamic> map) {
     return HistoryWordModel(
-      id: map['uid'] as String,
+      id: map['id'] as String,
       word: map['word'] as String,
     );
   }

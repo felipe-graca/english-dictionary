@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:english_dictionary/core/feature/user_details/cubit/user_details_cubit.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
+import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
+import 'package:english_dictionary/ui/global/bottom_navigator/cubit/bottom_navigator_cubit.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 part 'auth_state.dart';
 
@@ -21,7 +24,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   final userDetailsCubit = GetIt.I.get<UserDetailsCubit>();
+  final bottomNavigatorCubit = GetIt.I.get<BottomNavigatorCubit>();
 
+  final googleSignIn = GoogleSignIn();
   final firebaseAuth = FirebaseAuth.instance;
   var userDetailLoading = false;
   final isLoggedStream = StreamController<bool>.broadcast();
@@ -29,19 +34,24 @@ class AuthCubit extends Cubit<AuthState> {
 
   //login
   Future<void> login() async {
+    emit(state.copyWith(loading: true));
     final result = await loginUsecase.call(noParams);
 
     return result.fold(
-      (failure) => throw failure,
+      (failure) {
+        emit(state.copyWith(errorMessage: failure.message, loading: false));
+      },
       (success) {
         if (firebaseAuth.currentUser != null) {
           state.copyWith(
             userAuthDetails: () => firebaseAuth.currentUser,
             status: AuthStatus.authenticated,
+            loading: false,
           );
+          isLoggedStream.add(true);
+        } else {
+          emit(state.copyWith(status: AuthStatus.unauthenticated));
         }
-        emit(state.copyWith(status: AuthStatus.unauthenticated));
-        return;
       },
     );
   }
@@ -65,7 +75,12 @@ class AuthCubit extends Cubit<AuthState> {
 
     try {
       if (firebaseAuth.currentUser == null) {
-        emit(const AuthState(status: AuthStatus.unauthenticated));
+        emit(const AuthState(
+          status: AuthStatus.unauthenticated,
+          loading: false,
+          userAuthDetails: null,
+          errorMessage: '',
+        ));
 
         isLoggedStream.add(false);
         userDetailLoading = false;
@@ -85,15 +100,21 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> logout() async {
+  Future<bool> logout() async {
     try {
+      await googleSignIn.signOut();
       await firebaseAuth.signOut();
+
+      bottomNavigatorCubit.changePage(AppRoutes.dictionary);
+
+      return true;
     } catch (e, s) {
       if (kDebugMode) {
         print(e);
         print(s);
       }
     }
+    return false;
   }
 
   Future<String?> getToken() async {

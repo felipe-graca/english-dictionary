@@ -1,43 +1,48 @@
 part of 'word_signification_cubit.dart';
 
-enum AuthStatus { authenticated, unauthenticated }
+enum LoadingStatus { isLoading, isNotLoading }
 
 class WordSignificationState extends Equatable {
-  final String word;
-  final dynamic failure;
   final WordSignificationEntity wordSignification;
-  final ExampleEntity? example;
-  final WordEntity wordEntity;
+  final ExampleEntity example;
+  final WordEntity word;
+  final bool loading;
+  final String errorMessage;
+  final LoadingStatus loadingStatus;
   const WordSignificationState({
-    this.word = '',
     this.wordSignification = const WordSignificationEntity(),
-    this.failure,
-    this.example,
-    this.wordEntity = const WordEntity(),
+    this.example = const ExampleEntity(),
+    this.word = const WordEntity(),
+    this.loading = false,
+    this.errorMessage = '',
+    this.loadingStatus = LoadingStatus.isNotLoading,
   });
 
   @override
   List<Object?> get props => [
-        word,
         wordSignification,
-        failure,
         example,
-        wordEntity,
+        word,
+        loading,
+        errorMessage,
+        loadingStatus,
       ];
 
   WordSignificationState copyWith({
-    final String? word,
     final WordSignificationEntity? wordSignification,
-    final dynamic Function()? failure,
     final ExampleEntity? example,
-    final WordEntity? wordEntity,
+    final WordEntity? word,
+    final bool? loading,
+    final String? errorMessage,
+    final LoadingStatus? loadingStatus,
   }) {
     return WordSignificationState(
-      word: word ?? this.word,
       wordSignification: wordSignification ?? this.wordSignification,
-      failure: failure != null ? failure() : this.failure,
       example: example ?? this.example,
-      wordEntity: wordEntity ?? this.wordEntity,
+      word: word ?? this.word,
+      loading: loading ?? this.loading,
+      errorMessage: errorMessage ?? this.errorMessage,
+      loadingStatus: loadingStatus ?? this.loadingStatus,
     );
   }
 }

@@ -31,4 +31,6 @@ class ExampleEntity extends Equatable {
       examples: examples,
     );
   }
+
+  bool get isEmpty => word.isEmpty && examples.isEmpty;
 }
