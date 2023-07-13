@@ -1,6 +1,6 @@
-import 'package:english_dictionary/presenter/dictionary/cubit/dictionary_cubit.dart';
-import 'package:english_dictionary/presenter/dictionary/page/widgets/latest_viewed_words_widget.dart';
-import 'package:english_dictionary/presenter/dictionary/page/widgets/word_list_widget.dart';
+import 'package:english_dictionary/core/feature/words/cubit/words_cubit.dart';
+import 'package:english_dictionary/presenter/dictionary/widgets/latest_viewed_words_widget.dart';
+import 'package:english_dictionary/presenter/dictionary/widgets/word_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -13,11 +13,11 @@ class DictionaryPage extends StatefulWidget {
 }
 
 class _DictionaryPageState extends State<DictionaryPage> {
-  final dictorionaryCubit = GetIt.I.get<DictionaryCubit>();
+  final wordsCubit = GetIt.I.get<WordsCubit>();
 
   @override
   void initState() {
-    Future.wait([dictorionaryCubit.onInit()]);
+    Future.wait([wordsCubit.getWords()]);
     super.initState();
   }
 
@@ -27,8 +27,8 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocBuilder<DictionaryCubit, DictionaryState>(
-        bloc: dictorionaryCubit,
+      body: BlocBuilder<WordsCubit, WordsState>(
+        bloc: wordsCubit,
         builder: (context, state) {
           return SizedBox(
             width: size.width,

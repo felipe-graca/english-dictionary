@@ -4,30 +4,30 @@ enum AuthStatus { authenticated, unauthenticated }
 
 class FavoritesState extends Equatable {
   final List<FavoriteWordEntity> words;
-  final bool wasSubmitted;
+  final bool loading;
   final String errorMessage;
 
   const FavoritesState({
     this.words = const <FavoriteWordEntity>[],
-    this.wasSubmitted = false,
+    this.loading = false,
     this.errorMessage = '',
   });
 
   @override
   List<Object?> get props => [
         words,
-        wasSubmitted,
+        loading,
         errorMessage,
       ];
 
   FavoritesState copyWith({
     final List<FavoriteWordEntity>? words,
-    final bool? wasSubmitted,
+    final bool? loading,
     final String? errorMessage,
   }) {
     return FavoritesState(
       words: words ?? this.words,
-      wasSubmitted: wasSubmitted ?? this.wasSubmitted,
+      loading: loading ?? this.loading,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

@@ -2,7 +2,7 @@ import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
-import 'package:english_dictionary/ui/global/card/card_widget.dart';
+import 'package:english_dictionary/ui/global/custom_card/custom_card.dart';
 import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:english_dictionary/ui/global/word_tile/word_tile_widget.dart';
 import 'package:flutter/material.dart';
@@ -67,12 +67,12 @@ class _FivoritesPageState extends State<FivoritesPage> {
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                child: CardWidget(
+                child: CustomCard(
                   child: SizedBox(
                     width: size.width,
                     height: size.height,
                     child: Center(
-                      child: _buildBody(isLoading: (state.wasSubmitted && state.words.isEmpty), words: state.words),
+                      child: _buildBody(isLoading: (state.loading && state.words.isEmpty), words: state.words),
                     ),
                   ),
                 ),

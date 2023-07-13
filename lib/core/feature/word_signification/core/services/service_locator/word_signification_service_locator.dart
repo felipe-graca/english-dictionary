@@ -38,6 +38,6 @@ class WordSignificationServiceLocator implements IWordSignificationServiceLocato
     i.registerLazySingleton<IGetWordSignificationExampleUsecase>(() => GetWordSignificationExampleUsecase(i.get()));
 
     /*cubits*/
-    i.registerLazySingleton(() => WordSignificationCubit(i.get(), i.get()));
+    i.registerLazySingleton(() => WordSignificationCubit(i.get(), i.get(), i.get()));
   }
 }

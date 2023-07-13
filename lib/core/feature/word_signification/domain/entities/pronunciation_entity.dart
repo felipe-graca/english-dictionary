@@ -45,4 +45,6 @@ class PronunciationEntity extends Equatable {
       adverb: adverb,
     );
   }
+
+  bool get isEmpty => all.isEmpty && noun.isEmpty && verb.isEmpty && adjective.isEmpty && adverb.isEmpty;
 }

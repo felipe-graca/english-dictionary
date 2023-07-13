@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/exists_user/exists_user_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
@@ -6,6 +8,7 @@ import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'user_details_state.dart';
 
@@ -17,6 +20,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
   UserDetailsCubit(this.getUserDetailsUsecase, this.existsUserUsecase, this.saveUserUsecase) : super(const UserDetailsState());
 
   final firebaseAuth = FirebaseAuth.instance;
+  final imagePicker = ImagePicker();
 
   Future<bool> initializeUserDetails() async {
     final existsUser = await _existsUser();
@@ -51,7 +55,10 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         emit(state.copyWith(errorMessage: failure.message));
         return false;
       },
-      (success) => success,
+      (success) {
+        emit(state.copyWith(userDetails: userDetails));
+        return success;
+      },
     );
   }
 
@@ -66,6 +73,37 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         emit(state.copyWith(userDetails: success));
         return true;
       },
+    );
+  }
+
+  Future<void> changeImageProfile(String base64) async {
+    emit(state.copyWith(userDetails: state.userDetails.copyWith(base64Image: base64)));
+  }
+
+  //Picker image
+  Future<void> pickImage() async {
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      await changeImageProfile(await _xFileToBase64(pickedFile)).then((_) async {
+        await _updateUserDetails();
+      });
+    }
+  }
+
+  //Xfile to base64
+  Future<String> _xFileToBase64(XFile file) async {
+    final bytes = await file.readAsBytes();
+    return base64Encode(bytes);
+  }
+
+  Future<bool> _updateUserDetails() async {
+    final result = await saveUserUsecase.call(state.userDetails);
+    return result.fold(
+      (failure) {
+        emit(state.copyWith(errorMessage: failure.message));
+        return false;
+      },
+      (success) => success,
     );
   }
 }

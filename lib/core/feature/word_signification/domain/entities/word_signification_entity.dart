@@ -51,4 +51,6 @@ class WordSignificationEntity extends Equatable {
       frequency: frequency,
     );
   }
+
+  bool get isEmpty => word.isEmpty && results.isEmpty && syllables.isEmpty && pronunciation.isEmpty && frequency == 0.0;
 }

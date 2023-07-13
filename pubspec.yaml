@@ -38,6 +38,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0-pre
   intl: ^0.18.1
   flutter_tts: ^3.7.0
+  image_picker: ^1.0.1
   
   
 

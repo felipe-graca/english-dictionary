@@ -46,7 +46,7 @@ class BottomNavigatorBar extends StatelessWidget {
                       onTap: () {
                         if (state.currentPage == e.pageEnum) return;
                         cubit.changePage(e.route);
-                        Navigator.of(AppRouter.navigatorKey.currentState!.context).pushNamed(e.route);
+                        Navigator.of(AppRouter.navigatorKey.currentState!.context).pushNamedAndRemoveUntil(e.route, (route) => false);
                       },
                       isActive: state.currentPage == e.pageEnum,
                     ),
