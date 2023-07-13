@@ -5,27 +5,36 @@ import 'package:english_dictionary/core/feature/user_details/domain/entities/use
 
 class UserDetailsModel extends UserDetailsEntity {
   const UserDetailsModel({
+    required String uid,
     required String name,
     required String email,
     required String base64Image,
-    required String uid,
-  }) : super(name: name, email: email, base64Image: base64Image, uid: uid);
+    required int countWords,
+  }) : super(
+          uid: uid,
+          name: name,
+          email: email,
+          base64Image: base64Image,
+          countWords: countWords,
+        );
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'uid': uid,
       'name': name,
       'email': email,
-      'photoUrl': base64Image,
-      'uid': uid,
+      'base64Image': base64Image,
+      'countWords': countWords,
     };
   }
 
   factory UserDetailsModel.fromMap(Map<String, dynamic> map) {
     return UserDetailsModel(
+      uid: map['uid'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      base64Image: map['photoUrl'] as String,
-      uid: map['uid'] as String,
+      base64Image: map['base64Image'] as String,
+      countWords: map['countWords'] as int,
     );
   }
 

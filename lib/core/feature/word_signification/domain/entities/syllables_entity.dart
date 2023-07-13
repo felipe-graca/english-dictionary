@@ -30,4 +30,6 @@ class SyllablesEntity extends Equatable {
       list: list,
     );
   }
+
+  bool get isEmpty => count == 0 && list.isEmpty;
 }

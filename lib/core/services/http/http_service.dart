@@ -73,4 +73,10 @@ base class HttpService implements IHttpService {
     final response = await _dio.delete(path, data: data, options: options ?? await buildAuthOptions());
     return response;
   }
+
+  @override
+  Future download(String urlPath, {Options? options}) async {
+    final response = await _dio.get(urlPath, options: options ?? Options(responseType: ResponseType.bytes));
+    return response;
+  }
 }

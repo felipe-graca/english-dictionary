@@ -1,32 +1,32 @@
 part of 'user_details_cubit.dart';
 
 class UserDetailsState extends Equatable {
-  final UserDetailsEntity? userDetails;
+  final UserDetailsEntity userDetails;
   final String errorMessage;
-  final bool wasSubmitted;
+  final bool loading;
 
   const UserDetailsState({
     this.userDetails = const UserDetailsEntity(),
     this.errorMessage = '',
-    this.wasSubmitted = false,
+    this.loading = false,
   });
 
   @override
   List<Object?> get props => [
         userDetails,
         errorMessage,
-        wasSubmitted,
+        loading,
       ];
 
   UserDetailsState copyWith({
     UserDetailsEntity? userDetails,
     String? errorMessage,
-    bool? wasSubmitted,
+    bool? loading,
   }) {
     return UserDetailsState(
       userDetails: userDetails ?? this.userDetails,
       errorMessage: errorMessage ?? this.errorMessage,
-      wasSubmitted: wasSubmitted ?? this.wasSubmitted,
+      loading: loading ?? this.loading,
     );
   }
 }

@@ -73,9 +73,10 @@ class _LoginPgaeState extends State<LoginPgae> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: PrimaryButton(
                     label: 'Login with Google',
+                    isLoading: state.loading,
                     fullWidth: true,
-                    onTap: () {
-                      _authCubit.login();
+                    onTap: () async {
+                      await _authCubit.login();
                     },
                   ),
                 ),

@@ -1,9 +1,11 @@
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/presenter/base/page/base_page.dart';
 import 'package:english_dictionary/presenter/dictionary/page/dictionary_page.dart';
+import 'package:english_dictionary/presenter/error/page/error_page.dart';
 import 'package:english_dictionary/presenter/favorites/page/favorites_page.dart';
 import 'package:english_dictionary/presenter/history/page/history_page.dart';
 import 'package:english_dictionary/presenter/login/page/login_page.dart';
+import 'package:english_dictionary/presenter/profile/page/profile_page.dart';
 import 'package:english_dictionary/presenter/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,19 +38,19 @@ class AppRouter {
         page = const HistoryPage();
         break;
       case AppRoutes.profile:
-        page = Container();
+        page = const ProfilePage();
         break;
       default:
-        page = Container();
+        page = const ErrorPage();
     }
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       settings: routeSettings,
-      transitionDuration: const Duration(milliseconds: 100),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        animation.drive(CurveTween(curve: Curves.easeInOut));
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 
@@ -67,17 +69,14 @@ class AppRouter {
         page = const BasePage();
         break;
       default:
-        page = Container();
+        page = const ErrorPage();
     }
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       settings: routeSettings,
       transitionDuration: const Duration(milliseconds: 300),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(1.0, 0.0),
-          end: Offset.zero,
-        ).animate(animation),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+        opacity: animation,
         child: child,
       ),
     );

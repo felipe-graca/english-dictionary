@@ -22,7 +22,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   Future<void> getFavoritesWords() async {
     emit(const FavoritesState());
     try {
-      emit(state.copyWith(wasSubmitted: true));
+      emit(state.copyWith(loading: true));
       final words = await _getFavoritesWordsUsecase.call(noParams);
       words.fold(
         (failure) => throw failure,
@@ -30,20 +30,20 @@ class FavoritesCubit extends Cubit<FavoritesState> {
           emit(
             state.copyWith(
               words: success,
-              wasSubmitted: false,
+              loading: false,
             ),
           ),
         },
       );
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      emit(state.copyWith(errorMessage: e.toString(), loading: false));
     }
   }
 
   Future<bool> removeFavoriteWord(WordEntity wordEntity) async {
     final favoriteWordEntity = FavoriteWordEntity(id: wordEntity.id, word: wordEntity.word);
     try {
-      emit(state.copyWith(wasSubmitted: true));
+      emit(state.copyWith(loading: true));
       final result = await _removeFavoriteWordUsecase.call(favoriteWordEntity);
 
       result.fold(
@@ -51,15 +51,15 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         (success) => {
           emit(
             state.copyWith(
-              words: state.words.where((element) => element != wordEntity).toList(),
-              wasSubmitted: false,
+              words: state.words.where((element) => element.id != favoriteWordEntity.id).toList(),
+              loading: false,
             ),
           ),
         },
       );
       return true;
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      emit(state.copyWith(errorMessage: e.toString(), loading: false));
       return false;
     }
   }
@@ -68,7 +68,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final favoriteWordEntity = FavoriteWordEntity(id: wordEntity.id, word: wordEntity.word);
 
     try {
-      emit(state.copyWith(wasSubmitted: true));
+      emit(state.copyWith(loading: true));
       final result = await _saveFavoriteWordUsecase.call(favoriteWordEntity);
       result.fold(
         (failure) => throw failure,
@@ -78,7 +78,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
               emit(
                 state.copyWith(
                   words: [...state.words, favoriteWordEntity],
-                  wasSubmitted: false,
+                  loading: false,
                 ),
               ),
             }
@@ -86,12 +86,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       );
       return true;
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      emit(state.copyWith(errorMessage: e.toString(), loading: false));
       return false;
     }
   }
 
-  bool isFavorite(WordEntity word) => state.words.contains(word);
+  bool isFavorite(FavoriteWordEntity word) => state.words.contains(word);
 
-  bool get isLoading => state.wasSubmitted;
+  bool get isLoading => state.loading;
 }

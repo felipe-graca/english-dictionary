@@ -3,48 +3,54 @@ import 'package:english_dictionary/core/feature/user_details/data/models/user_de
 import 'package:equatable/equatable.dart';
 
 class UserDetailsEntity extends Equatable {
+  final String uid;
   final String name;
   final String email;
   final String base64Image;
-  final String uid;
+  final int countWords;
 
   const UserDetailsEntity({
+    this.uid = '',
     this.name = '',
     this.email = '',
     this.base64Image = '',
-    this.uid = '',
+    this.countWords = 0,
   });
 
   @override
   List<Object?> get props => [
+        uid,
         name,
         email,
         base64Image,
-        uid,
+        countWords,
       ];
 
   //copyWith
   UserDetailsEntity copyWith({
+    final String? uid,
     final String? name,
     final String? email,
     final String? base64Image,
-    final String? uid,
     final List<HistoryWordModel>? history,
+    final int? countWords,
   }) {
     return UserDetailsEntity(
+      uid: uid ?? this.uid,
       name: name ?? this.name,
       email: email ?? this.email,
       base64Image: base64Image ?? this.base64Image,
-      uid: uid ?? this.uid,
+      countWords: countWords ?? this.countWords,
     );
   }
 
   UserDetailsModel toModel() {
     return UserDetailsModel(
+      uid: uid,
       name: name,
       email: email,
       base64Image: base64Image,
-      uid: uid,
+      countWords: countWords,
     );
   }
 

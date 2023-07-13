@@ -99,7 +99,8 @@ This application is a simple english dictionary application built using flutter 
 - [X] Total of viewed words
 - [x] Profile
 - [X] Lastest viewed words
-- [X] Search words
+- [...] Search words
+- [...] Aks for gpt to get list of personalized words. Ex: "Tecnology words", "Business words", "Sport words
 
 ## Testing
 - [X] Unit Testing

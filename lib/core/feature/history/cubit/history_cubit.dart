@@ -20,9 +20,7 @@ class HistoryCubit extends Cubit<HistoryState> {
   ) : super(const HistoryState());
 
   Future<void> getHistoryWords() async {
-    emit(const HistoryState());
     try {
-      emit(state.copyWith(wasSubmitted: true));
       final words = await _getFavoritesWordsUsecase.call(noParams);
       words.fold(
         (failure) => throw failure,
@@ -30,34 +28,34 @@ class HistoryCubit extends Cubit<HistoryState> {
           emit(
             state.copyWith(
               words: success,
-              wasSubmitted: false,
+              loading: false,
             ),
           ),
         },
       );
     } on GetHistoryWordsFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message, wasSubmitted: false));
+      emit(state.copyWith(errorMessage: e.message, loading: false));
     }
   }
 
   Future<bool> clearHistoryWords() async {
     try {
-      emit(state.copyWith(wasSubmitted: true));
+      emit(state.copyWith(loading: true));
       final result = await _clearHistoryWordsUsecase.call(noParams);
       result.fold(
         (failure) => throw failure,
-        (success) => {emit(state.copyWith(words: [], wasSubmitted: false))},
+        (success) => {emit(state.copyWith(words: [], loading: false))},
       );
       return true;
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      emit(state.copyWith(errorMessage: e.toString(), loading: false));
       return false;
     }
   }
 
   Future<bool> saveHistoryWord(HistoryWordEntity wordEntity) async {
     try {
-      emit(state.copyWith(wasSubmitted: true));
+      emit(state.copyWith(loading: true));
       final result = await _saveFavoriteWordUsecase.call(wordEntity);
       result.fold(
         (failure) => throw failure,
@@ -66,17 +64,21 @@ class HistoryCubit extends Cubit<HistoryState> {
             if (state.words.contains(wordEntity)) {
               emit(state.copyWith(words: state.words.where((element) => element != wordEntity).toList()));
             }
-            emit(state.copyWith(words: [success, ...state.words], wasSubmitted: false));
+            emit(state.copyWith(words: [success, ...state.words], loading: false));
           }
         },
       );
       return true;
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), wasSubmitted: false));
+      emit(state.copyWith(errorMessage: e.toString(), loading: false));
       return false;
     }
   }
 
+  void dispose() {
+    emit(state.copyWith(words: [], loading: false, errorMessage: ''));
+  }
+
   bool isHistoryWord(HistoryWordEntity word) => state.words.contains(word);
-  bool get isLoading => state.wasSubmitted;
+  bool get isLoading => state.loading;
 }
