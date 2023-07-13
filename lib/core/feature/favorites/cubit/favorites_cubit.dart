@@ -51,7 +51,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         (success) => {
           emit(
             state.copyWith(
-              words: state.words.where((element) => element != wordEntity).toList(),
+              words: state.words.where((element) => element.id != favoriteWordEntity.id).toList(),
               loading: false,
             ),
           ),

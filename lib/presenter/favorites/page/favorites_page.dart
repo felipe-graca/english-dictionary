@@ -32,19 +32,6 @@ class _FivoritesPageState extends State<FivoritesPage> {
     return BlocBuilder<FavoritesCubit, FavoritesState>(
       bloc: favoritesCubit,
       builder: (context, state) {
-        if (state.words.isEmpty) {
-          return Center(
-            child: Text(
-              'Sorry nothing to see here 🙁',
-              style: GoogleFonts.lato(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.98,
-                color: const Color.fromRGBO(102, 106, 214, 0.59),
-              ),
-            ),
-          );
-        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -87,6 +74,19 @@ class _FivoritesPageState extends State<FivoritesPage> {
   Widget _buildBody({required bool isLoading, required List<FavoriteWordEntity> words}) {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
+    }
+    if (words.isEmpty) {
+      return Center(
+        child: Text(
+          'Sorry nothing to see here 🙁',
+          style: GoogleFonts.lato(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.98,
+            color: const Color.fromRGBO(102, 106, 214, 0.59),
+          ),
+        ),
+      );
     }
     return ListView.separated(
       itemCount: words.length,

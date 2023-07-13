@@ -143,8 +143,8 @@ class FirebaseService implements IFirebaseService {
         throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
       }
 
-      final snapShot = await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).get();
-      if (snapShot.exists) await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).delete();
+      final snapShot = await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).get();
+      if (snapShot.exists) await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).delete();
 
       await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).set({
         ...map,

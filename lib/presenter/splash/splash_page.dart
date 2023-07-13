@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
+import 'package:english_dictionary/ui/shared/custom_lottie_build.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/routes/app_routes.dart';
@@ -43,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SizedBox(
         width: double.infinity,
         child: Column(
@@ -51,19 +51,21 @@ class _SplashPageState extends State<SplashPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            SvgPicture.asset('assets/icons/dictionary.svg', height: 200, width: 200),
-            const SizedBox(height: 20),
-            const Text(
+            Text(
               'English Dictionary',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(
-              color: Colors.black,
-              strokeWidth: 1,
+            SizedBox(height: 200),
+            Hero(
+              tag: 'loading',
+              child: SizedBox(
+                width: 200,
+                height: 200,
+                child: CustomLottieBuilder(),
+              ),
             ),
           ],
         ),

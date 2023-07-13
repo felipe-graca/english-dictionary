@@ -6,6 +6,7 @@ abstract interface class IHttpService {
   Future post(String path, {dynamic data, Options? options});
   Future put(String path, {dynamic data, Options? options});
   Future delete(String url, {dynamic data, Options? options});
+  Future download(String urlPath, {Options? options});
   HttpResponseStatus handerResponseStatus(int? statusCode);
 
   Future<Options> buildAuthOptions();

@@ -67,7 +67,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     child: Center(
                       child: state.loading
                           ? const CircularProgressIndicator()
-                          : state.words.isEmpty && state.errorMessage != ''
+                          : state.words.isEmpty
                               ? Center(
                                   child: Text(
                                     'Sorry nothing to see here 🙁',

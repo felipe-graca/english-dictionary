@@ -14,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class WordPage extends StatefulWidget {
   final WordEntity word;
@@ -48,102 +49,104 @@ class _WordPageState extends State<WordPage> {
       body: BlocBuilder<WordSignificationCubit, WordSignificationState>(
         bloc: wordSignificationCubit,
         builder: (context, state) {
-          return AnimatedOpacity(
-            opacity: state.example.isEmpty ? 0.0 : 1,
-            duration: const Duration(milliseconds: 200),
-            child: SizedBox(
-              width: size.width,
-              height: size.height - 50,
-              child: state.loading
-                  ? const Center(
-                      child: SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                        ),
+          return SizedBox(
+            width: size.width,
+            height: size.height - 50,
+            child: state.loading
+                ? const Center(
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1,
                       ),
-                    )
-                  : Stack(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 30),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const SizedBox(
-                                    width: 50,
-                                  ),
-                                  Flexible(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          state.wordSignification.word.isEmpty
-                                              ? 'No data'
-                                              : state.wordSignification.word.substring(0, 1).toUpperCase() +
-                                                  state.wordSignification.word.substring(1, state.wordSignification.word.length),
-                                          style: GoogleFonts.lato(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.98,
-                                            color: const Color(0xFF515151),
-                                          ),
+                    ),
+                  )
+                : Stack(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 50,
+                                ),
+                                Flexible(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        state.wordSignification.word.isEmpty
+                                            ? 'No data'
+                                            : state.wordSignification.word.substring(0, 1).toUpperCase() +
+                                                state.wordSignification.word.substring(1, state.wordSignification.word.length),
+                                        style: GoogleFonts.lato(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.98,
+                                          color: const Color(0xFF515151),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  BlocBuilder<FavoritesCubit, FavoritesState>(
-                                    bloc: favoritesCubit,
-                                    builder: (context, state) {
-                                      return FavoriteButtonWidget(
-                                        onTap: () async {
-                                          if (wordSignificationCubit.isFavorite(toFavoriteWordEntity(wordSignificationCubit.state.word))) {
-                                            final result = await favoritesCubit.removeFavoriteWord(wordSignificationCubit.state.word);
-                                            if (result) {
-                                              if (!mounted) return;
-                                              CustomSnackBar.show(
-                                                text: '${wordSignificationCubit.state.word.word}, was removed from favorites!',
-                                                status: CustomSnackbarStatus.success,
-                                                context: context,
-                                              );
-                                              return;
-                                            }
-                                            if (!mounted) return;
-                                            CustomSnackBar.show(text: state.errorMessage, status: CustomSnackbarStatus.error, context: context);
-                                            return;
-                                          }
-                                          final result = await favoritesCubit.saveFavoriteWord(wordSignificationCubit.state.word);
+                                ),
+                                BlocBuilder<FavoritesCubit, FavoritesState>(
+                                  bloc: favoritesCubit,
+                                  builder: (context, state) {
+                                    return FavoriteButtonWidget(
+                                      onTap: () async {
+                                        if (state.words.contains(toFavoriteWordEntity(wordSignificationCubit.state.word))) {
+                                          final result = await favoritesCubit.removeFavoriteWord(wordSignificationCubit.state.word);
                                           if (result) {
                                             if (!mounted) return;
                                             CustomSnackBar.show(
-                                              text: '${wordSignificationCubit.state.word.word}, was added to favorites ',
+                                              text: '${wordSignificationCubit.state.word.word}, was removed from favorites!',
                                               status: CustomSnackbarStatus.success,
                                               context: context,
                                             );
                                             return;
                                           }
                                           if (!mounted) return;
+                                          CustomSnackBar.show(text: state.errorMessage, status: CustomSnackbarStatus.error, context: context);
+                                          return;
+                                        }
+                                        final result = await favoritesCubit.saveFavoriteWord(wordSignificationCubit.state.word);
+                                        if (result) {
+                                          if (!mounted) return;
                                           CustomSnackBar.show(
-                                            text: state.errorMessage,
-                                            status: CustomSnackbarStatus.error,
+                                            text: '${wordSignificationCubit.state.word.word}, was added to favorites ',
+                                            status: CustomSnackbarStatus.success,
                                             context: context,
                                           );
-                                        },
-                                        isFavorite: wordSignificationCubit.isFavorite(toFavoriteWordEntity(wordSignificationCubit.state.word)),
-                                        isLoading: state.loading,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+                                          return;
+                                        }
+                                        if (!mounted) return;
+                                        CustomSnackBar.show(
+                                          text: state.errorMessage,
+                                          status: CustomSnackbarStatus.error,
+                                          context: context,
+                                        );
+                                      },
+                                      isFavorite: state.words.contains(toFavoriteWordEntity(wordSignificationCubit.state.word)),
+                                      isLoading: state.loading,
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 30),
+                          ),
+                          const SizedBox(height: 30),
+                          if (state.loadingStatus == LoadingStatus.isLoading) ...[
+                            Center(
+                              child: Lottie.asset('assets/jsons/loading_animation.json', width: 300, height: 300),
+                            )
+                          ] else ...[
                             Padding(
                               padding: const EdgeInsets.only(left: 15),
                               child: buildOptions(
@@ -179,33 +182,33 @@ class _WordPageState extends State<WordPage> {
                                 value: state.example.examples.isEmpty ? 'No example' : state.example.examples.first,
                               ),
                             ),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 60, right: 60, bottom: 60),
-                            child: PrimaryButton(
-                              label: 'Next word',
-                              isLoading: state.loading,
-                              onTap: () async {
-                                await wordSignificationCubit.nextWord();
-                                await historyCubit.saveHistoryWord(toHistoryWordEntity(wordSignificationCubit.state.word));
-                              },
-                              fullWidth: true,
-                            ),
+                          ]
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 60, right: 60, bottom: 60),
+                          child: PrimaryButton(
+                            label: 'Next word',
+                            isLoading: state.loading,
+                            onTap: () async {
+                              await wordSignificationCubit.nextWord();
+                              await historyCubit.saveHistoryWord(toHistoryWordEntity(wordSignificationCubit.state.word));
+                            },
+                            fullWidth: true,
                           ),
                         ),
-                        const Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 20),
-                            child: PlayerWordWidget(),
-                          ),
+                      ),
+                      const Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: PlayerWordWidget(),
                         ),
-                      ],
-                    ),
-            ),
+                      ),
+                    ],
+                  ),
           );
         },
       ),

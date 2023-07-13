@@ -1,6 +1,6 @@
 part of 'word_signification_cubit.dart';
 
-enum AuthStatus { authenticated, unauthenticated }
+enum LoadingStatus { isLoading, isNotLoading }
 
 class WordSignificationState extends Equatable {
   final WordSignificationEntity wordSignification;
@@ -8,12 +8,14 @@ class WordSignificationState extends Equatable {
   final WordEntity word;
   final bool loading;
   final String errorMessage;
+  final LoadingStatus loadingStatus;
   const WordSignificationState({
     this.wordSignification = const WordSignificationEntity(),
     this.example = const ExampleEntity(),
     this.word = const WordEntity(),
     this.loading = false,
     this.errorMessage = '',
+    this.loadingStatus = LoadingStatus.isNotLoading,
   });
 
   @override
@@ -23,6 +25,7 @@ class WordSignificationState extends Equatable {
         word,
         loading,
         errorMessage,
+        loadingStatus,
       ];
 
   WordSignificationState copyWith({
@@ -31,6 +34,7 @@ class WordSignificationState extends Equatable {
     final WordEntity? word,
     final bool? loading,
     final String? errorMessage,
+    final LoadingStatus? loadingStatus,
   }) {
     return WordSignificationState(
       wordSignification: wordSignification ?? this.wordSignification,
@@ -38,6 +42,7 @@ class WordSignificationState extends Equatable {
       word: word ?? this.word,
       loading: loading ?? this.loading,
       errorMessage: errorMessage ?? this.errorMessage,
+      loadingStatus: loadingStatus ?? this.loadingStatus,
     );
   }
 }

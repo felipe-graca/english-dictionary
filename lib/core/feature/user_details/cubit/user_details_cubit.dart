@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:english_dictionary/core/feature/user_details/core/services/image_converter/image_converter_service_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/exists_user/exists_user_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/get_user_details/get_user_details_usecase_interface.dart';
@@ -16,8 +17,14 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
   final IGetUserDetailsUsecase getUserDetailsUsecase;
   final IExistsUserUsecase existsUserUsecase;
   final ISaveUserUsecase saveUserUsecase;
+  final IImageConverterService imageConverterService;
 
-  UserDetailsCubit(this.getUserDetailsUsecase, this.existsUserUsecase, this.saveUserUsecase) : super(const UserDetailsState());
+  UserDetailsCubit(
+    this.getUserDetailsUsecase,
+    this.existsUserUsecase,
+    this.saveUserUsecase,
+    this.imageConverterService,
+  ) : super(const UserDetailsState());
 
   final firebaseAuth = FirebaseAuth.instance;
   final imagePicker = ImagePicker();
@@ -46,7 +53,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     final userDetails = UserDetailsEntity(
       name: firebaseAuth.currentUser?.displayName ?? '',
       email: firebaseAuth.currentUser?.email ?? '',
-      base64Image: firebaseAuth.currentUser?.photoURL ?? '',
+      base64Image: await imageConverterService.convertImageToBase64(firebaseAuth.currentUser?.photoURL ?? ''),
       uid: firebaseAuth.currentUser?.uid ?? '',
     );
     final result = await saveUserUsecase.call(userDetails);
