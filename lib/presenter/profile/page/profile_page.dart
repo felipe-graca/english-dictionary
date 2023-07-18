@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
 import 'package:english_dictionary/core/feature/user_details/cubit/user_details_cubit.dart';
 import 'package:english_dictionary/core/routes/app_router.dart';
@@ -10,6 +7,7 @@ import 'package:english_dictionary/presenter/profile/widgets/custom_logout_modal
 import 'package:english_dictionary/ui/global/buttons/buttons.dart';
 import 'package:english_dictionary/ui/global/custom_card/custom_card.dart';
 import 'package:english_dictionary/ui/global/custom_loading_animation/custom_loading_animation.dart';
+import 'package:english_dictionary/ui/global/custom_snackbar/custom_snackbar.dart';
 import 'package:english_dictionary/ui/global/custom_text_field/custom_text_field.dart';
 import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.white,
       width: double.infinity,
       height: double.infinity,
       child: Padding(
@@ -117,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocBuilder<UserDetailsCubit, UserDetailsState>(
       bloc: userDetailsCubit,
       builder: (context, state) {
-        if (state.loading) {
+        if (state.loading && state.userDetails.isEmpty) {
           return const Center(
             child: CustomLoadingAnimation(),
           );
@@ -130,11 +129,28 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 const SizedBox(height: 20),
                 CustomImageProfile(
-                  imageFile: _imageFileFromBase64(state.userDetails.base64Image),
-                  onTap: () {
-                    userDetailsCubit.pickImage();
-                  },
-                ),
+                    isLoading: state.loading,
+                    imagePath: state.userDetails.imagePath,
+                    onTap: () async {
+                      final result = await userDetailsCubit.changeImageProfile();
+                      if (result == true) {
+                        if (!mounted) return;
+                        CustomSnackBar.show(
+                          context: context,
+                          text: 'Uploading image profile... Please wait a moment',
+                          status: CustomSnackbarStatus.success,
+                        );
+                        return;
+                      }
+
+                      if (!mounted) return;
+                      CustomSnackBar.show(
+                        context: context,
+                        text: state.errorMessage,
+                        status: CustomSnackbarStatus.error,
+                      );
+                      return;
+                    }),
                 const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30),
@@ -237,17 +253,5 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       },
     );
-  }
-
-  //Base64 to file
-  File? _imageFileFromBase64(String? base64) {
-    if (base64 == null || base64.isEmpty) {
-      return null;
-    }
-    final bytes = base64Decode(base64);
-    final tempDir = Directory.systemTemp;
-    final file = File('${tempDir.path}/image.jpg');
-    file.writeAsBytesSync(bytes);
-    return file;
   }
 }

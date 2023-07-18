@@ -16,7 +16,7 @@ void main() {
   final userDataModel = UserDetailsModel(
     name: faker.person.name(),
     email: faker.internet.email(),
-    base64Image: faker.image.toString(),
+    imagePath: faker.image.toString(),
     uid: faker.guid.guid(),
   );
 

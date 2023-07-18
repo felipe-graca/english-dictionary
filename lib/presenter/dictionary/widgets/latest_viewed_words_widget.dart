@@ -1,9 +1,11 @@
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/ui/global/custom_card/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LastestViewedWordsWidget extends StatefulWidget {
-  const LastestViewedWordsWidget({super.key});
+  final List<HistoryWordEntity> words;
+  const LastestViewedWordsWidget({super.key, required this.words});
 
   @override
   State<LastestViewedWordsWidget> createState() => _LastestViewedWordsWidgetState();
@@ -42,7 +44,7 @@ class _LastestViewedWordsWidgetState extends State<LastestViewedWordsWidget> {
               child: GridView.builder(
                 padding: const EdgeInsets.only(top: 5),
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 8,
+                itemCount: widget.words.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 4.5,
@@ -75,7 +77,7 @@ class _LastestViewedWordsWidgetState extends State<LastestViewedWordsWidget> {
                             width: 100,
                             height: 20,
                             child: Text(
-                              'Management',
+                              widget.words[index].word,
                               style: GoogleFonts.lato(
                                   fontSize: 15, fontWeight: FontWeight.w500, color: const Color.fromRGBO(63, 63, 63, 0.59), height: 1),
                             ),

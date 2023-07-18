@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/words/cubit/words_cubit.dart';
 import 'package:english_dictionary/presenter/dictionary/widgets/latest_viewed_words_widget.dart';
 import 'package:english_dictionary/presenter/dictionary/widgets/word_list_widget.dart';
@@ -38,9 +39,16 @@ class _DictionaryPageState extends State<DictionaryPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: LastestViewedWordsWidget(),
+                BlocBuilder<HistoryCubit, HistoryState>(
+                  bloc: GetIt.I.get<HistoryCubit>(),
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: LastestViewedWordsWidget(
+                        words: state.words.take(8).toList(),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
                 Builder(builder: (context) {

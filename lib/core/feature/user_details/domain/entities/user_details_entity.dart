@@ -6,14 +6,14 @@ class UserDetailsEntity extends Equatable {
   final String uid;
   final String name;
   final String email;
-  final String base64Image;
+  final String imagePath;
   final int countWords;
 
   const UserDetailsEntity({
     this.uid = '',
     this.name = '',
     this.email = '',
-    this.base64Image = '',
+    this.imagePath = '',
     this.countWords = 0,
   });
 
@@ -22,7 +22,7 @@ class UserDetailsEntity extends Equatable {
         uid,
         name,
         email,
-        base64Image,
+        imagePath,
         countWords,
       ];
 
@@ -31,7 +31,7 @@ class UserDetailsEntity extends Equatable {
     final String? uid,
     final String? name,
     final String? email,
-    final String? base64Image,
+    final String? imagePath,
     final List<HistoryWordModel>? history,
     final int? countWords,
   }) {
@@ -39,7 +39,7 @@ class UserDetailsEntity extends Equatable {
       uid: uid ?? this.uid,
       name: name ?? this.name,
       email: email ?? this.email,
-      base64Image: base64Image ?? this.base64Image,
+      imagePath: imagePath ?? this.imagePath,
       countWords: countWords ?? this.countWords,
     );
   }
@@ -49,11 +49,11 @@ class UserDetailsEntity extends Equatable {
       uid: uid,
       name: name,
       email: email,
-      base64Image: base64Image,
+      imagePath: imagePath,
       countWords: countWords,
     );
   }
 
   //isEmty
-  bool get isEmpty => name.isEmpty && email.isEmpty && base64Image.isEmpty && uid.isEmpty;
+  bool get isEmpty => name.isEmpty && email.isEmpty && imagePath.isEmpty && uid.isEmpty;
 }

@@ -10,9 +10,12 @@ import 'package:english_dictionary/core/services/firebase/firebase_service.dart'
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 import 'package:english_dictionary/core/services/http/http_service.dart';
 import 'package:english_dictionary/core/services/http/http_service_interface.dart';
+import 'package:english_dictionary/core/services/storage/storage_service.dart';
+import 'package:english_dictionary/core/services/storage/storage_service_interface.dart';
 import 'package:english_dictionary/core/services/tts/tts_service.dart';
 import 'package:english_dictionary/core/services/tts/tts_service_interface.dart';
 import 'package:english_dictionary/ui/global/bottom_navigator/cubit/bottom_navigator_cubit.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +27,7 @@ class ServiceLocator {
     /*singletons packages*/
     i.registerSingleton(await SharedPreferences.getInstance());
     i.registerSingleton(FirebaseFirestore.instance);
+    i.registerSingleton(FirebaseStorage.instance);
 
     //dio
     i.registerSingleton(Dio());
@@ -33,6 +37,7 @@ class ServiceLocator {
 
     /*services*/
     i.registerLazySingleton<IFirebaseService>(() => FirebaseService());
+    i.registerLazySingleton<IStorageService>(() => StorageService());
     i.registerLazySingleton<IHttpService>(() => HttpService(i.get()));
     i.registerLazySingleton<ITtsService>(() => TtsService());
   }

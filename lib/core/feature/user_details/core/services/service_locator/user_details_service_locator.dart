@@ -1,5 +1,3 @@
-import 'package:english_dictionary/core/feature/user_details/core/services/image_converter/image_converter_service.dart';
-import 'package:english_dictionary/core/feature/user_details/core/services/image_converter/image_converter_service_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/core/services/service_locator/user_details_service_locator_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/cubit/user_details_cubit.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/exists_user/exists_user_datasource.dart';
@@ -30,7 +28,6 @@ class UserDetailsServiceLocator implements IUserDetailsServiceLocator {
     final i = GetIt.instance;
 
     //Services
-    i.registerLazySingleton<IImageConverterService>(() => ImageConverterService(i.get()));
 
     /*datasources*/
 

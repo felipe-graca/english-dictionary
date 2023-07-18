@@ -79,6 +79,5 @@ class HistoryCubit extends Cubit<HistoryState> {
     emit(state.copyWith(words: [], loading: false, errorMessage: ''));
   }
 
-  bool isHistoryWord(HistoryWordEntity word) => state.words.contains(word);
   bool get isLoading => state.loading;
 }

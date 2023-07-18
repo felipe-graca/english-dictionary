@@ -61,7 +61,7 @@ class WordListWidget extends StatelessWidget {
                                   historyCubit.saveHistoryWord(toHistoryWordEntity(word));
                                   await openModalBottomSheet(context: context, child: WordPage(word: word));
                                 },
-                                isActived: historyCubit.isHistoryWord(toHistoryWordEntity(word)),
+                                isActived: state.words.any((element) => element.id == word.id),
                               );
                             },
                             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),
