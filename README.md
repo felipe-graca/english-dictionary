@@ -2,13 +2,12 @@
 
 This is a simple english word dictionary app. With GPT-3, the app will suggest you a list of words that you may like. You can also search for words and save them to your favorite list. The app also has a history list that you can see the words you have viewed. You can also see the total number of words you have viewed. The app also has a profile page that you can see your lastest viewed words and your favorite words.
 
-<!-- Create Warning text for excessive architecture complexition for Knowledge demonstration and i know to the Repository bypass rule(80% - 20%) -->
 ## ATENTITION
 
 - This application is created using Clean Architecture and Clean Code
 - This application is created using DDD+TDD
 - This application is created using SOLID principles
-- I know the Repository bypass rule(80% - 20%) but i want to demonstrate my knowledge about Clean Architecture and Clean Code
+- I know the usecase bypass rule(80% - 20%) but i want to demonstrate my knowledge about Clean Architecture and Clean Code
 - Desconsider the complexity of the architecture, i know that this application is simple and the architecture is complex, but i want to demonstrate my knowledge about Clean Architecture and Clean Code
 
 
@@ -115,6 +114,7 @@ Figma design(UI/UX) created by me
 - [...] Gamefication (To Do)
 - [...] Search word with voice (To Do)
 - [...] Search word with camera (To Do)
+- [...] Sujest words when based on example [Only genareted list words] (To Do)
 
 
 

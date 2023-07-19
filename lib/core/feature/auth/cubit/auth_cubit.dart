@@ -33,28 +33,22 @@ class AuthCubit extends Cubit<AuthState> {
   final isLoggedStream = StreamController<bool>.broadcast();
   late final isLogged = isLoggedStream.stream;
 
-  //login
   Future<void> login() async {
     emit(state.copyWith(loading: true));
-    final result = await loginUsecase.call(noParams);
+    final (failure, result) = await loginUsecase.call(noParams);
 
-    return result.fold(
-      (failure) {
-        emit(state.copyWith(errorMessage: failure.message, loading: false));
-      },
-      (success) {
-        if (firebaseAuth.currentUser != null) {
-          state.copyWith(
-            userAuthDetails: () => firebaseAuth.currentUser,
-            status: AuthStatus.authenticated,
-            loading: false,
-          );
-          isLoggedStream.add(true);
-        } else {
-          emit(state.copyWith(status: AuthStatus.unauthenticated));
-        }
-      },
-    );
+    if (result) {
+      if (firebaseAuth.currentUser != null) {
+        state.copyWith(
+          userAuthDetails: () => firebaseAuth.currentUser,
+          status: AuthStatus.authenticated,
+          loading: false,
+        );
+        isLoggedStream.add(true);
+      }
+      return;
+    }
+    emit(state.copyWith(errorMessage: failure!.message));
   }
 
   void startListenAuthChanges() {

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/data/datasource/login/login_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/auth/domain/repositores/login/login_repository_interface.dart';
@@ -9,12 +8,12 @@ class LoginRepository implements ILoginRepository {
   LoginRepository(this._loginDatasource);
 
   @override
-  Future<Either<LoginFailure, bool>> login() async {
+  Future<(LoginFailure?, bool)> login() async {
     try {
       final result = await _loginDatasource.login();
-      return right(result);
+      return (null, result);
     } on LoginFailure catch (e) {
-      return left(e);
+      return (e, false);
     }
   }
 }

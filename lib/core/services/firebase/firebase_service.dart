@@ -25,8 +25,8 @@ class FirebaseService implements IFirebaseService {
 
       await _auth.signInWithCredential(credential);
       return true;
-    } on FirebaseAuthException catch (e) {
-      throw LoginFailure(message: (e.message ?? '').toString());
+    } on FirebaseAuthException {
+      throw LoginFailure();
     }
   }
 
