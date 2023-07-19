@@ -2,9 +2,9 @@ import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
-import 'package:english_dictionary/ui/global/custom_card/custom_card.dart';
-import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:english_dictionary/ui/global/word_tile/word_tile_widget.dart';
+import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
+import 'package:english_dictionary/ui/global/light_components/word_tile/word_tile_widget.dart';
+import 'package:english_dictionary/ui/shared/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

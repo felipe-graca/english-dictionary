@@ -4,12 +4,12 @@ import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/presenter/profile/widgets/custom_image_profile.dart';
 import 'package:english_dictionary/presenter/profile/widgets/custom_logout_modal.dart';
-import 'package:english_dictionary/ui/global/buttons/buttons.dart';
-import 'package:english_dictionary/ui/global/custom_card/custom_card.dart';
-import 'package:english_dictionary/ui/global/custom_loading_animation/custom_loading_animation.dart';
-import 'package:english_dictionary/ui/global/custom_snackbar/custom_snackbar.dart';
-import 'package:english_dictionary/ui/global/custom_text_field/custom_text_field.dart';
-import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
+import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
+import 'package:english_dictionary/ui/global/light_components/custom_loading_animation/custom_loading_animation.dart';
+import 'package:english_dictionary/ui/global/light_components/custom_text_field/custom_text_field.dart';
+import 'package:english_dictionary/ui/shared/custom_snackbar.dart';
+import 'package:english_dictionary/ui/shared/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -65,48 +65,51 @@ class _ProfilePageState extends State<ProfilePage> {
       height: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Profile',
-                    style: GoogleFonts.lato(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.98,
-                      color: const Color.fromRGBO(102, 106, 214, 0.59),
+        child: GestureDetector(
+          onTap: unFocus,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Profile',
+                      style: GoogleFonts.lato(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.98,
+                        color: const Color.fromRGBO(102, 106, 214, 0.59),
+                      ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      await openModalBottomSheet(
-                        context: context,
-                        child: CustomLogoutModal(
-                          logout: () async {
-                            final logout = await authCubit.logout();
-                            if (logout == true) {
-                              if (!mounted) return;
-                              Navigator.of(AppRouter.authNavigatorKey.currentState!.context)
-                                  .pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
-                            }
-                          },
-                        ),
-                      );
-                    },
-                    child: const Icon(Icons.logout, color: Colors.red),
-                  ),
-                ],
+                    InkWell(
+                      onTap: () async {
+                        await openModalBottomSheet(
+                          context: context,
+                          child: CustomLogoutModal(
+                            logout: () async {
+                              final logout = await authCubit.logout();
+                              if (logout == true) {
+                                if (!mounted) return;
+                                Navigator.of(AppRouter.authNavigatorKey.currentState!.context)
+                                    .pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+                              }
+                            },
+                          ),
+                        );
+                      },
+                      child: const Icon(Icons.logout, color: Colors.red),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Expanded(child: CustomCard(child: _buildBody)),
-          ],
+              const SizedBox(height: 10),
+              Expanded(child: CustomCard(child: _buildBody)),
+            ],
+          ),
         ),
       ),
     );
@@ -172,6 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       CustomTextField(
                         controller: nameController,
                         focusNode: nameFocusNode,
+                        isDisabled: true,
                       ),
                     ],
                   ),
@@ -197,6 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       CustomTextField(
                         controller: emailController,
                         focusNode: emailFocusNode,
+                        isDisabled: true,
                       ),
                     ],
                   ),

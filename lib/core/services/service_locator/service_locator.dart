@@ -14,7 +14,7 @@ import 'package:english_dictionary/core/services/storage/storage_service.dart';
 import 'package:english_dictionary/core/services/storage/storage_service_interface.dart';
 import 'package:english_dictionary/core/services/tts/tts_service.dart';
 import 'package:english_dictionary/core/services/tts/tts_service_interface.dart';
-import 'package:english_dictionary/ui/global/bottom_navigator/cubit/bottom_navigator_cubit.dart';
+import 'package:english_dictionary/ui/global/light_components/bottom_navigator/cubit/bottom_navigator_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';

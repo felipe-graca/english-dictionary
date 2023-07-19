@@ -6,8 +6,8 @@ import 'package:english_dictionary/core/feature/word_signification/cubit/word_si
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/widget/favorite_button_widget.dart';
 import 'package:english_dictionary/presenter/word/page/widget/player_word_widget.dart';
-import 'package:english_dictionary/ui/global/buttons/buttons.dart';
-import 'package:english_dictionary/ui/global/custom_snackbar/custom_snackbar.dart';
+import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
+import 'package:english_dictionary/ui/shared/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';

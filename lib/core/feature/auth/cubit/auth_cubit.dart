@@ -4,7 +4,8 @@ import 'package:english_dictionary/core/feature/user_details/cubit/user_details_
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
-import 'package:english_dictionary/ui/global/bottom_navigator/cubit/bottom_navigator_cubit.dart';
+import 'package:english_dictionary/ui/global/light_components/bottom_navigator/cubit/bottom_navigator_cubit.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
