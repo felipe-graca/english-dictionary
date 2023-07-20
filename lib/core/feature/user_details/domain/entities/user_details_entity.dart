@@ -56,4 +56,9 @@ class UserDetailsEntity extends Equatable {
 
   //isEmty
   bool get isEmpty => name.isEmpty && email.isEmpty && imagePath.isEmpty && uid.isEmpty;
+
+  //empty
+  factory UserDetailsEntity.empty() {
+    return const UserDetailsEntity();
+  }
 }

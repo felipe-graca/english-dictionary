@@ -36,19 +36,24 @@ class WordSignificationCubit extends Cubit<WordSignificationState> {
 
   Future<void> getWordSignification(WordEntity word) async {
     emit(state.copyWith(word: word));
-    final result = await _getWordSignificationUsecase.call(word.word);
-    result.fold(
-      (failure) => emit(state.copyWith(errorMessage: failure.message)),
-      (success) => emit(state.copyWith(wordSignification: success)),
-    );
+    final (failure, result) = await _getWordSignificationUsecase.call(word.word);
+
+    if (!result.isEmpty) {
+      emit(state.copyWith(wordSignification: result));
+      return;
+    }
+
+    emit(state.copyWith(errorMessage: failure!.message));
   }
 
   Future<void> getWordSignificationExample(WordEntity word) async {
-    final result = await _getWordSignificationExampleUsecase.call(word.word);
-    result.fold(
-      (failure) => emit(state.copyWith(errorMessage: failure.message)),
-      (success) => emit(state.copyWith(example: success)),
-    );
+    final (failure, example) = await _getWordSignificationExampleUsecase.call(word.word);
+
+    if (!example.isEmpty) {
+      emit(state.copyWith(example: example));
+      return;
+    }
+    emit(state.copyWith(errorMessage: failure!.message));
   }
 
   Future<void> getWordSignificationAndExample(WordEntity word, {bool ignoreLoading = false}) async {

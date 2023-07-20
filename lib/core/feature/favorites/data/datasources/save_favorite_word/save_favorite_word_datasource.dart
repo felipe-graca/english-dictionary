@@ -10,10 +10,9 @@ class SaveFavoriteWordDatasource implements ISaveFavoriteWordDatasource {
   SaveFavoriteWordDatasource(this._firebaseService);
 
   @override
-  Future<FavoriteWordModel> saveFavoriteWord(FavoriteWordModel model) async {
+  Future<bool> saveFavoriteWord(FavoriteWordModel model) async {
     try {
-      final result = await _firebaseService.saveFavoriteWord(model.toMap());
-      return FavoriteWordModel.fromMap(result);
+      return await _firebaseService.saveFavoriteWord(model.toMap());
     } on FirebaseFailure {
       throw SaveFavoriteWordFailure();
     }

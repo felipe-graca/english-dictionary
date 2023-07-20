@@ -44,14 +44,9 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
   }
 
   Future<bool> _existsUser() async {
-    final result = await existsUserUsecase.call(noParams);
-    return result.fold(
-      (failure) {
-        emit(state.copyWith(errorMessage: failure.message));
-        return false;
-      },
-      (success) => success,
-    );
+    final (failure, result) = await existsUserUsecase.call(noParams);
+    emit(state.copyWith(errorMessage: failure!.message));
+    return result;
   }
 
   Future<bool> _createUserDetails() async {
@@ -61,31 +56,26 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
       imagePath: firebaseAuth.currentUser?.photoURL ?? '',
       uid: firebaseAuth.currentUser?.uid ?? '',
     );
-    final result = await saveUserUsecase.call(userDetails);
-    return result.fold(
-      (failure) {
-        emit(state.copyWith(errorMessage: failure.message));
-        return false;
-      },
-      (success) {
-        emit(state.copyWith(userDetails: userDetails));
-        return success;
-      },
-    );
+    final (failure, result) = await saveUserUsecase.call(userDetails);
+
+    if (result) {
+      emit(state.copyWith(userDetails: userDetails));
+      return result;
+    }
+    emit(state.copyWith(errorMessage: failure!.message));
+    return false;
   }
 
   Future<bool> _getUserDetails() async {
-    final result = await getUserDetailsUsecase.call(noParams);
-    return result.fold(
-      (failure) {
-        emit(state.copyWith(errorMessage: failure.message));
-        return false;
-      },
-      (success) {
-        emit(state.copyWith(userDetails: success));
-        return true;
-      },
-    );
+    final (failure, result) = await getUserDetailsUsecase.call(noParams);
+
+    if (!result.isEmpty) {
+      emit(state.copyWith(userDetails: result));
+      return true;
+    }
+
+    emit(state.copyWith(errorMessage: failure!.message));
+    return false;
   }
 
   Future<bool> changeImageProfile() async {
@@ -130,14 +120,10 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
   }
 
   Future<bool> _updateUserDetails() async {
-    final result = await saveUserUsecase.call(state.userDetails);
-    return result.fold(
-      (failure) {
-        emit(state.copyWith(errorMessage: failure.message));
-        return false;
-      },
-      (success) => success,
-    );
+    final (failure, result) = await saveUserUsecase.call(state.userDetails);
+    emit(state.copyWith(errorMessage: failure!.message));
+
+    return result;
   }
 
   Future<void> addWordToCountOfNewWords(WordEntity word) async {
@@ -148,10 +134,12 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
       }
     }
     final userDetails = state.userDetails.copyWith(countWords: state.userDetails.countWords + 1);
-    final result = await saveUserUsecase.call(userDetails);
-    result.fold(
-      (failure) => emit(state.copyWith(errorMessage: failure.message)),
-      (success) => emit(state.copyWith(userDetails: userDetails)),
-    );
+    final (failure, result) = await saveUserUsecase.call(userDetails);
+
+    if (result) {
+      emit(state.copyWith(userDetails: userDetails));
+      return;
+    }
+    emit(state.copyWith(errorMessage: failure!.message));
   }
 }

@@ -85,7 +85,7 @@ class FirebaseService implements IFirebaseService {
   }
 
   @override
-  Future<Map<String, dynamic>> saveFavoriteWord(Map<String, dynamic> map) async {
+  Future<bool> saveFavoriteWord(Map<String, dynamic> map) async {
     try {
       final user = _auth.currentUser;
       if (user == null) {
@@ -94,7 +94,7 @@ class FirebaseService implements IFirebaseService {
 
       await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).set(map);
 
-      return map;
+      return true;
     } on FirebaseFailure {
       throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
     }
@@ -136,7 +136,7 @@ class FirebaseService implements IFirebaseService {
 
   //history
   @override
-  Future<Map<String, dynamic>> saveHistoryWord(Map<String, dynamic> map) async {
+  Future<bool> saveHistoryWord(Map<String, dynamic> map) async {
     try {
       final user = _auth.currentUser;
       if (user == null) {
@@ -151,7 +151,7 @@ class FirebaseService implements IFirebaseService {
         'date': DateTime.now().millisecondsSinceEpoch,
       });
 
-      return map;
+      return true;
     } on FirebaseFailure {
       throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
     }

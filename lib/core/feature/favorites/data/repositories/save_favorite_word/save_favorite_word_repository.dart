@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/datasources/save_favorite_word/save_favorite_word_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
@@ -9,12 +8,11 @@ class SaveFavoriteWordRepository implements ISaveFavoriteWordRepository {
 
   SaveFavoriteWordRepository(this._datasource);
   @override
-  Future<Either<SaveFavoriteWordFailure, FavoriteWordEntity>> saveFavoriteWord(FavoriteWordEntity entity) async {
+  Future<(SaveFavoriteWordFailure?, bool)> saveFavoriteWord(FavoriteWordEntity entity) async {
     try {
-      final result = await _datasource.saveFavoriteWord(entity.toModel());
-      return Right(result.toEntity());
+      return (null, await _datasource.saveFavoriteWord(entity.toModel()));
     } on SaveFavoriteWordFailure catch (e) {
-      return Left(e);
+      return (e, false);
     }
   }
 }

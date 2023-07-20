@@ -11,10 +11,9 @@ class SaveHistoryWordDatasource implements ISaveHistoryWordDatasource {
   SaveHistoryWordDatasource(this._firebaseService);
 
   @override
-  Future<HistoryWordModel> saveHistoryWord(HistoryWordModel model) async {
+  Future<bool> saveHistoryWord(HistoryWordModel model) async {
     try {
-      final result = await _firebaseService.saveHistoryWord(model.toMap());
-      return HistoryWordModel.fromMap(result);
+      return await _firebaseService.saveHistoryWord(model.toMap());
     } on FirebaseFailure {
       throw SaveHistoryWordFailure();
     }

@@ -1,4 +1,3 @@
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
@@ -12,20 +11,15 @@ class WordsCubit extends Cubit<WordsState> {
   WordsCubit(this._getWordsUsecase) : super(const WordsState());
 
   Future<void> getWords() async {
-    try {
-      emit(state.copyWith(loading: true));
-      final words = await _getWordsUsecase.call(noParams);
-      words.fold(
-        (failure) => throw failure,
-        (success) => {
-          emit(
-            state.copyWith(words: success, loading: false),
-          ),
-        },
-      );
-    } on GetWordsFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message, loading: false));
+    emit(state.copyWith(loading: true));
+    final (failure, words) = await _getWordsUsecase.call(noParams);
+
+    if (words.isNotEmpty) {
+      emit(state.copyWith(words: words, loading: false));
+      return;
     }
+
+    emit(state.copyWith(errorMessage: failure!.message, loading: false));
   }
 
   Future<WordEntity> nextWord(WordEntity actualWordEntity) async {

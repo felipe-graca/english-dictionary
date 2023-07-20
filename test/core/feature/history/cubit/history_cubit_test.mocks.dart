@@ -6,20 +6,13 @@
 import 'dart:async' as _i6;
 
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart'
-    as _i7;
-import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart'
-    as _i8;
-import 'package:english_dictionary/core/feature/history/domain/repositories/clear_history_words/clear_history_word_repository_interface.dart'
-    as _i4;
-import 'package:english_dictionary/core/feature/history/domain/repositories/get_history_words/get_history_words_repository_interface.dart'
-    as _i2;
-import 'package:english_dictionary/core/feature/history/domain/usecases/clear_history_word/clear_history_word_usecase.dart'
-    as _i10;
-import 'package:english_dictionary/core/feature/history/domain/usecases/get_history_words/get_history_words_usecase.dart'
-    as _i5;
-import 'package:english_dictionary/core/feature/history/domain/usecases/save_history_word/save_history_word_usecase.dart'
-    as _i11;
+import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart' as _i7;
+import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart' as _i8;
+import 'package:english_dictionary/core/feature/history/domain/repositories/clear_history_words/clear_history_word_repository_interface.dart' as _i4;
+import 'package:english_dictionary/core/feature/history/domain/repositories/get_history_words/get_history_words_repository_interface.dart' as _i2;
+import 'package:english_dictionary/core/feature/history/domain/usecases/clear_history_word/clear_history_word_usecase.dart' as _i10;
+import 'package:english_dictionary/core/feature/history/domain/usecases/get_history_words/get_history_words_usecase.dart' as _i5;
+import 'package:english_dictionary/core/feature/history/domain/usecases/save_history_word/save_history_word_usecase.dart' as _i11;
 import 'package:english_dictionary/core/usecase/usecase.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -34,8 +27,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeIGetHistoryWordsRepository_0 extends _i1.SmartFake
-    implements _i2.IGetHistoryWordsRepository {
+class _FakeIGetHistoryWordsRepository_0 extends _i1.SmartFake implements _i2.IGetHistoryWordsRepository {
   _FakeIGetHistoryWordsRepository_0(
     Object parent,
     Invocation parentInvocation,
@@ -55,8 +47,7 @@ class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
         );
 }
 
-class _FakeIClearHistoryWordRepository_2 extends _i1.SmartFake
-    implements _i4.IClearHistoryWordRepository {
+class _FakeIClearHistoryWordRepository_2 extends _i1.SmartFake implements _i4.IClearHistoryWordRepository {
   _FakeIClearHistoryWordRepository_2(
     Object parent,
     Invocation parentInvocation,
@@ -69,14 +60,13 @@ class _FakeIClearHistoryWordRepository_2 extends _i1.SmartFake
 /// A class which mocks [GetHistoryWordsUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetHistoryWordsUsecase extends _i1.Mock
-    implements _i5.GetHistoryWordsUsecase {
+class MockGetHistoryWordsUsecase extends _i1.Mock implements _i5.GetHistoryWordsUsecase {
   MockGetHistoryWordsUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.IGetHistoryWordsRepository get repository => (super.noSuchMethod(
+  _i2.IGetHistoryWordsRepository get _repository => (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeIGetHistoryWordsRepository_0(
           this,
@@ -84,39 +74,32 @@ class MockGetHistoryWordsUsecase extends _i1.Mock
         ),
       ) as _i2.IGetHistoryWordsRepository);
   @override
-  _i6.Future<
-      _i3.Either<_i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>> call(
-          _i9.NoParams? noParams) =>
-      (super.noSuchMethod(
+  _i6.Future<_i3.Either<_i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>> call(_i9.NoParams? noParams) => (super.noSuchMethod(
         Invocation.method(
           #call,
           [noParams],
         ),
-        returnValue: _i6.Future<
-            _i3.Either<_i7.GetHistoryWordsFailure,
-                List<_i8.HistoryWordEntity>>>.value(_FakeEither_1<
-            _i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>(
+        returnValue: _i6.Future<_i3.Either<_i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>>.value(
+            _FakeEither_1<_i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>(
           this,
           Invocation.method(
             #call,
             [noParams],
           ),
         )),
-      ) as _i6.Future<
-          _i3.Either<_i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>>);
+      ) as _i6.Future<_i3.Either<_i7.GetHistoryWordsFailure, List<_i8.HistoryWordEntity>>>);
 }
 
 /// A class which mocks [ClearHistoryWordsUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockClearHistoryWordsUsecase extends _i1.Mock
-    implements _i10.ClearHistoryWordsUsecase {
+class MockClearHistoryWordsUsecase extends _i1.Mock implements _i10.ClearHistoryWordsUsecase {
   MockClearHistoryWordsUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.IClearHistoryWordRepository get repository => (super.noSuchMethod(
+  _i4.IClearHistoryWordRepository get _repository => (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeIClearHistoryWordRepository_2(
           this,
@@ -124,16 +107,12 @@ class MockClearHistoryWordsUsecase extends _i1.Mock
         ),
       ) as _i4.IClearHistoryWordRepository);
   @override
-  _i6.Future<_i3.Either<_i7.ClearHistoryWordsFailure, bool>> call(
-          _i9.NoParams? noParams) =>
-      (super.noSuchMethod(
+  _i6.Future<_i3.Either<_i7.ClearHistoryWordsFailure, bool>> call(_i9.NoParams? noParams) => (super.noSuchMethod(
         Invocation.method(
           #call,
           [noParams],
         ),
-        returnValue:
-            _i6.Future<_i3.Either<_i7.ClearHistoryWordsFailure, bool>>.value(
-                _FakeEither_1<_i7.ClearHistoryWordsFailure, bool>(
+        returnValue: _i6.Future<_i3.Either<_i7.ClearHistoryWordsFailure, bool>>.value(_FakeEither_1<_i7.ClearHistoryWordsFailure, bool>(
           this,
           Invocation.method(
             #call,
@@ -146,24 +125,18 @@ class MockClearHistoryWordsUsecase extends _i1.Mock
 /// A class which mocks [SaveHistoryWordUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveHistoryWordUsecase extends _i1.Mock
-    implements _i11.SaveHistoryWordUsecase {
+class MockSaveHistoryWordUsecase extends _i1.Mock implements _i11.SaveHistoryWordUsecase {
   MockSaveHistoryWordUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<
-      _i3.Either<_i7.SaveHistoryWordFailure, _i8.HistoryWordEntity>> call(
-          _i8.HistoryWordEntity? entity) =>
-      (super.noSuchMethod(
+  _i6.Future<_i3.Either<_i7.SaveHistoryWordFailure, _i8.HistoryWordEntity>> call(_i8.HistoryWordEntity? entity) => (super.noSuchMethod(
         Invocation.method(
           #call,
           [entity],
         ),
-        returnValue: _i6.Future<
-                _i3.Either<_i7.SaveHistoryWordFailure,
-                    _i8.HistoryWordEntity>>.value(
+        returnValue: _i6.Future<_i3.Either<_i7.SaveHistoryWordFailure, _i8.HistoryWordEntity>>.value(
             _FakeEither_1<_i7.SaveHistoryWordFailure, _i8.HistoryWordEntity>(
           this,
           Invocation.method(
@@ -171,6 +144,5 @@ class MockSaveHistoryWordUsecase extends _i1.Mock
             [entity],
           ),
         )),
-      ) as _i6.Future<
-          _i3.Either<_i7.SaveHistoryWordFailure, _i8.HistoryWordEntity>>);
+      ) as _i6.Future<_i3.Either<_i7.SaveHistoryWordFailure, _i8.HistoryWordEntity>>);
 }

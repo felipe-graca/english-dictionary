@@ -5,14 +5,14 @@ import 'package:english_dictionary/core/feature/words/data/models/word_model.dar
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 
 class GetWordsDatasource implements IGetWordsDatasource {
-  final IFirebaseService firebaseService;
+  final IFirebaseService _firebaseService;
 
-  GetWordsDatasource(this.firebaseService);
+  GetWordsDatasource(this._firebaseService);
 
   @override
   Future<List<WordModel>> getWords() async {
     try {
-      final result = await firebaseService.getWords();
+      final result = await _firebaseService.getWords();
       return result.map((e) => WordModel.fromMap(e)).toList();
     } on FirebaseFailure catch (e) {
       throw GetWordsFailure(message: e.plugin);

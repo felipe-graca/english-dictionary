@@ -1,4 +1,3 @@
-import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/get_history_words/get_history_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/clear_history_word/clear_history_word_usecase_interface.dart';
@@ -20,59 +19,41 @@ class HistoryCubit extends Cubit<HistoryState> {
   ) : super(const HistoryState());
 
   Future<void> getHistoryWords() async {
-    try {
-      final words = await _getFavoritesWordsUsecase.call(noParams);
-      words.fold(
-        (failure) => throw failure,
-        (success) => {
-          emit(
-            state.copyWith(
-              words: success,
-              loading: false,
-            ),
-          ),
-        },
-      );
-    } on GetHistoryWordsFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message, loading: false));
+    emit(state.copyWith(loading: true));
+
+    final (failure, words) = await _getFavoritesWordsUsecase.call(noParams);
+    if (words.isNotEmpty) {
+      emit(state.copyWith(words: words, loading: false));
+      return;
     }
+    emit(state.copyWith(errorMessage: failure!.message, loading: false));
   }
 
   Future<bool> clearHistoryWords() async {
-    try {
-      emit(state.copyWith(loading: true));
-      final result = await _clearHistoryWordsUsecase.call(noParams);
-      result.fold(
-        (failure) => throw failure,
-        (success) => {emit(state.copyWith(words: [], loading: false))},
-      );
+    emit(state.copyWith(loading: true));
+    final (failure, result) = await _clearHistoryWordsUsecase.call(noParams);
+
+    if (result) {
+      emit(state.copyWith(words: [], loading: false));
       return true;
-    } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), loading: false));
-      return false;
     }
+    emit(state.copyWith(errorMessage: failure!.message, loading: false));
+    return false;
   }
 
   Future<bool> saveHistoryWord(HistoryWordEntity wordEntity) async {
-    try {
-      emit(state.copyWith(loading: true));
-      final result = await _saveFavoriteWordUsecase.call(wordEntity);
-      result.fold(
-        (failure) => throw failure,
-        (success) {
-          {
-            if (state.words.contains(wordEntity)) {
-              emit(state.copyWith(words: state.words.where((element) => element != wordEntity).toList()));
-            }
-            emit(state.copyWith(words: [success, ...state.words], loading: false));
-          }
-        },
-      );
+    emit(state.copyWith(loading: true));
+    final (failure, result) = await _saveFavoriteWordUsecase.call(wordEntity);
+
+    if (result) {
+      if (state.words.contains(wordEntity)) {
+        emit(state.copyWith(words: state.words.where((element) => element != wordEntity).toList()));
+      }
+      emit(state.copyWith(words: [wordEntity, ...state.words], loading: false));
       return true;
-    } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString(), loading: false));
-      return false;
     }
+    emit(state.copyWith(errorMessage: failure!.message, loading: false));
+    return false;
   }
 
   void dispose() {

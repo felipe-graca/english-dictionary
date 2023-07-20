@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/datasources/get_history_words/get_history_words_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
@@ -10,11 +9,11 @@ class GetHistoryWordsRepository implements IGetHistoryWordsRepository {
   GetHistoryWordsRepository(this._datasource);
 
   @override
-  Future<Either<GetHistoryWordsFailure, List<HistoryWordEntity>>> getHistoryWords() async {
+  Future<(GetHistoryWordsFailure?, List<HistoryWordEntity>)> getHistoryWords() async {
     try {
-      return Right(await _datasource.getHistoryWords());
+      return (null, await _datasource.getHistoryWords());
     } on GetHistoryWordsFailure catch (e) {
-      return Left(e);
+      return (e, <HistoryWordEntity>[]);
     }
   }
 }

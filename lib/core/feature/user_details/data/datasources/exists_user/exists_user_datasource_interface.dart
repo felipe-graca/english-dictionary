@@ -11,8 +11,9 @@ class ExistsUserDatasource implements IExistsUserDatasource {
   Future<bool> existsUser() async {
     try {
       return await _firebaseService.existsUser();
-    } on ExistsUserFailuire catch (e) {
-      throw ExistsUserFailuire(message: e.toString());
+      //TODO: Refector tjis line to get FirebaseException and throw ExistsUserFailuire
+    } on ExistsUserFailuire {
+      throw ExistsUserFailuire();
     }
   }
 }

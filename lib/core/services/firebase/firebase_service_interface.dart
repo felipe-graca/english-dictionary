@@ -11,12 +11,12 @@ abstract interface class IFirebaseService {
   Future<List<Map<String, dynamic>>> getWords();
 
   //favorites
-  Future<Map<String, dynamic>> saveFavoriteWord(Map<String, dynamic> map);
+  Future<bool> saveFavoriteWord(Map<String, dynamic> map);
   Future<bool> removeFavoriteWord(Map<String, dynamic> map);
   Future<List<Map<String, dynamic>>> getFavoritesWords();
 
   //history
-  Future<Map<String, dynamic>> saveHistoryWord(Map<String, dynamic> map);
+  Future<bool> saveHistoryWord(Map<String, dynamic> map);
   Future<bool> clearHistoryWords();
   Future<List<Map<String, dynamic>>> getHistoryWords();
 }

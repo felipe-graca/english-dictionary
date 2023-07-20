@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification/get_word_signification_trpository_interface.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart';
@@ -10,15 +9,5 @@ class GetWordSignificationUsecase implements IGetWordSignificationUsecase {
   GetWordSignificationUsecase(this._repository);
 
   @override
-  Future<Either<GetWordSignificationFailure, WordSignificationEntity>> call(String params) async {
-    try {
-      final result = await _repository.getWordSignification(params);
-      return result.fold(
-        (failure) => throw failure,
-        (success) => Right(success),
-      );
-    } on GetWordSignificationFailure catch (e) {
-      return Left(e);
-    }
-  }
+  Future<(GetWordSignificationFailure?, WordSignificationEntity)> call(String params) async => await _repository.getWordSignification(params);
 }

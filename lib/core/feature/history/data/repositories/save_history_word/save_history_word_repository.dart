@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/datasources/save_history_word/save_history_word_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
@@ -9,11 +8,11 @@ class SaveHistoryWordRepository implements ISaveHistoryWordRepository {
 
   SaveHistoryWordRepository(this._datasource);
   @override
-  Future<Either<SaveHistoryWordFailure, HistoryWordEntity>> saveHistoryWord(HistoryWordEntity entity) async {
+  Future<(SaveHistoryWordFailure?, bool)> saveHistoryWord(HistoryWordEntity entity) async {
     try {
-      return Right(await _datasource.saveHistoryWord(entity.toModel()));
+      return (null, await _datasource.saveHistoryWord(entity.toModel()));
     } on SaveHistoryWordFailure catch (e) {
-      return Left(e);
+      return (e, false);
     }
   }
 }
