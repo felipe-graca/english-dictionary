@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/repositories/get_history_words/get_history_words_repository.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
@@ -23,22 +22,30 @@ main() {
       test(
         'should return [Right(List<HistoryWordEntity>)] when [GetHistoryWordsRepository.getHistoryWords()] return [List<HistoryWordEntity>]',
         () async {
-          when(getHistoryWordsRepository.getHistoryWords()).thenAnswer((_) async => const Right([]));
+          when(getHistoryWordsRepository.getHistoryWords()).thenAnswer((_) async => (null, <HistoryWordEntity>[]));
 
-          final result = await getHistoryWordsUsecase.call(noParams);
+          final (failure, result) = await getHistoryWordsUsecase.call(noParams);
 
-          expect(result, const Right([]));
+          expect(result, <HistoryWordEntity>[]);
+          expect(failure, null);
+
+          verify(getHistoryWordsRepository.getHistoryWords()).called(1);
+          verifyNoMoreInteractions(getHistoryWordsRepository);
         },
       );
 
       test(
         'should return [Left(GetHistoryWordsFailure())] when [GetHistoryWordsRepository.getHistoryWords()] throw [GetHistoryWordsFailure()]',
         () async {
-          when(getHistoryWordsRepository.getHistoryWords()).thenThrow(GetHistoryWordsFailure());
+          when(getHistoryWordsRepository.getHistoryWords()).thenAnswer((_) async => (GetHistoryWordsFailure(), <HistoryWordEntity>[]));
 
-          final result = await getHistoryWordsUsecase.call(noParams);
+          final (failure, result) = await getHistoryWordsUsecase.call(noParams);
 
-          expect(result, isA<Left<GetHistoryWordsFailure, List<HistoryWordEntity>>>());
+          expect(result, <HistoryWordEntity>[]);
+          expect(failure, isA<GetHistoryWordsFailure>());
+
+          verify(getHistoryWordsRepository.getHistoryWords()).called(1);
+          verifyNoMoreInteractions(getHistoryWordsRepository);
         },
       );
     },

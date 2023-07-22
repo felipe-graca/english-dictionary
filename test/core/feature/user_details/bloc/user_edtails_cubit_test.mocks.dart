@@ -17,6 +17,8 @@ import 'package:english_dictionary/core/feature/user_details/domain/usecases/get
     as _i3;
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/save_user/save_user_usecase.dart'
     as _i9;
+import 'package:english_dictionary/core/services/storage/storage_service.dart'
+    as _i10;
 import 'package:english_dictionary/core/usecase/usecase.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -112,4 +114,31 @@ class MockSaveUserUsecase extends _i1.Mock implements _i9.SaveUserUsecase {
         returnValue:
             _i4.Future<(_i5.SaveUserFailure?, bool)>.value((null, false)),
       ) as _i4.Future<(_i5.SaveUserFailure?, bool)>);
+}
+
+/// A class which mocks [StorageService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStorageService extends _i1.Mock implements _i10.StorageService {
+  MockStorageService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<String> saveImage(
+    String? path, {
+    required String? userName,
+    required String? imagePath,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveImage,
+          [path],
+          {
+            #userName: userName,
+            #imagePath: imagePath,
+          },
+        ),
+        returnValue: _i4.Future<String>.value(''),
+      ) as _i4.Future<String>);
 }

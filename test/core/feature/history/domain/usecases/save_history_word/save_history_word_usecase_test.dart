@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/repositories/save_history_word/save_history_word_repository.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
@@ -26,22 +25,30 @@ main() {
       test(
         'should return [Right(HistoryWordEntity)] when [SaveHistoryWordRepository.saveHistoryWord()] return [HistoryWordEntity]',
         () async {
-          when(saveHistoryWordRepository.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => Right(historyWord));
+          when(saveHistoryWordRepository.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => (null, true));
 
-          final result = await saveHistoryWordUsecase.call(historyWord);
+          final (failure, result) = await saveHistoryWordUsecase.call(historyWord);
 
-          expect(result, Right(historyWord));
+          expect(result, true);
+          expect(failure, null);
+
+          verify(saveHistoryWordRepository.saveHistoryWord(historyWord)).called(1);
+          verifyNoMoreInteractions(saveHistoryWordRepository);
         },
       );
 
       test(
         'should return [Left(SaveHistoryWordFailure())] when [SaveHistoryWordRepository.saveHistoryWord()] throw [SaveHistoryWordFailure()]',
         () async {
-          when(saveHistoryWordRepository.saveHistoryWord(historyWord.toModel())).thenThrow(SaveHistoryWordFailure());
+          when(saveHistoryWordRepository.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => (SaveHistoryWordFailure(), false));
 
-          final result = await saveHistoryWordUsecase.call(historyWord);
+          final (failure, result) = await saveHistoryWordUsecase.call(historyWord);
 
-          expect(result, isA<Left<SaveHistoryWordFailure, HistoryWordEntity>>());
+          expect(result, false);
+          expect(failure, isA<SaveHistoryWordFailure>());
+
+          verify(saveHistoryWordRepository.saveHistoryWord(historyWord)).called(1);
+          verifyNoMoreInteractions(saveHistoryWordRepository);
         },
       );
     },

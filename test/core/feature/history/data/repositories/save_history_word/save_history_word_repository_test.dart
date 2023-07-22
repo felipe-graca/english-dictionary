@@ -26,7 +26,7 @@ main() {
       test(
         'should return [Right(HistoryWordEntity)] when [SaveHistoryWordDatasource.saveHistoryWord()] return [HistoryWordEntity]',
         () async {
-          when(saveHistoryWordDatasource.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => historyWord.toModel());
+          when(saveHistoryWordDatasource.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => true);
 
           final result = await saveHistoryWordRepository.saveHistoryWord(historyWord);
 
