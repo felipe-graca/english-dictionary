@@ -1,4 +1,4 @@
-import 'package:english_dictionary/core/errors/failure.dart';
+import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/datasources/get_favorites_words/get_favorites_words_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart';

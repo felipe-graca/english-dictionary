@@ -1,15 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomImageProfile extends StatefulWidget {
   final Function() onTap;
-  final File? imageFile;
+  final String imagePath;
+  final bool isLoading;
   const CustomImageProfile({
     super.key,
     required this.onTap,
-    this.imageFile,
+    this.imagePath = '',
+    this.isLoading = false,
   });
 
   @override
@@ -17,7 +17,7 @@ class CustomImageProfile extends StatefulWidget {
 }
 
 class _CustomImageProfileState extends State<CustomImageProfile> {
-  bool get _hasImage => widget.imageFile != null;
+  bool get _hasImage => widget.imagePath != '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,29 +40,49 @@ class _CustomImageProfileState extends State<CustomImageProfile> {
               ),
             ),
           ),
-          _hasImage
-              ? Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.5),
-                      width: 2,
+          if (widget.isLoading)
+            const Center(
+              child: CircularProgressIndicator(strokeWidth: 0.5, color: Colors.black),
+            )
+          else ...[
+            _hasImage
+                ? Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.5),
+                        width: 2,
+                      ),
                     ),
-                  ),
-                  width: 120,
-                  height: 120,
-                  child: ClipOval(
-                    child: Image.file(
-                      widget.imageFile!,
-                      fit: BoxFit.cover,
+                    width: 120,
+                    height: 120,
+                    child: ClipOval(
+                      child: Image.network(
+                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 0.5,
+                              color: Colors.black,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                        widget.imagePath,
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                  )
+                : Icon(
+                    Icons.camera_alt,
+                    color: Colors.white.withOpacity(0.7),
+                    size: 50,
                   ),
-                )
-              : Icon(
-                  Icons.camera_alt,
-                  color: Colors.white.withOpacity(0.7),
-                  size: 50,
-                ),
+          ]
         ],
       ),
     );

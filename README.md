@@ -1,10 +1,21 @@
 # English dictionary
 
-<!-- Create a complete descript -->
-This application is a simple english dictionary application built using flutter framework. This application is built using BLoC pattern, Clean Architecture, TDD, and SOLID principle.
+This is a simple english word dictionary app. With GPT-3, the app will suggest you a list of words that you may like. You can also search for words and save them to your favorite list. The app also has a history list that you can see the words you have viewed. You can also see the total number of words you have viewed. The app also has a profile page that you can see your lastest viewed words and your favorite words.
+
+## ATENTITION
+
+- This application is created using Clean Architecture and Clean Code
+- This application is created using DDD+TDD
+- This application is created using SOLID principles
+- I know the usecase bypass rule(80% - 20%) but i want to demonstrate my knowledge about Clean Architecture and Clean Code
+- Desconsider the complexity of the architecture, i know that this application is simple and the architecture is complex, but i want to demonstrate my knowledge about Clean Architecture and Clean Code
+
+
+
+
 
 ## Screenshots
-- Figma design(UI/UX) created by me
+Figma design(UI/UX) created by me
 
 ![Alt Text](images/figma.png)
 
@@ -52,38 +63,32 @@ This application is a simple english dictionary application built using flutter 
         - core
             - errors
             - features
-                - cubit
-                - data
-                    - datasources
-                    - models
-                    - repositories
-                - domain
-                    - entities
-                    - repositories
-                    - usecases
+                - feature
+                    - cubit
+                    - data
+                        - datasources
+                        - models
+                        - repositories
+                    - domain
+                        - entities
+                        - repositories
+                        - usecases
             - routes
             - usecase
-            - utils
             - services
+            - utils
+            - shared ### in the future this folder was deleted
+        - presenters
+            - presenter
+                - page
+                - widgets
+        - ui ### in the future this folder was transfered to Design System
+            - components
+                - light_components
+                - dark_components
             - shared
-        - presenter
-            - features
-                - cubit
-                - data
-                    - datasources
-                    - models
-                    - repositories
-                - domain
-                    - entities
-                    - repositories
-                    - usecases
-                - pages
-                    - widgets
-        - ui
-            - global
-                - custom_components
-                    - widgets
-                    - cubit
+                - Automatic select components based on theme
+            - configurations
         - main.dart
                 
 
@@ -92,15 +97,26 @@ This application is a simple english dictionary application built using flutter 
 - [firebase](https://firebase.google.com/)
 
 ## Features
-- [x] Login with google
-- [X] List of words
-- [X] Favorite words
-- [X] History words
-- [X] Total of viewed words
-- [x] Profile
-- [X] Lastest viewed words
-- [...] Search words
-- [...] Aks for gpt to get list of personalized words. Ex: "Tecnology words", "Business words", "Sport words
+- [X] Search word
+- [X] Save word to favorite list
+- [X] Save word to history list
+- [X] Text to speech word
+- [X] Login with google
+- [X] Logout
+- [X] View favorite words
+- [X] View history words
+- [X] View profile
+- [X] View total number of new words viewed
+- [X] Edit image profile
+- [...] Search Word (In progress)
+- [...] Related Suggest words with GPT-3 (In progress)
+- [...] Dark mode (To Do)
+- [...] Gamefication (To Do)
+- [...] Search word with voice (To Do)
+- [...] Search word with camera (To Do)
+- [...] Sujest words when based on example [Only genareted list words] (To Do)
+
+
 
 ## Testing
 - [X] Unit Testing
@@ -139,6 +155,6 @@ $ flutter pub run build_runner watch --delete-conflicting-outputs
 ### 4. Run the app
 
 ```shell
-$ flutter run --dart-define=WORD_SIGNIFICATION_API_KEY=[YOUR_API_KEY] --dart-define=WORD_SIGNIFICATION_API_URL=https://wordsapiv1.p.rapidapi.com/words
+$ flutter run --dart-define=WORD_SIGNIFICATION_API_KEY=[YOUR_API_KEY] --dart-define=WORD_SIGNIFICATION_API_URL=https://wordsapiv1.p.rapidapi.com/words --dart-define=STORAGE_BUCKET=[STORAGE_BUCKET_URL] --dart-define=GPT_API_URL=https://api.openai.com/v1/engines/davinci/completions --dart-define=GPT_API_KEY=[key]
 ```
 

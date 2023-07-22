@@ -1,7 +1,7 @@
 import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/utils/utils.dart';
-import 'package:english_dictionary/ui/global/bottom_navigator/cubit/bottom_navigator_cubit.dart';
-import 'package:english_dictionary/ui/global/bottom_navigator/widget/bottom_navigator_item.dart';
+import 'package:english_dictionary/ui/global/light_components/bottom_navigator/cubit/bottom_navigator_cubit.dart';
+import 'package:english_dictionary/ui/global/light_components/bottom_navigator/widget/bottom_navigator_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

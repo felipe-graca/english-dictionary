@@ -64,7 +64,9 @@ class _SplashPageState extends State<SplashPage> {
               child: SizedBox(
                 width: 200,
                 height: 200,
-                child: CustomLottieBuilder(),
+                child: CustomLottieBuilder(
+                  path: 'assets/jsons/loading_animation.json',
+                ),
               ),
             ),
           ],

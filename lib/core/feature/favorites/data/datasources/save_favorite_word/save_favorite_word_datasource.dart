@@ -1,4 +1,4 @@
-import 'package:english_dictionary/core/errors/failure.dart';
+import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/datasources/save_favorite_word/save_favorite_word_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart';
@@ -10,10 +10,9 @@ class SaveFavoriteWordDatasource implements ISaveFavoriteWordDatasource {
   SaveFavoriteWordDatasource(this._firebaseService);
 
   @override
-  Future<FavoriteWordModel> saveFavoriteWord(FavoriteWordModel model) async {
+  Future<bool> saveFavoriteWord(FavoriteWordModel model) async {
     try {
-      final result = await _firebaseService.saveFavoriteWord(model.toMap());
-      return FavoriteWordModel.fromMap(result);
+      return await _firebaseService.saveFavoriteWord(model.toMap());
     } on FirebaseFailure {
       throw SaveFavoriteWordFailure();
     }

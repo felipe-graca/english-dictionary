@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SnackbarToDisplayModel {
-  final String text;
-  final CustomSnackbarStatus status;
-  final String page;
-
-  SnackbarToDisplayModel({
-    required this.text,
-    required this.status,
-    required this.page,
-  });
-}
-
 enum CustomSnackbarStatus { success, error, warning }
 
 class CustomSnackBar {

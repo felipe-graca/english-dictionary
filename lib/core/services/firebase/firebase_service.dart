@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:english_dictionary/core/errors/failure.dart';
-import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
+import 'package:english_dictionary/core/errors/firebase_failure.dart';
+import 'package:english_dictionary/core/errors/google_failure.dart';
 import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,187 +11,123 @@ class FirebaseService implements IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<bool> signInWithGoogle() async {
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
+  Future<bool> signInWithGoogle() async => await _googleSignIn
+      .signIn()
+      .then((value) async => value != null ? await _authOnFirebase(await value.authentication) : false)
+      .catchError((e) => throw GoogleSignInFailure.getGoogleSignInErrorMessage(e.code, e.message));
 
-      final GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
+  Future<bool> _authOnFirebase(GoogleSignInAuthentication googleSignInAuthentication) async => await _auth
+      .signInWithCredential(_buildGoogleAuthCredential(googleSignInAuthentication))
+      .then((value) => value.user != null)
+      .catchError((e) => throw e);
 
-      final credential = GoogleAuthProvider.credential(
+  @override
+  Future<List<Map<String, dynamic>>> getWords() async => await _firestore
+      .collection('words')
+      .get()
+      .then((value) => List<Map<String, dynamic>>.from(value.docs.map((e) => e.data())))
+      .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'));
+
+  @override
+  Future<bool> saveUser(Map<String, dynamic> map) async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .set(map)
+          .then((value) => true)
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<Map<String, dynamic>> getUserDetails() async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .get()
+          .then((value) => value.data()!)
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<bool> existsUser() async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .get()
+          .then((value) => value.exists)
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<bool> saveFavoriteWord(Map<String, dynamic> map) async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('favorites')
+          .doc(map['id'])
+          .set(map)
+          .then((_) => true)
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<List<Map<String, dynamic>>> getFavoritesWords() async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('favorites')
+          .get()
+          .then((value) => List<Map<String, dynamic>>.from(value.docs.map((e) => e.data())))
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<bool> removeFavoriteWord(Map<String, dynamic> map) async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('favorites')
+          .doc(map['id'])
+          .delete()
+          .then((value) => true)
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<bool> saveHistoryWord(Map<String, dynamic> map) async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('history')
+          .doc(map['id'])
+          .set({...map, 'date': DateTime.now().millisecondsSinceEpoch})
+          .then((value) => true)
+          .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<List<Map<String, dynamic>>> getHistoryWords() async => _auth.currentUser != null
+      ? await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('history')
+          .orderBy('date', descending: true)
+          .get()
+          .then((value) => List<Map<String, dynamic>>.from(value.docs.map((e) => e.data())))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  @override
+  Future<bool> clearHistoryWords() async => _auth.currentUser != null
+      ? await _firestore.collection('users').doc(_auth.currentUser!.uid).collection('history').get().then((snapshot) async {
+          for (final ds in snapshot.docs) {
+            await ds.reference.delete();
+          }
+          return true;
+        }).catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'))
+      : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
+
+  OAuthCredential _buildGoogleAuthCredential(GoogleSignInAuthentication googleSignInAuthentication) => GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-
-      await _auth.signInWithCredential(credential);
-      return true;
-    } on FirebaseAuthException catch (e) {
-      throw LoginFailure(message: (e.message ?? '').toString());
-    }
-  }
-
-  @override
-  Future<bool> saveUser(Map<String, dynamic> map) async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      await _firestore.collection('users').doc(user.uid).set(map);
-      return true;
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  @override
-  Future<Map<String, dynamic>> getUserDetails() async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      final snapshot = await _firestore.collection('users').doc(user.uid).get();
-
-      if (snapshot.data() == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      return snapshot.data()!;
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  @override
-  Future<bool> existsUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      final snapshot = await _firestore.collection('users').doc(user.uid).get();
-
-      if (snapshot.exists) return true;
-      return false;
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getWords() async {
-    try {
-      final snapshot = await _firestore.collection('words').get();
-      return List.from(snapshot.docs.map((e) => e.data()));
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  @override
-  Future<Map<String, dynamic>> saveFavoriteWord(Map<String, dynamic> map) async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) {
-        throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-      }
-
-      await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).set(map);
-
-      return map;
-    } on FirebaseFailure {
-      throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-    }
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getFavoritesWords() async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('favorites').get();
-      if (snapshot.docs.isEmpty) return [];
-
-      return snapshot.docs.map((e) => e.data()).toList();
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  @override
-  Future<bool> removeFavoriteWord(Map<String, dynamic> map) async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).get();
-
-      if (snapshot.exists) {
-        await _firestore.collection('users').doc(user.uid).collection('favorites').doc(map['id']).delete();
-        return true;
-      }
-
-      return false;
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  //history
-  @override
-  Future<Map<String, dynamic>> saveHistoryWord(Map<String, dynamic> map) async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) {
-        throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-      }
-
-      final snapShot = await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).get();
-      if (snapShot.exists) await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).delete();
-
-      await _firestore.collection('users').doc(user.uid).collection('history').doc(map['id']).set({
-        ...map,
-        'date': DateTime.now().millisecondsSinceEpoch,
-      });
-
-      return map;
-    } on FirebaseFailure {
-      throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-    }
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getHistoryWords() async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('history').orderBy('date', descending: true).get();
-      if (snapshot.docs.isEmpty) return [];
-
-      return snapshot.docs.map((e) => e.data()).toList();
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
-
-  @override
-  Future<bool> clearHistoryWords() async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) throw FirebaseFailure(plugin: 'ERROR_ABORTED_BY_USER');
-
-      final snapshot = await _firestore.collection('users').doc(user.uid).collection('history').get();
-
-      if (snapshot.docs.isNotEmpty) {
-        await _firestore.collection('users').doc(user.uid).collection('history').get().then((snapshot) {
-          for (DocumentSnapshot ds in snapshot.docs) {
-            ds.reference.delete();
-          }
-        });
-        return true;
-      }
-
-      return false;
-    } on FirebaseFailure {
-      throw LoginFailure(message: '');
-    }
-  }
 }

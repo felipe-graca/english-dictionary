@@ -1,5 +1,6 @@
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
+import 'package:english_dictionary/core/feature/words/domain/entities/gpt_request_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -9,23 +10,22 @@ part 'words_state.dart';
 
 class WordsCubit extends Cubit<WordsState> {
   final IGetWordsUsecase _getWordsUsecase;
-  WordsCubit(this._getWordsUsecase) : super(const WordsState());
+  final IGetGptWordsUsecase _getGptWordsUsecase;
+  WordsCubit(
+    this._getWordsUsecase,
+    this._getGptWordsUsecase,
+  ) : super(const WordsState());
 
   Future<void> getWords() async {
-    try {
-      emit(state.copyWith(loading: true));
-      final words = await _getWordsUsecase.call(noParams);
-      words.fold(
-        (failure) => throw failure,
-        (success) => {
-          emit(
-            state.copyWith(words: success, loading: false),
-          ),
-        },
-      );
-    } on GetWordsFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message, loading: false));
+    emit(state.copyWith(loading: true));
+    final (failure, words) = await _getWordsUsecase.call(noParams);
+
+    if (words.isNotEmpty) {
+      emit(state.copyWith(words: words, loading: false));
+      return;
     }
+
+    emit(state.copyWith(errorMessage: failure!.message, loading: false));
   }
 
   Future<WordEntity> nextWord(WordEntity actualWordEntity) async {
@@ -35,5 +35,22 @@ class WordsCubit extends Cubit<WordsState> {
     } else {
       return state.words[0];
     }
+  }
+
+  Future<void> getAiWords(String relatedWord) async {
+    emit(state.copyWith(aiLoading: true));
+    final (failure, result) = await _getGptWordsUsecase.call(
+      GptRequestEntity(messages: [GptRequestMessageEntity(content: _builAIString(relatedWord), role: 'user')]),
+    );
+
+    if (result.isNotEmpty) {
+      emit(state.copyWith(words: result, aiLoading: false));
+      return;
+    }
+    emit(state.copyWith(errorMessage: failure!.message, aiLoading: false));
+  }
+
+  String _builAIString(String text) {
+    return "Generate existentes 30 words(Only one word) related with $text. you need return in only one line";
   }
 }

@@ -40,6 +40,8 @@ dependencies:
   flutter_tts: ^3.7.0
   image_picker: ^1.0.1
   lottie: ^2.4.0
+  firebase_storage: ^11.2.5
+  connectivity_plus: ^4.0.1
   
   
 

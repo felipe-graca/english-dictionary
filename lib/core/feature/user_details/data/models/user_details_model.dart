@@ -8,13 +8,13 @@ class UserDetailsModel extends UserDetailsEntity {
     required String uid,
     required String name,
     required String email,
-    required String base64Image,
+    required String imagePath,
     required int countWords,
   }) : super(
           uid: uid,
           name: name,
           email: email,
-          base64Image: base64Image,
+          imagePath: imagePath,
           countWords: countWords,
         );
 
@@ -23,7 +23,7 @@ class UserDetailsModel extends UserDetailsEntity {
       'uid': uid,
       'name': name,
       'email': email,
-      'base64Image': base64Image,
+      'imagePath': imagePath,
       'countWords': countWords,
     };
   }
@@ -33,7 +33,7 @@ class UserDetailsModel extends UserDetailsEntity {
       uid: map['uid'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      base64Image: map['base64Image'] as String,
+      imagePath: map['imagePath'] as String,
       countWords: map['countWords'] as int,
     );
   }
@@ -46,7 +46,7 @@ class UserDetailsModel extends UserDetailsEntity {
     return UserDetailsEntity(
       name: name,
       email: email,
-      base64Image: base64Image,
+      imagePath: imagePath,
       uid: uid,
     );
   }

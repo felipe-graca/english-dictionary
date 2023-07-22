@@ -1,4 +1,4 @@
-import 'package:english_dictionary/core/errors/failure.dart';
+import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/get_user_details/get_user_details_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart';
@@ -16,7 +16,7 @@ class GetUserDetailsDatasource implements IGetUserDetailsDatasource {
 
       return UserDetailsModel.fromMap(result);
     } on FirebaseFailure {
-      throw SaveUserFailure();
+      throw GetUserDatailsFailure();
     }
   }
 }

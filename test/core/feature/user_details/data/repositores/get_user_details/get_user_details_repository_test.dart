@@ -20,7 +20,7 @@ main() {
   final userDetails = UserDetailsEntity(
     name: faker.person.name(),
     email: faker.internet.email(),
-    base64Image: faker.internet.httpUrl(),
+    imagePath: faker.internet.httpUrl(),
     uid: faker.guid.guid(),
   );
 

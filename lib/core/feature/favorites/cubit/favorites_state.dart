@@ -1,7 +1,5 @@
 part of 'favorites_cubit.dart';
 
-enum AuthStatus { authenticated, unauthenticated }
-
 class FavoritesState extends Equatable {
   final List<FavoriteWordEntity> words;
   final bool loading;
