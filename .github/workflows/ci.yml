@@ -34,7 +34,7 @@ jobs:
           name: test-results
           path: tests-results.json
           reorter: flutter-json
-      - uses: VeryGoodOpenSource/verry_good_coverage@v1.1.1
+      - uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
         with:
           min_coverage: 80
 
