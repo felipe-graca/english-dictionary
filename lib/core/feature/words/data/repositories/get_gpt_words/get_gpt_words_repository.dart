@@ -9,12 +9,12 @@ class GetGptWordsRepository implements IGetGptWordsRepository {
   GetGptWordsRepository(this._datasource);
 
   @override
-  Future<(GptFailure?, List<String>)> getGptWords(GptRequestEntity word) async {
+  Future<(GetWordsFailure?, List<String>)> getGptWords(GptRequestEntity word) async {
     try {
       final result = await _datasource.getGptWords(word.toModel());
 
       return (null, _parseResult(result));
-    } on GptFailure catch (e) {
+    } on GetWordsFailure catch (e) {
       return (e, <String>[]);
     }
   }

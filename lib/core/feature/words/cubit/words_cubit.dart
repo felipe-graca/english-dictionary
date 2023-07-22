@@ -1,4 +1,5 @@
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase_interface.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -8,7 +9,11 @@ part 'words_state.dart';
 
 class WordsCubit extends Cubit<WordsState> {
   final IGetWordsUsecase _getWordsUsecase;
-  WordsCubit(this._getWordsUsecase) : super(const WordsState());
+  final IGetGptWordsUsecase _getGptWordsUsecase;
+  WordsCubit(
+    this._getWordsUsecase,
+    this._getGptWordsUsecase,
+  ) : super(const WordsState());
 
   Future<void> getWords() async {
     emit(state.copyWith(loading: true));
@@ -29,5 +34,9 @@ class WordsCubit extends Cubit<WordsState> {
     } else {
       return state.words[0];
     }
+  }
+
+  String _buildGptString(String text) {
+    return "Generate existentes 30 words(Only one word) related with $text. you need return in only one line";
   }
 }

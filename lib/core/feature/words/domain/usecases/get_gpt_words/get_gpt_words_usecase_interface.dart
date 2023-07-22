@@ -4,5 +4,5 @@ import 'package:english_dictionary/core/usecase/usecase.dart';
 
 abstract interface class IGetGptWordsUsecase implements UseCase<List<String>, GptRequestEntity> {
   @override
-  Future<(GptFailure?, List<String>)> call(GptRequestEntity entity);
+  Future<(GetWordsFailure?, List<String>)> call(GptRequestEntity entity);
 }

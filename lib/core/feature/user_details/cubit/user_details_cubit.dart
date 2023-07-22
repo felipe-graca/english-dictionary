@@ -45,6 +45,9 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
 
   Future<bool> _existsUser() async {
     final (failure, result) = await existsUserUsecase.call(noParams);
+    if (result) {
+      return result;
+    }
     emit(state.copyWith(errorMessage: failure!.message));
     return result;
   }

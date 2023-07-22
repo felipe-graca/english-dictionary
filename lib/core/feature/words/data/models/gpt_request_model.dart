@@ -5,7 +5,7 @@ import 'package:english_dictionary/core/feature/words/domain/entities/gpt_reques
 class GptRequestModel extends GptRequestEntity {
   const GptRequestModel({
     String prompt = '',
-    int maxTokens = 250,
+    int maxTokens = 120,
   }) : super(
           prompt: prompt,
           maxTokens: maxTokens,

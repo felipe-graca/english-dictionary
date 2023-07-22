@@ -6,7 +6,7 @@ class GptRequestEntity extends Equatable {
   final String prompt;
   final int maxTokens;
 
-  const GptRequestEntity({this.prompt = '', this.maxTokens = 250});
+  const GptRequestEntity({this.prompt = '', this.maxTokens = 120});
 
   @override
   List<Object> get props => [prompt, maxTokens];

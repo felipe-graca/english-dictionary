@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
-import 'package:english_dictionary/core/feature/words/core/services/gpt_service/gpt_service_interface.dart';
+import 'package:english_dictionary/core/errors/gpt_failure.dart';
+import 'package:english_dictionary/core/services/gpt/gpt_service_interface.dart';
 import 'package:english_dictionary/core/feature/words/data/models/gpt_request_model.dart';
 import 'package:english_dictionary/core/services/http/http_service.dart';
 

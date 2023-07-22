@@ -7,7 +7,3 @@ class WordsFailure extends Failure {
 class GetWordsFailure extends Failure {
   GetWordsFailure({String message = 'Something went wrong at Get Words'}) : super(message: message);
 }
-
-class GptFailure extends Failure {
-  GptFailure({String message = 'Something went wrong at Gpt'}) : super(message: message);
-}

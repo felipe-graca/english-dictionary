@@ -1,5 +1,6 @@
+import 'package:english_dictionary/core/errors/gpt_failure.dart';
 import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
-import 'package:english_dictionary/core/feature/words/core/services/gpt_service/gpt_service_interface.dart';
+import 'package:english_dictionary/core/services/gpt/gpt_service_interface.dart';
 import 'package:english_dictionary/core/feature/words/data/datasources/get_gpt_words/get_gpt_words_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/words/data/models/gpt_request_model.dart';
 
@@ -12,7 +13,7 @@ class GetGptWordsDatasource implements IGetGptWordsDatasource {
     try {
       return await _gptService.generateText(word);
     } on GptFailure catch (e) {
-      throw WordsFailure(message: e.message);
+      throw GetWordsFailure(message: e.message);
     }
   }
 }

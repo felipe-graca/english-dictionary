@@ -48,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
       }
       return;
     }
-    emit(state.copyWith(errorMessage: failure!.message, loading: false));
+    emit(state.copyWith(errorMessage: failure?.message, loading: false));
   }
 
   void startListenAuthChanges() {

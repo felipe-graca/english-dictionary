@@ -1,4 +1,4 @@
-import 'package:english_dictionary/core/errors/failure.dart';
+import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
 import 'package:english_dictionary/core/feature/words/data/datasources/get_words/get_words_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/words/data/models/word_model.dart';
@@ -15,7 +15,7 @@ class GetWordsDatasource implements IGetWordsDatasource {
       final result = await _firebaseService.getWords();
       return result.map((e) => WordModel.fromMap(e)).toList();
     } on FirebaseFailure catch (e) {
-      throw GetWordsFailure(message: e.plugin);
+      throw GetWordsFailure(message: e.message);
     }
   }
 }
