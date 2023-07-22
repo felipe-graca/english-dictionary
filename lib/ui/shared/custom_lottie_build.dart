@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class CustomLottieBuilder extends StatefulWidget {
-  const CustomLottieBuilder({super.key});
+  final String path;
+  const CustomLottieBuilder({super.key, required this.path});
 
   @override
   State<CustomLottieBuilder> createState() => _CustomLottieBuilderState();
@@ -26,7 +27,7 @@ class _CustomLottieBuilderState extends State<CustomLottieBuilder> with SingleTi
   @override
   Widget build(BuildContext context) {
     return Lottie.asset(
-      'assets/jsons/loading_animation.json', // Replace with your animation path
+      widget.path, // Replace with your animation path
       controller: _controller,
       onLoaded: (composition) {
         _controller.duration = composition.duration;

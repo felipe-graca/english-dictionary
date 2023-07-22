@@ -1,20 +1,18 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/exists_user/exists_user_datasource.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/repositories/exists_user/exists_user_repository_interface.dart';
 
 class ExistsUserRepository implements IExistsUserRepository {
-  final IExistsUserDatasource _existsUserDatasource;
+  final IExistsUserDatasource _datasource;
 
-  ExistsUserRepository(this._existsUserDatasource);
+  ExistsUserRepository(this._datasource);
 
   @override
-  Future<Either<ExistsUserFailuire, bool>> existsUser() async {
+  Future<(ExistsUserFailuire?, bool)> existsUser() async {
     try {
-      final result = await _existsUserDatasource.existsUser();
-      return right(result);
+      return (null, await _datasource.existsUser());
     } on ExistsUserFailuire catch (e) {
-      return left(e);
+      return (e, false);
     }
   }
 }

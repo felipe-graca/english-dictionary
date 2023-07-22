@@ -26,6 +26,7 @@ class _PlayerWordWidgetState extends State<PlayerWordWidget> with SingleTickerPr
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
+          _animationController.value = 0;
           _isPlaying = false;
         });
       }
@@ -70,13 +71,25 @@ class _PlayerWordWidgetState extends State<PlayerWordWidget> with SingleTickerPr
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
-                      return Container(
-                        height: 5,
-                        width: _animationController.value * MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      return Stack(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Container(
+                            width: _animationController.value * MediaQuery.of(context).size.width,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),

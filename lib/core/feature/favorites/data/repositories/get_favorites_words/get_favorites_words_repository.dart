@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/datasources/get_favorites_words/get_favorites_words_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
@@ -10,11 +9,11 @@ class GetFavoritesWordsRepository implements IGetFavoritesWordsRepository {
   GetFavoritesWordsRepository(this._datasource);
 
   @override
-  Future<Either<GetFavoritesWordsFailure, List<FavoriteWordEntity>>> getFavoritesWords() async {
+  Future<(GetFavoritesWordsFailure?, List<FavoriteWordEntity>)> getFavoritesWords() async {
     try {
-      return Right(await _datasource.getFavoritesWords());
+      return (null, await _datasource.getFavoritesWords());
     } on GetFavoritesWordsFailure catch (e) {
-      return Left(e);
+      return (e, <FavoriteWordEntity>[]);
     }
   }
 }

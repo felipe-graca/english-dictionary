@@ -2,9 +2,9 @@ import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
-import 'package:english_dictionary/ui/global/custom_card/custom_card.dart';
-import 'package:english_dictionary/ui/global/modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:english_dictionary/ui/global/word_tile/word_tile_widget.dart';
+import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
+import 'package:english_dictionary/ui/global/light_components/word_tile/word_tile_widget.dart';
+import 'package:english_dictionary/ui/shared/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -13,7 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 class WordListWidget extends StatelessWidget {
   final bool isLoading;
   final List<WordEntity> words;
-  const WordListWidget({super.key, required this.words, required this.isLoading});
+  final bool iaLoading;
+  const WordListWidget({super.key, required this.words, required this.isLoading, this.iaLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +28,28 @@ class WordListWidget extends StatelessWidget {
       children: [
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Text(
-            'Word List',
-            style: GoogleFonts.lato(
-              fontSize: 25,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.98,
-              color: const Color.fromRGBO(102, 106, 214, 0.59),
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: iaLoading ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+            children: [
+              Text(
+                'Word List',
+                style: GoogleFonts.lato(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.98,
+                  color: const Color.fromRGBO(102, 106, 214, 0.59),
+                ),
+              ),
+              if (iaLoading) ...[
+                const SizedBox(width: 10),
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(color: Colors.black, strokeWidth: 0.5),
+                ),
+              ]
+            ],
           ),
         ),
         const SizedBox(height: 8),
@@ -61,7 +75,7 @@ class WordListWidget extends StatelessWidget {
                                   historyCubit.saveHistoryWord(toHistoryWordEntity(word));
                                   await openModalBottomSheet(context: context, child: WordPage(word: word));
                                 },
-                                isActived: historyCubit.isHistoryWord(toHistoryWordEntity(word)),
+                                isActived: state.words.any((element) => element.id == word.id),
                               );
                             },
                             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),

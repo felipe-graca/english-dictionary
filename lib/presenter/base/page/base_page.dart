@@ -2,8 +2,8 @@ import 'package:english_dictionary/core/feature/favorites/cubit/favorites_cubit.
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/routes/app_routes.dart';
+import 'package:english_dictionary/ui/global/light_components/bottom_navigator/bottom_navigator_bar.dart';
 
-import 'package:english_dictionary/ui/global/bottom_navigator/bottom_navigator_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

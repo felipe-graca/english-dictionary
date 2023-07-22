@@ -15,3 +15,7 @@ class UpdateUserDatailsFailure extends UserDetailsFailure {
 class SaveUserFailure extends UserDetailsFailure {
   SaveUserFailure({String message = 'Something went wrong with save user data'}) : super(message: message);
 }
+
+class UpdateImageProfileFailure extends UserDetailsFailure {
+  UpdateImageProfileFailure({String message = 'Something went wrong with update image profile'}) : super(message: message);
+}

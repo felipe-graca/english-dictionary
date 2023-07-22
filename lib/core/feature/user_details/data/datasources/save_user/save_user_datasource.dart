@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/save_user/save_user_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart';
@@ -13,8 +14,8 @@ class SaveUserDatasource implements ISaveUserDatasource {
   Future<bool> saveUser(UserDetailsModel model) async {
     try {
       return await _firebaseService.saveUser(model.toMap());
-    } on SaveUserFailure catch (e) {
-      throw SaveUserFailure(message: e.message);
+    } on FirebaseFailure {
+      throw SaveUserFailure();
     }
   }
 }

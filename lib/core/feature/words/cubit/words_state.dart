@@ -6,11 +6,12 @@ class WordsState extends Equatable {
   final List<WordEntity> words;
   final String errorMessage;
   final bool loading;
-
+  final bool aiLoading;
   const WordsState({
     this.words = const <WordEntity>[],
     this.errorMessage = '',
     this.loading = false,
+    this.aiLoading = false,
   });
 
   @override
@@ -18,17 +19,20 @@ class WordsState extends Equatable {
         words,
         errorMessage,
         loading,
+        aiLoading,
       ];
 
   WordsState copyWith({
     final List<WordEntity>? words,
     final String? errorMessage,
     final bool? loading,
+    final bool? aiLoading,
   }) {
     return WordsState(
       words: words ?? this.words,
       errorMessage: errorMessage ?? this.errorMessage,
       loading: loading ?? this.loading,
+      aiLoading: aiLoading ?? this.aiLoading,
     );
   }
 }

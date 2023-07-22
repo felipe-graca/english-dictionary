@@ -6,14 +6,12 @@
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart'
-    as _i6;
+import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart' as _i6;
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource_interface.dart'
     as _i2;
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification/get_word_signification_repository.dart'
     as _i4;
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart'
-    as _i7;
+import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -27,8 +25,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeIGetWordSignificationDatasource_0 extends _i1.SmartFake
-    implements _i2.IGetWordSignificationDatasource {
+class _FakeIGetWordSignificationDatasource_0 extends _i1.SmartFake implements _i2.IGetWordSignificationDatasource {
   _FakeIGetWordSignificationDatasource_0(
     Object parent,
     Invocation parentInvocation,
@@ -51,14 +48,13 @@ class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
 /// A class which mocks [GetWordSignificationRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetWordSignificationRepository extends _i1.Mock
-    implements _i4.GetWordSignificationRepository {
+class MockGetWordSignificationRepository extends _i1.Mock implements _i4.GetWordSignificationRepository {
   MockGetWordSignificationRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.IGetWordSignificationDatasource get datasource => (super.noSuchMethod(
+  _i2.IGetWordSignificationDatasource get _datasource => (super.noSuchMethod(
         Invocation.getter(#datasource),
         returnValue: _FakeIGetWordSignificationDatasource_0(
           this,
@@ -66,25 +62,18 @@ class MockGetWordSignificationRepository extends _i1.Mock
         ),
       ) as _i2.IGetWordSignificationDatasource);
   @override
-  _i5.Future<
-      _i3.Either<_i6.GetWordSignificationFailure,
-          _i7.WordSignificationEntity>> getWordSignification(String? word) =>
-      (super.noSuchMethod(
+  _i5.Future<_i3.Either<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>> getWordSignification(String? word) => (super.noSuchMethod(
         Invocation.method(
           #getWordSignification,
           [word],
         ),
-        returnValue: _i5.Future<
-            _i3.Either<_i6.GetWordSignificationFailure,
-                _i7.WordSignificationEntity>>.value(_FakeEither_1<
-            _i6.GetWordSignificationFailure, _i7.WordSignificationEntity>(
+        returnValue: _i5.Future<_i3.Either<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>>.value(
+            _FakeEither_1<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>(
           this,
           Invocation.method(
             #getWordSignification,
             [word],
           ),
         )),
-      ) as _i5.Future<
-          _i3.Either<_i6.GetWordSignificationFailure,
-              _i7.WordSignificationEntity>>);
+      ) as _i5.Future<_i3.Either<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>>);
 }
