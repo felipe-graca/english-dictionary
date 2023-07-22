@@ -14,7 +14,7 @@ import 'remove_favorite_word_repository_test.mocks.dart';
 main() {
   final datasource = MockRemoveFavoriteWordDatasource();
 
-  final IRemoveFavoriteWordRepository usecase = RemoveFavoriteWordRepository(datasource);
+  final IRemoveFavoriteWordRepository repository = RemoveFavoriteWordRepository(datasource);
 
   final faker = Faker();
 
@@ -24,26 +24,26 @@ main() {
   );
 
   test(
-    'Should return a RemoveFavoriteWordFailure when not found words',
+    'Should return true when remove favorite word',
     () async {
-      when(datasource.removeFavoriteWord(wordEntity.toModel())).thenThrow(RemoveFavoriteWordFailure());
+      when(datasource.removeFavoriteWord(wordEntity.toModel())).thenAnswer((_) async => true);
 
-      final result = await usecase.removeFavoriteWord(wordEntity);
+      final (failure, result) = await repository.removeFavoriteWord(wordEntity);
 
-      expect(result.isLeft(), true);
-      expect(result.fold((failure) => failure, (success) => success), isA<RemoveFavoriteWordFailure>());
+      expect(result, true);
+      expect(failure, null);
     },
   );
 
   test(
     'Should return a RemoveFavoriteWordFailure when not found words',
     () async {
-      when(datasource.removeFavoriteWord(wordEntity.toModel())).thenAnswer((_) async => true);
+      when(datasource.removeFavoriteWord(wordEntity.toModel())).thenThrow(RemoveFavoriteWordFailure());
 
-      final result = await usecase.removeFavoriteWord(wordEntity);
+      final (failure, result) = await repository.removeFavoriteWord(wordEntity);
 
-      expect(result.isRight(), true);
-      expect(result.fold((failure) => failure, (success) => success), isA<bool>());
+      expect(result, false);
+      expect(failure, isA<RemoveFavoriteWordFailure>());
     },
   );
 }

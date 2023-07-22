@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
@@ -39,9 +38,9 @@ main() {
       test(
         'should emit [HistoryState] with [loading] = true when called',
         () async {
-          when(getHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => Right([historyWord]));
+          when(getHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => (null, <HistoryWordEntity>[]));
 
-          historyCubit.getHistoryWords();
+          await historyCubit.getHistoryWords();
 
           expect(historyCubit.state, const HistoryState(loading: true));
         },
@@ -50,7 +49,7 @@ main() {
       test(
         'should emit [HistoryState] with [loading] = false and [words] = [List<HistoryWordEntity>] when called',
         () async {
-          when(getHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => Right([historyWord]));
+          when(getHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => (null, <HistoryWordEntity>[historyWord]));
 
           await historyCubit.getHistoryWords();
 
@@ -88,9 +87,9 @@ main() {
       test(
         'should emit [HistoryState] with [loading] = true when called',
         () async {
-          when(clearHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => const Right(true));
+          when(clearHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => (null, true));
 
-          historyCubit.clearHistoryWords();
+          await historyCubit.clearHistoryWords();
 
           expect(historyCubit.state, const HistoryState(loading: true));
         },
@@ -99,7 +98,7 @@ main() {
       test(
         'should emit [HistoryState] with [loading] = false and [words] = [] when called',
         () async {
-          when(clearHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => const Right(true));
+          when(clearHistoryWordsUsecase.call(noParams)).thenAnswer((_) async => (null, true));
 
           await historyCubit.clearHistoryWords();
 
@@ -138,9 +137,9 @@ main() {
       test(
         'should emit [HistoryState] with [loading] = true when called',
         () async {
-          when(saveHistoryWordUsecase.call(any)).thenAnswer((_) async => Right(historyWord));
+          when(saveHistoryWordUsecase.call(any)).thenAnswer((_) async => (null, true));
 
-          historyCubit.saveHistoryWord(historyWord);
+          await historyCubit.saveHistoryWord(historyWord);
 
           expect(historyCubit.state, const HistoryState(loading: true));
         },
@@ -149,7 +148,7 @@ main() {
       test(
         'should emit [HistoryState] with [loading] = false and [words] = [] when called',
         () async {
-          when(saveHistoryWordUsecase.call(any)).thenAnswer((_) async => Right(historyWord));
+          when(saveHistoryWordUsecase.call(any)).thenAnswer((_) async => (null, true));
 
           await historyCubit.saveHistoryWord(historyWord);
 

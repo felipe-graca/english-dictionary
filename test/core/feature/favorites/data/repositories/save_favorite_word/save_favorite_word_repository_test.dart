@@ -23,19 +23,20 @@ main() {
   );
 
   test('should save favorite word', () async {
-    when(datasource.saveFavoriteWord(any)).thenAnswer((_) async => wordEntity.toModel());
+    when(datasource.saveFavoriteWord(any)).thenAnswer((_) async => true);
 
-    final result = await repository.saveFavoriteWord(wordEntity);
+    final (failure, result) = await repository.saveFavoriteWord(wordEntity);
 
-    expect(result.isRight(), true);
+    expect(result, true);
+    expect(failure, null);
   });
 
   test('should return a SaveFavoriteWordFailure when save favorite wordEntity', () async {
     when(datasource.saveFavoriteWord(wordEntity.toModel())).thenThrow(SaveFavoriteWordFailure());
 
-    final result = await repository.saveFavoriteWord(wordEntity);
+    final (failure, result) = await repository.saveFavoriteWord(wordEntity);
 
-    expect(result.isLeft(), true);
-    expect(result.fold((failure) => failure, (success) => success), isA<SaveFavoriteWordFailure>());
+    expect(result, false);
+    expect(failure, isA<SaveFavoriteWordFailure>());
   });
 }

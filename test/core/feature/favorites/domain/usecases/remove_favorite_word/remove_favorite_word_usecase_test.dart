@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/repositories/remove_favorite_word/remove_favorite_word_repository.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
@@ -25,15 +24,26 @@ void main() {
   );
 
   test('should remove favorite word', () async {
-    when(repository.removeFavoriteWord(wordEntity)).thenAnswer((_) async => const Right(true));
-    final result = await usecase(wordEntity);
-    expect(result.isRight(), true);
+    when(repository.removeFavoriteWord(wordEntity)).thenAnswer((_) async => (null, true));
+
+    final (failure, result) = await usecase.call(wordEntity);
+
+    expect(result, true);
+    expect(failure, null);
+
+    verify(repository.removeFavoriteWord(wordEntity)).called(1);
+    verifyNoMoreInteractions(repository);
   });
 
   test('should return a RemoveFavoriteWordFailure when remove favorite wordEntity', () async {
-    when(repository.removeFavoriteWord(wordEntity)).thenAnswer((_) async => Left(RemoveFavoriteWordFailure()));
-    final result = await usecase(wordEntity);
-    expect(result.isLeft(), true);
-    expect(result.fold((failure) => failure, (success) => success), isA<RemoveFavoriteWordFailure>());
+    when(repository.removeFavoriteWord(wordEntity)).thenAnswer((_) async => (RemoveFavoriteWordFailure(), false));
+
+    final (failure, result) = await usecase.call(wordEntity);
+
+    expect(result, false);
+    expect(failure, isA<RemoveFavoriteWordFailure>());
+
+    verify(repository.removeFavoriteWord(wordEntity)).called(1);
+    verifyNoMoreInteractions(repository);
   });
 }
