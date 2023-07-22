@@ -3,15 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:dartz/dartz.dart' as _i3;
-import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart' as _i6;
-import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification_exemple/get_word_signification_exemple_datasource_interface.dart'
-    as _i2;
+import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart'
+    as _i5;
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification_exemple/get_word_signification_exemple_repository.dart'
-    as _i4;
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart' as _i7;
+    as _i3;
+import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,18 +24,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeIGetWordSignificationExampleDatasource_0 extends _i1.SmartFake implements _i2.IGetWordSignificationExampleDatasource {
-  _FakeIGetWordSignificationExampleDatasource_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
-  _FakeEither_1(
+class _FakeExampleEntity_0 extends _i1.SmartFake implements _i2.ExampleEntity {
+  _FakeExampleEntity_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -48,32 +37,33 @@ class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
 /// A class which mocks [GetWordSignificationExampleRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetWordSignificationExampleRepository extends _i1.Mock implements _i4.GetWordSignificationExampleRepository {
+class MockGetWordSignificationExampleRepository extends _i1.Mock
+    implements _i3.GetWordSignificationExampleRepository {
   MockGetWordSignificationExampleRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.IGetWordSignificationExampleDatasource get _datasource => (super.noSuchMethod(
-        Invocation.getter(#datasource),
-        returnValue: _FakeIGetWordSignificationExampleDatasource_0(
-          this,
-          Invocation.getter(#datasource),
-        ),
-      ) as _i2.IGetWordSignificationExampleDatasource);
-  @override
-  _i5.Future<_i3.Either<_i6.GetWordSignificationExampleFailure, _i7.ExampleEntity>> getWordSignificationExamples(String? word) => (super.noSuchMethod(
-        Invocation.method(
-          #getWordSignificationExamples,
-          [word],
-        ),
-        returnValue: _i5.Future<_i3.Either<_i6.GetWordSignificationExampleFailure, _i7.ExampleEntity>>.value(
-            _FakeEither_1<_i6.GetWordSignificationExampleFailure, _i7.ExampleEntity>(
-          this,
-          Invocation.method(
-            #getWordSignificationExamples,
-            [word],
-          ),
-        )),
-      ) as _i5.Future<_i3.Either<_i6.GetWordSignificationExampleFailure, _i7.ExampleEntity>>);
+  _i4.Future<(_i5.GetWordSignificationExampleFailure?, _i2.ExampleEntity)>
+      getWordSignificationExamples(String? word) => (super.noSuchMethod(
+            Invocation.method(
+              #getWordSignificationExamples,
+              [word],
+            ),
+            returnValue: _i4.Future<
+                (
+                  _i5.GetWordSignificationExampleFailure?,
+                  _i2.ExampleEntity
+                )>.value((
+              null,
+              _FakeExampleEntity_0(
+                this,
+                Invocation.method(
+                  #getWordSignificationExamples,
+                  [word],
+                ),
+              )
+            )),
+          ) as _i4.Future<
+              (_i5.GetWordSignificationExampleFailure?, _i2.ExampleEntity)>);
 }

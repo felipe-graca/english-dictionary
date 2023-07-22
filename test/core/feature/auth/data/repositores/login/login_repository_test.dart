@@ -16,10 +16,10 @@ main() {
       when(datasource.login()).thenAnswer((_) async => true);
       final ILoginRepository repository = LoginRepository(datasource);
 
-      final result = await repository.login();
-      final folded = result.fold((failure) => failure, (success) => success);
+      final (failure, result) = await repository.login();
 
-      expect(folded, true);
+      expect(result, true);
+      expect(failure, null);
     });
 
     test('should return trow when not logged user', () async {
@@ -27,10 +27,10 @@ main() {
       when(datasource.login()).thenThrow(LoginFailure());
       final ILoginRepository repository = LoginRepository(datasource);
 
-      final result = await repository.login();
-      final folded = result.fold((failure) => failure, (success) => success);
+      final (failure, result) = await repository.login();
 
-      expect(folded, isA<LoginFailure>());
+      expect(failure, isA<LoginFailure>());
+      expect(result, false);
     });
   });
 }

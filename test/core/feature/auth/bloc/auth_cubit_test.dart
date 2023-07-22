@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart';
@@ -20,7 +19,7 @@ main() {
 
   group('login()', () {
     test('login() should set AuthStatus.authenticated when login is success', () async {
-      when(authCubit.loginUsecase.call(noParams)).thenAnswer((_) async => const Right(true));
+      when(authCubit.loginUsecase.call(noParams)).thenAnswer((_) async => (null, true));
 
       await authCubit.login();
 
@@ -29,7 +28,7 @@ main() {
     });
 
     test('login() should set AuthStatus.unauthenticated when login is failure', () async {
-      when(authCubit.loginUsecase.call(noParams)).thenAnswer((_) async => Left(LoginFailure()));
+      when(authCubit.loginUsecase.call(noParams)).thenAnswer((_) async => (LoginFailure(), false));
 
       await authCubit.login();
 

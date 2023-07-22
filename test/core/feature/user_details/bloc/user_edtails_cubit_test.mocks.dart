@@ -5,20 +5,19 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:dartz/dartz.dart' as _i2;
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart'
-    as _i9;
+    as _i8;
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart'
     as _i5;
 import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart'
-    as _i6;
+    as _i2;
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/exists_user/exists_user_usecase.dart'
-    as _i8;
+    as _i7;
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/get_user_details/get_user_details_usecase.dart'
     as _i3;
 import 'package:english_dictionary/core/feature/user_details/domain/usecases/save_user/save_user_usecase.dart'
-    as _i10;
-import 'package:english_dictionary/core/usecase/usecase.dart' as _i7;
+    as _i9;
+import 'package:english_dictionary/core/usecase/usecase.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -32,8 +31,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
-  _FakeEither_0(
+class _FakeUserDetailsEntity_0 extends _i1.SmartFake
+    implements _i2.UserDetailsEntity {
+  _FakeUserDetailsEntity_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -52,77 +52,64 @@ class MockGetUserDetailsUsecase extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>> call(
-          _i7.NoParams? params) =>
+  _i4.Future<(_i5.GetUserDatailsFailure?, _i2.UserDetailsEntity)> call(
+          _i6.NoParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
-        returnValue: _i4.Future<
-                _i2.Either<_i5.GetUserDatailsFailure,
-                    _i6.UserDetailsEntity>>.value(
-            _FakeEither_0<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
+        returnValue: _i4
+            .Future<(_i5.GetUserDatailsFailure?, _i2.UserDetailsEntity)>.value((
+          null,
+          _FakeUserDetailsEntity_0(
+            this,
+            Invocation.method(
+              #call,
+              [params],
+            ),
+          )
         )),
-      ) as _i4.Future<
-          _i2.Either<_i5.GetUserDatailsFailure, _i6.UserDetailsEntity>>);
+      ) as _i4.Future<(_i5.GetUserDatailsFailure?, _i2.UserDetailsEntity)>);
 }
 
 /// A class which mocks [ExistsUserUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockExistsUserUsecase extends _i1.Mock implements _i8.ExistsUserUsecase {
+class MockExistsUserUsecase extends _i1.Mock implements _i7.ExistsUserUsecase {
   MockExistsUserUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i9.ExistsUserFailuire, bool>> call(
-          _i7.NoParams? noParams) =>
+  _i4.Future<(_i8.ExistsUserFailuire?, bool)> call(_i6.NoParams? noParams) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [noParams],
         ),
-        returnValue: _i4.Future<_i2.Either<_i9.ExistsUserFailuire, bool>>.value(
-            _FakeEither_0<_i9.ExistsUserFailuire, bool>(
-          this,
-          Invocation.method(
-            #call,
-            [noParams],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i9.ExistsUserFailuire, bool>>);
+        returnValue:
+            _i4.Future<(_i8.ExistsUserFailuire?, bool)>.value((null, false)),
+      ) as _i4.Future<(_i8.ExistsUserFailuire?, bool)>);
 }
 
 /// A class which mocks [SaveUserUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveUserUsecase extends _i1.Mock implements _i10.SaveUserUsecase {
+class MockSaveUserUsecase extends _i1.Mock implements _i9.SaveUserUsecase {
   MockSaveUserUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>> call(
-          _i6.UserDetailsEntity? params) =>
+  _i4.Future<(_i5.SaveUserFailure?, bool)> call(
+          _i2.UserDetailsEntity? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>>.value(
-            _FakeEither_0<_i5.SaveUserFailure, bool>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.SaveUserFailure, bool>>);
+        returnValue:
+            _i4.Future<(_i5.SaveUserFailure?, bool)>.value((null, false)),
+      ) as _i4.Future<(_i5.SaveUserFailure?, bool)>);
 }
