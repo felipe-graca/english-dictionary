@@ -28,7 +28,7 @@ class WordSignificationModel extends WordSignificationEntity {
     return WordSignificationModel(
       word: map['word'] as String,
       results: List<ResultsModel>.from(
-        (map['results'] as List<dynamic>).map<ResultsModel>(
+        (map['results'] ?? []).map<ResultsModel>(
           (x) => ResultsModel.fromMap(x as Map<String, dynamic>),
         ),
       ),

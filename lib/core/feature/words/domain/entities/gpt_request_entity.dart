@@ -3,28 +3,56 @@ import 'package:english_dictionary/core/feature/words/data/models/gpt_request_mo
 import 'package:equatable/equatable.dart';
 
 class GptRequestEntity extends Equatable {
-  final String prompt;
-  final int maxTokens;
+  final String model;
+  final List<GptRequestMessageEntity> messages;
 
-  const GptRequestEntity({this.prompt = '', this.maxTokens = 120});
+  const GptRequestEntity({
+    this.messages = const <GptRequestMessageEntity>[],
+    this.model = 'gpt-3.5-turbo',
+  });
 
   @override
-  List<Object> get props => [prompt, maxTokens];
+  List<Object> get props => [messages];
 
   GptRequestModel toModel() {
     return GptRequestModel(
-      prompt: prompt,
-      maxTokens: maxTokens,
+      messages: List<GptRequestMessageModel>.from(messages.map((e) => e.toModel())),
     );
   }
 
   GptRequestEntity copyWith({
-    String? prompt,
+    List<GptRequestMessageEntity>? messages,
     int? maxTokens,
   }) {
     return GptRequestEntity(
-      prompt: prompt ?? this.prompt,
-      maxTokens: maxTokens ?? this.maxTokens,
+      messages: messages ?? this.messages,
+    );
+  }
+}
+
+class GptRequestMessageEntity extends Equatable {
+  final String role;
+  final String content;
+
+  const GptRequestMessageEntity({this.role = '', this.content = ''});
+
+  @override
+  List<Object> get props => [role, content];
+
+  GptRequestMessageEntity copyWith({
+    String? role,
+    String? content,
+  }) {
+    return GptRequestMessageEntity(
+      role: role ?? this.role,
+      content: content ?? this.content,
+    );
+  }
+
+  GptRequestMessageModel toModel() {
+    return GptRequestMessageModel(
+      role: role,
+      content: content,
     );
   }
 }

@@ -12,7 +12,7 @@ final class GptService extends HttpService implements IGptService {
     try {
       const url = String.fromEnvironment('GPT_API_URL');
       final response = await super.post(url, data: request.toJson(), options: await _buildAuthOptions());
-      return response.data['choices'][0]['text'];
+      return response.data['choices'][0]['message']['content'];
     } on DioException {
       throw GptFailure();
     }

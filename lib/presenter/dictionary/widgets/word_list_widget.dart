@@ -13,7 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 class WordListWidget extends StatelessWidget {
   final bool isLoading;
   final List<WordEntity> words;
-  const WordListWidget({super.key, required this.words, required this.isLoading});
+  final bool iaLoading;
+  const WordListWidget({super.key, required this.words, required this.isLoading, this.iaLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +28,28 @@ class WordListWidget extends StatelessWidget {
       children: [
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Text(
-            'Word List',
-            style: GoogleFonts.lato(
-              fontSize: 25,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.98,
-              color: const Color.fromRGBO(102, 106, 214, 0.59),
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: iaLoading ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+            children: [
+              Text(
+                'Word List',
+                style: GoogleFonts.lato(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.98,
+                  color: const Color.fromRGBO(102, 106, 214, 0.59),
+                ),
+              ),
+              if (iaLoading) ...[
+                const SizedBox(width: 10),
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(color: Colors.black, strokeWidth: 0.5),
+                ),
+              ]
+            ],
           ),
         ),
         const SizedBox(height: 8),

@@ -84,16 +84,12 @@ class WordSignificationCubit extends Cubit<WordSignificationState> {
   }
 
   Future<void> nextWord() async {
-    emit(state.copyWith(loadingStatus: LoadingStatus.isLoading));
     final nextWord = await wordsCubit.nextWord(state.word);
     await getWordSignificationAndExample(nextWord, ignoreLoading: true);
-    emit(state.copyWith(loadingStatus: LoadingStatus.isNotLoading));
   }
 
   Future<void> searchWord(String word) async {
-    emit(state.copyWith(loadingStatus: LoadingStatus.isLoading));
     final wordEntity = WordEntity(word: word);
     await getWordSignificationAndExample(wordEntity, ignoreLoading: true);
-    emit(state.copyWith(loadingStatus: LoadingStatus.isNotLoading));
   }
 }

@@ -111,6 +111,7 @@ class FirebaseService implements IFirebaseService {
           .collection('users')
           .doc(_auth.currentUser!.uid)
           .collection('history')
+          .orderBy('date', descending: true)
           .get()
           .then((value) => List<Map<String, dynamic>>.from(value.docs.map((e) => e.data())))
       : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');

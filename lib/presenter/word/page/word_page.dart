@@ -14,7 +14,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 
 class WordPage extends StatefulWidget {
   final WordEntity word;
@@ -142,47 +141,41 @@ class _WordPageState extends State<WordPage> {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          if (state.loadingStatus == LoadingStatus.isLoading) ...[
-                            Center(
-                              child: Lottie.asset('assets/jsons/loading_animation.json', width: 300, height: 300),
-                            )
-                          ] else ...[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: buildOptions(
-                                path: 'assets/icons/pronunciation.svg',
-                                title: 'Pronunciation',
-                                value: decodeSpecialCharacters(state.wordSignification.pronunciation.all),
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: buildOptions(
+                              path: 'assets/icons/pronunciation.svg',
+                              title: 'Pronunciation',
+                              value: decodeSpecialCharacters(state.wordSignification.pronunciation.all),
                             ),
-                            const SizedBox(height: 30),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: buildOptions(
-                                path: 'assets/icons/word.svg',
-                                title: 'Word',
-                                value: state.wordSignification.word,
-                              ),
+                          ),
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: buildOptions(
+                              path: 'assets/icons/word.svg',
+                              title: 'Word',
+                              value: state.wordSignification.word,
                             ),
-                            const SizedBox(height: 30),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: buildOptions(
-                                path: 'assets/icons/definition.svg',
-                                title: 'Definition',
-                                value: state.wordSignification.results.isEmpty ? 'No definition' : state.wordSignification.results.first.definition,
-                              ),
+                          ),
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: buildOptions(
+                              path: 'assets/icons/definition.svg',
+                              title: 'Definition',
+                              value: state.wordSignification.results.isEmpty ? 'No definition' : state.wordSignification.results.first.definition,
                             ),
-                            const SizedBox(height: 30),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: buildOptions(
-                                path: 'assets/icons/example.svg',
-                                title: 'Example',
-                                value: state.example.examples.isEmpty ? 'No example' : state.example.examples.first,
-                              ),
+                          ),
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: buildOptions(
+                              path: 'assets/icons/example.svg',
+                              title: 'Example',
+                              value: state.example.examples.isEmpty ? 'No example' : state.example.examples.first,
                             ),
-                          ]
+                          ),
                         ],
                       ),
                       Align(

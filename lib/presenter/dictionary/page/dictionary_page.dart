@@ -28,45 +28,45 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocBuilder<WordsCubit, WordsState>(
-        bloc: wordsCubit,
-        builder: (context, state) {
-          return SizedBox(
-            width: size.width,
-            height: size.height,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                BlocBuilder<HistoryCubit, HistoryState>(
-                  bloc: GetIt.I.get<HistoryCubit>(),
-                  builder: (context, state) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: CustomListController(
-                        words: state.words.take(8).toList(),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 10),
-                Builder(builder: (context) {
-                  return Expanded(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: BlocBuilder<WordsCubit, WordsState>(
+          bloc: wordsCubit,
+          builder: (context, state) {
+            return SizedBox(
+              width: size.width,
+              height: size.height,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  BlocBuilder<HistoryCubit, HistoryState>(
+                    bloc: GetIt.I.get<HistoryCubit>(),
+                    builder: (context, state) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: CustomListController(),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: WordListWidget(
                         words: state.words,
                         isLoading: state.loading,
+                        iaLoading: state.aiLoading,
                       ),
                     ),
-                  );
-                }),
-                const SizedBox(height: 10),
-              ],
-            ),
-          );
-        },
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

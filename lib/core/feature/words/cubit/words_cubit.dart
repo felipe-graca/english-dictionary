@@ -1,3 +1,4 @@
+import 'package:english_dictionary/core/feature/words/domain/entities/gpt_request_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase_interface.dart';
@@ -36,7 +37,20 @@ class WordsCubit extends Cubit<WordsState> {
     }
   }
 
-  String _buildGptString(String text) {
+  Future<void> getAiWords(String relatedWord) async {
+    emit(state.copyWith(aiLoading: true));
+    final (failure, result) = await _getGptWordsUsecase.call(
+      GptRequestEntity(messages: [GptRequestMessageEntity(content: _builAIString(relatedWord), role: 'user')]),
+    );
+
+    if (result.isNotEmpty) {
+      emit(state.copyWith(words: result, aiLoading: false));
+      return;
+    }
+    emit(state.copyWith(errorMessage: failure!.message, aiLoading: false));
+  }
+
+  String _builAIString(String text) {
     return "Generate existentes 30 words(Only one word) related with $text. you need return in only one line";
   }
 }

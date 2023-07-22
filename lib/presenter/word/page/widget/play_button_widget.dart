@@ -10,7 +10,7 @@ class PlayButtonWidget extends StatelessWidget {
     return SizedBox(
       width: 50,
       height: 50,
-      child: InkWell(
+      child: GestureDetector(
         onTap: onTap,
         child: Icon(
           isPlayed ? Icons.pause : Icons.play_arrow,
