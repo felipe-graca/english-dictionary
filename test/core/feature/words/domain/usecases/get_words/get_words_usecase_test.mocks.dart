@@ -3,14 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:dartz/dartz.dart' as _i2;
-import 'package:english_dictionary/core/errors/failure.dart' as _i5;
+import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart'
+    as _i4;
 import 'package:english_dictionary/core/feature/words/data/repositories/get_words/get_words_repository.dart'
-    as _i3;
+    as _i2;
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart'
-    as _i6;
+    as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -24,40 +24,24 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
-  _FakeEither_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GetWordsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetWordsRepository extends _i1.Mock
-    implements _i3.GetWordsRepository {
+    implements _i2.GetWordsRepository {
   MockGetWordsRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.WordEntity>>> getWords() =>
+  _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)> getWords() =>
       (super.noSuchMethod(
         Invocation.method(
           #getWords,
           [],
         ),
         returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, List<_i6.WordEntity>>>.value(
-                _FakeEither_0<_i5.Failure, List<_i6.WordEntity>>(
-          this,
-          Invocation.method(
-            #getWords,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.WordEntity>>>);
+            _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>.value(
+                (null, <_i5.WordEntity>[])),
+      ) as _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>);
 }

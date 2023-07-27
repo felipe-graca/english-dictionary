@@ -9,7 +9,7 @@ void main() async {
 
   runApp(
     FutureBuilder(
-      future: ServicesInitializer.initializeServices(),
+      future: InitializerService.initializeServices(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return const MyApp();

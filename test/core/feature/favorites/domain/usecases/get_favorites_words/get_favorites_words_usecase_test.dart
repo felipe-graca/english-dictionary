@@ -1,10 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/repositories/get_favorites_words/get_favorites_words_repository.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase_interface.dart';
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,26 +26,30 @@ main() {
   test(
     'Should return a list of words entity',
     () async {
-      when(repository.getFavoritesWords()).thenAnswer((_) async => Right([wordEntity]));
+      when(repository.getFavoritesWords()).thenAnswer((_) async => (null, <FavoriteWordEntity>[wordEntity]));
 
-      final result = await usecase.call(noParams);
+      final (failure, result) = await usecase.call(noParams);
 
-      expect(result.isRight(), true);
-      expect(result.fold((failure) => failure, (success) => success), isA<List<WordEntity>>());
+      expect(result, <FavoriteWordEntity>[wordEntity]);
+      expect(failure, null);
 
-      expect(result.fold((failure) => failure, (success) => success), [wordEntity]);
+      verify(repository.getFavoritesWords()).called(1);
+      verifyNoMoreInteractions(repository);
     },
   );
 
   test(
     'Should return a GetFavoritesWordsFailure when not found words',
     () async {
-      when(repository.getFavoritesWords()).thenAnswer((_) async => Left(GetFavoritesWordsFailure()));
+      when(repository.getFavoritesWords()).thenAnswer((_) async => (GetFavoritesWordsFailure(), <FavoriteWordEntity>[]));
 
-      final result = await usecase.call(noParams);
+      final (failure, result) = await usecase.call(noParams);
 
-      expect(result.isLeft(), true);
-      expect(result.fold((failure) => failure, (success) => success), isA<GetFavoritesWordsFailure>());
+      expect(result, <FavoriteWordEntity>[]);
+      expect(failure, isA<GetFavoritesWordsFailure>());
+
+      verify(repository.getFavoritesWords()).called(1);
+      verifyNoMoreInteractions(repository);
     },
   );
 }

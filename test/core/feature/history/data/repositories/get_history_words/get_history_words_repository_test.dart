@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/datasources/get_history_words/get_history_words_datasource.dart';
 import 'package:english_dictionary/core/feature/history/data/repositories/get_history_words/get_history_words_repository.dart';
@@ -24,9 +23,14 @@ main() {
         () async {
           when(getHistoryWordsDatasource.getHistoryWords()).thenAnswer((_) async => []);
 
-          final result = await getHistoryWordsRepository.getHistoryWords();
+          final (failure, result) = await getHistoryWordsRepository.getHistoryWords();
 
-          expect(result, const Right([]));
+          expect(result, isA<List<HistoryWordEntity>>());
+          expect(result, []);
+          expect(failure, isNull);
+
+          verify(getHistoryWordsDatasource.getHistoryWords()).called(1);
+          verifyNoMoreInteractions(getHistoryWordsDatasource);
         },
       );
 
@@ -35,9 +39,13 @@ main() {
         () async {
           when(getHistoryWordsDatasource.getHistoryWords()).thenThrow(GetHistoryWordsFailure());
 
-          final result = await getHistoryWordsRepository.getHistoryWords();
+          final (failure, result) = await getHistoryWordsRepository.getHistoryWords();
 
-          expect(result, isA<Left<GetHistoryWordsFailure, List<HistoryWordEntity>>>());
+          expect(result, []);
+          expect(failure, isA<GetHistoryWordsFailure>());
+
+          verify(getHistoryWordsDatasource.getHistoryWords()).called(1);
+          verifyNoMoreInteractions(getHistoryWordsDatasource);
         },
       );
     },

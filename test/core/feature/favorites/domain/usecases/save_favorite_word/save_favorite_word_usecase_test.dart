@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/data/repositories/save_favorite_word/save_favorite_word_repository.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
@@ -25,19 +24,26 @@ void main() {
   );
 
   test('should save favorite word', () async {
-    when(repository.saveFavoriteWord(any)).thenAnswer((_) async => Right(wordEntity));
+    when(repository.saveFavoriteWord(any)).thenAnswer((_) async => (null, true));
 
-    final result = await usecase(wordEntity);
+    final (failure, result) = await usecase(wordEntity);
 
-    expect(result.isRight(), true);
+    expect(result, true);
+    expect(failure, null);
+
+    verify(repository.saveFavoriteWord(wordEntity)).called(1);
+    verifyNoMoreInteractions(repository);
   });
 
   test('should return a SaveFavoriteWordFailure when save favorite wordEntity', () async {
-    when(repository.saveFavoriteWord(wordEntity)).thenAnswer((_) async => Left(SaveFavoriteWordFailure()));
+    when(repository.saveFavoriteWord(wordEntity)).thenAnswer((_) async => (SaveFavoriteWordFailure(), false));
 
-    final result = await usecase(wordEntity);
+    final (failure, result) = await usecase(wordEntity);
 
-    expect(result.isLeft(), true);
-    expect(result.fold((failure) => failure, (success) => success), isA<SaveFavoriteWordFailure>());
+    expect(result, false);
+    expect(failure, isA<SaveFavoriteWordFailure>());
+
+    verify(repository.saveFavoriteWord(wordEntity)).called(1);
+    verifyNoMoreInteractions(repository);
   });
 }

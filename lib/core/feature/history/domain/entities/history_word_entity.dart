@@ -6,8 +6,8 @@ class HistoryWordEntity extends Equatable {
   final String word;
 
   const HistoryWordEntity({
-    required this.id,
-    required this.word,
+    this.id = '',
+    this.word = '',
   });
 
   @override
@@ -32,5 +32,9 @@ class HistoryWordEntity extends Equatable {
       word: word,
       id: id,
     );
+  }
+
+  factory HistoryWordEntity.empty() {
+    return const HistoryWordEntity();
   }
 }

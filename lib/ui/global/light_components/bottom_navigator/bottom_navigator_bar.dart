@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:english_dictionary/core/feature/auth/cubit/auth_cubit.dart';
 import 'package:english_dictionary/core/routes/app_router.dart';
+import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/core/utils/utils.dart';
 import 'package:english_dictionary/ui/global/light_components/bottom_navigator/cubit/bottom_navigator_cubit.dart';
 import 'package:english_dictionary/ui/global/light_components/bottom_navigator/widget/bottom_navigator_item.dart';
@@ -6,15 +10,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class BottomNavigatorBar extends StatelessWidget {
+class BottomNavigatorBar extends StatefulWidget {
   const BottomNavigatorBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = GetIt.I.get<BottomNavigatorCubit>();
+  State<BottomNavigatorBar> createState() => _BottomNavigatorBarState();
+}
 
+class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
+  final bottomNavigatorCubit = GetIt.I.get<BottomNavigatorCubit>();
+  final authCubit = GetIt.I.get<AuthCubit>();
+
+  StreamSubscription<bool>? authSubscription;
+
+  @override
+  void initState() {
+    authSubscription = authCubit.isLogged.listen((isLogged) {
+      if (!isLogged) {
+        bottomNavigatorCubit.changePage(AppRoutes.dictionary);
+      }
+      authSubscription?.cancel();
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<BottomNavigatorCubit, BottomNavigatorState>(
-      bloc: cubit,
+      bloc: bottomNavigatorCubit,
       builder: (context, state) {
         return SafeArea(
           child: Container(
@@ -45,7 +68,7 @@ class BottomNavigatorBar extends StatelessWidget {
                       icon: e.icon,
                       onTap: () {
                         if (state.currentPage == e.pageEnum) return;
-                        cubit.changePage(e.route);
+                        bottomNavigatorCubit.changePage(e.route);
                         Navigator.of(AppRouter.navigatorKey.currentState!.context).pushNamedAndRemoveUntil(e.route, (route) => false);
                       },
                       isActive: state.currentPage == e.pageEnum,

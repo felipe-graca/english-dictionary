@@ -3,12 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
 import 'package:english_dictionary/core/feature/favorites/data/datasources/save_favorite_word/save_favorite_word_datasource.dart'
-    as _i3;
-import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart'
     as _i2;
+import 'package:english_dictionary/core/feature/favorites/data/models/favorites_word_model.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -22,41 +22,22 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeFavoriteWordModel_0 extends _i1.SmartFake
-    implements _i2.FavoriteWordModel {
-  _FakeFavoriteWordModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [SaveFavoriteWordDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSaveFavoriteWordDatasource extends _i1.Mock
-    implements _i3.SaveFavoriteWordDatasource {
+    implements _i2.SaveFavoriteWordDatasource {
   MockSaveFavoriteWordDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.FavoriteWordModel> saveFavoriteWord(
-          _i2.FavoriteWordModel? model) =>
+  _i3.Future<bool> saveFavoriteWord(_i4.FavoriteWordModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveFavoriteWord,
           [model],
         ),
-        returnValue:
-            _i4.Future<_i2.FavoriteWordModel>.value(_FakeFavoriteWordModel_0(
-          this,
-          Invocation.method(
-            #saveFavoriteWord,
-            [model],
-          ),
-        )),
-      ) as _i4.Future<_i2.FavoriteWordModel>);
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
 }

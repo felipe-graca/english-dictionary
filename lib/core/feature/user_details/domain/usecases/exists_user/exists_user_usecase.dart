@@ -9,5 +9,5 @@ class ExistsUserUsecase implements IExistsUserUsecase {
   ExistsUserUsecase(this._datasource);
 
   @override
-  Future<(ExistsUserFailuire?, bool)> call(NoParams noParams) async => await _datasource.existsUser();
+  Future<(ExistsUserFailure?, bool)> call(NoParams noParams) async => await _datasource.existsUser();
 }

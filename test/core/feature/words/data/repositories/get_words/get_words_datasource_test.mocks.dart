@@ -3,11 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:english_dictionary/core/feature/words/data/datasources/get_words/get_words_datasource.dart' as _i3;
-import 'package:english_dictionary/core/feature/words/data/models/word_model.dart' as _i5;
-import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart' as _i2;
+import 'package:english_dictionary/core/feature/words/data/datasources/get_words/get_words_datasource.dart'
+    as _i2;
+import 'package:english_dictionary/core/feature/words/data/models/word_model.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -21,38 +22,21 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeIFirebaseService_0 extends _i1.SmartFake implements _i2.IFirebaseService {
-  _FakeIFirebaseService_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GetWordsDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetWordsDatasource extends _i1.Mock implements _i3.GetWordsDatasource {
+class MockGetWordsDatasource extends _i1.Mock
+    implements _i2.GetWordsDatasource {
   MockGetWordsDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.IFirebaseService get _firebaseService => (super.noSuchMethod(
-        Invocation.getter(#firebaseService),
-        returnValue: _FakeIFirebaseService_0(
-          this,
-          Invocation.getter(#firebaseService),
-        ),
-      ) as _i2.IFirebaseService);
-  @override
-  _i4.Future<List<_i5.WordModel>> getWords() => (super.noSuchMethod(
+  _i3.Future<List<_i4.WordModel>> getWords() => (super.noSuchMethod(
         Invocation.method(
           #getWords,
           [],
         ),
-        returnValue: _i4.Future<List<_i5.WordModel>>.value(<_i5.WordModel>[]),
-      ) as _i4.Future<List<_i5.WordModel>>);
+        returnValue: _i3.Future<List<_i4.WordModel>>.value(<_i4.WordModel>[]),
+      ) as _i3.Future<List<_i4.WordModel>>);
 }

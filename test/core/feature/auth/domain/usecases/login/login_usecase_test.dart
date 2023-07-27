@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/auth/data/repositores/login/login_repository.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase.dart';
@@ -16,19 +15,20 @@ main() {
   final ILoginUsecase usecase = LoginUsecase(repository);
 
   test('should return true when logged user', () async {
-    when(repository.login()).thenAnswer((_) async => const Right(true));
+    when(repository.login()).thenAnswer((_) async => (null, true));
 
-    final result = await usecase(noParams);
+    final (failure, result) = await usecase.call(noParams);
 
-    expect(result, const Right(true));
+    expect(failure, null);
+    expect(result, true);
   });
 
   test('should return false when not logged user', () async {
-    when(repository.login()).thenAnswer((_) async => Left(LoginFailure()));
+    when(repository.login()).thenAnswer((_) async => (LoginFailure(), false));
 
-    final result = await usecase.call(noParams);
-    final folded = result.fold((l) => l, (r) => r);
+    final (failure, result) = await usecase.call(noParams);
 
-    expect(folded, isA<LoginFailure>());
+    expect(failure, isA<LoginFailure>());
+    expect(result, false);
   });
 }

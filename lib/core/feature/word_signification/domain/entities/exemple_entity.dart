@@ -32,5 +32,9 @@ class ExampleEntity extends Equatable {
     );
   }
 
+  factory ExampleEntity.empty() {
+    return const ExampleEntity();
+  }
+
   bool get isEmpty => word.isEmpty && examples.isEmpty;
 }

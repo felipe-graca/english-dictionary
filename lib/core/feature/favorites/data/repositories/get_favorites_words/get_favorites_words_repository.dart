@@ -11,7 +11,7 @@ class GetFavoritesWordsRepository implements IGetFavoritesWordsRepository {
   @override
   Future<(GetFavoritesWordsFailure?, List<FavoriteWordEntity>)> getFavoritesWords() async {
     try {
-      return (null, await _datasource.getFavoritesWords());
+      return (null, (await _datasource.getFavoritesWords()).map((e) => e.toEntity()).toList());
     } on GetFavoritesWordsFailure catch (e) {
       return (e, <FavoriteWordEntity>[]);
     }

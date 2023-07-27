@@ -11,7 +11,7 @@ class GetWordSignificationExampleRepository implements IGetWordSignificationExam
   @override
   Future<(GetWordSignificationExampleFailure?, ExampleEntity)> getWordSignificationExamples(String word) async {
     try {
-      return (null, await _datasource.getWordSignificationExamples(word));
+      return (null, (await _datasource.getWordSignificationExamples(word)).toEntity());
     } on GetWordSignificationExampleFailure catch (e) {
       return (e, const ExampleEntity());
     }

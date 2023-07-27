@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/get_user_details/get_user_details_datasource.dart.dart';
 import 'package:english_dictionary/core/feature/user_details/data/repositories/get_user_details/get_user_details_repository.dart';
@@ -27,18 +26,25 @@ main() {
   test('Should return entity when getUserDetails is success', () async {
     when(getUserDetailsDatasource.getUserDetails()).thenAnswer((_) async => userDetails.toModel());
 
-    final result = await getUserDetailsRepository.getUserDetails();
+    final (failure, result) = await getUserDetailsRepository.getUserDetails();
 
-    expect(result, isA<Right<GetUserDatailsFailure, UserDetailsEntity>>());
-    expect(result, Right(userDetails));
+    expect(result, userDetails);
+    expect(failure, isNull);
+    expect(result, isA<UserDetailsEntity>());
+
+    verify(getUserDetailsDatasource.getUserDetails()).called(1);
+    verifyNoMoreInteractions(getUserDetailsDatasource);
   });
 
   test('Should return failure when getUserDetails is failure', () async {
     when(getUserDetailsDatasource.getUserDetails()).thenThrow(GetUserDatailsFailure());
 
-    final result = await getUserDetailsRepository.getUserDetails();
+    final (failure, result) = await getUserDetailsRepository.getUserDetails();
 
-    expect(result, isA<Left<GetUserDatailsFailure, UserDetailsEntity>>());
-    expect(result, Left<GetUserDatailsFailure, UserDetailsEntity>(GetUserDatailsFailure()));
+    expect(result, UserDetailsEntity.empty());
+    expect(failure, isA<GetUserDatailsFailure>());
+
+    verify(getUserDetailsDatasource.getUserDetails()).called(1);
+    verifyNoMoreInteractions(getUserDetailsDatasource);
   });
 }

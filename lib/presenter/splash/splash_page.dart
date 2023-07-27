@@ -30,14 +30,12 @@ class _SplashPageState extends State<SplashPage> {
 
   void handleNavigation(bool isLogged) {
     Future.delayed(const Duration(seconds: 1)).then((_) async {
-      if (!mounted) {
-        return;
-      }
+      if (!mounted) return;
       if (isLogged) {
         Navigator.of(context).pushReplacementNamed(AppRoutes.base);
-      } else {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+        return;
       }
+      Navigator.of(context).pushReplacementNamed(AppRoutes.login);
     });
   }
 

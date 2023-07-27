@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:english_dictionary/core/feature/user_details/cubit/user_details_cubit.dart';
 import 'package:english_dictionary/core/feature/auth/domain/usecases/login/login_usecase_interface.dart';
-import 'package:english_dictionary/core/routes/app_routes.dart';
+import 'package:english_dictionary/core/feature/user_details/cubit/user_details_cubit.dart';
 import 'package:english_dictionary/core/usecase/usecase.dart';
-import 'package:english_dictionary/ui/global/light_components/bottom_navigator/cubit/bottom_navigator_cubit.dart';
 
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,12 +18,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this.loginUsecase) : super(const AuthState()) {
     Future.delayed(const Duration(milliseconds: 500)).then((_) {
-      onUserChanged();
+      _onUserChanged();
     });
   }
-
-  final userDetailsCubit = GetIt.I.get<UserDetailsCubit>();
-  final bottomNavigatorCubit = GetIt.I.get<BottomNavigatorCubit>();
 
   final googleSignIn = GoogleSignIn();
   final firebaseAuth = FirebaseAuth.instance;
@@ -53,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   void startListenAuthChanges() {
     firebaseAuth.userChanges().listen((event) {
-      onUserChanged();
+      _onUserChanged();
     });
   }
 
@@ -61,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
     isLoggedStream.close();
   }
 
-  Future<void> onUserChanged() async {
+  Future<void> _onUserChanged() async {
     if (userDetailLoading) {
       return;
     }
@@ -82,7 +77,7 @@ class AuthCubit extends Cubit<AuthState> {
         return;
       }
 
-      final initializeUserDetails = await userDetailsCubit.initializeUserDetails();
+      final initializeUserDetails = await GetIt.I.get<UserDetailsCubit>().initializeUserDetails();
       if (initializeUserDetails) {
         emit(state.copyWith(status: AuthStatus.authenticated));
         isLoggedStream.add(true);
@@ -99,8 +94,13 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await googleSignIn.signOut();
       await firebaseAuth.signOut();
-
-      bottomNavigatorCubit.changePage(AppRoutes.dictionary);
+      emit(const AuthState(
+        status: AuthStatus.unauthenticated,
+        loading: false,
+        userAuthDetails: null,
+        errorMessage: '',
+      ));
+      isLoggedStream.add(false);
 
       return true;
     } catch (e, s) {
