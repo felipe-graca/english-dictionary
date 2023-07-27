@@ -52,5 +52,9 @@ class WordSignificationEntity extends Equatable {
     );
   }
 
+  factory WordSignificationEntity.empty() {
+    return const WordSignificationEntity();
+  }
+
   bool get isEmpty => word.isEmpty && results.isEmpty && syllables.isEmpty && pronunciation.isEmpty && frequency == 0.0;
 }

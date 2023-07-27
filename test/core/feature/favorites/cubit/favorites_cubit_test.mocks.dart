@@ -3,19 +3,19 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i3;
 
-import 'package:dartz/dartz.dart' as _i3;
-import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart' as _i7;
-import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart' as _i8;
-import 'package:english_dictionary/core/feature/favorites/domain/repositories/get_favorites_words/get_favorites_words_repository_interface.dart'
-    as _i2;
-import 'package:english_dictionary/core/feature/favorites/domain/repositories/remove_favorite_word/remove_favorite_word_repository_interface.dart'
+import 'package:english_dictionary/core/feature/favorites/core/errors/favorites_failure.dart'
     as _i4;
-import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase.dart' as _i5;
-import 'package:english_dictionary/core/feature/favorites/domain/usecases/remove_favorite_word/remove_favorite_word_usecase.dart' as _i10;
-import 'package:english_dictionary/core/feature/favorites/domain/usecases/save_favorite_word/save_favorite_word_usecase.dart' as _i11;
-import 'package:english_dictionary/core/usecase/usecase.dart' as _i9;
+import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart'
+    as _i5;
+import 'package:english_dictionary/core/feature/favorites/domain/usecases/get_favorites_words/get_favorites_words_usecase.dart'
+    as _i2;
+import 'package:english_dictionary/core/feature/favorites/domain/usecases/remove_favorite_word/remove_favorite_word_usecase.dart'
+    as _i7;
+import 'package:english_dictionary/core/feature/favorites/domain/usecases/save_favorite_word/save_favorite_word_usecase.dart'
+    as _i8;
+import 'package:english_dictionary/core/usecase/usecase.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -29,122 +29,71 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeIGetFavoritesWordsRepository_0 extends _i1.SmartFake implements _i2.IGetFavoritesWordsRepository {
-  _FakeIGetFavoritesWordsRepository_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
-  _FakeEither_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeIRemoveFavoriteWordRepository_2 extends _i1.SmartFake implements _i4.IRemoveFavoriteWordRepository {
-  _FakeIRemoveFavoriteWordRepository_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GetFavoritesWordsUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetFavoritesWordsUsecase extends _i1.Mock implements _i5.GetFavoritesWordsUsecase {
+class MockGetFavoritesWordsUsecase extends _i1.Mock
+    implements _i2.GetFavoritesWordsUsecase {
   MockGetFavoritesWordsUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.IGetFavoritesWordsRepository get _repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeIGetFavoritesWordsRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-      ) as _i2.IGetFavoritesWordsRepository);
-  @override
-  _i6.Future<_i3.Either<_i7.GetFavoritesWordsFailure, List<_i8.FavoriteWordEntity>>> call(_i9.NoParams? noParams) => (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [noParams],
-        ),
-        returnValue: _i6.Future<_i3.Either<_i7.GetFavoritesWordsFailure, List<_i8.FavoriteWordEntity>>>.value(
-            _FakeEither_1<_i7.GetFavoritesWordsFailure, List<_i8.FavoriteWordEntity>>(
-          this,
-          Invocation.method(
-            #call,
-            [noParams],
-          ),
-        )),
-      ) as _i6.Future<_i3.Either<_i7.GetFavoritesWordsFailure, List<_i8.FavoriteWordEntity>>>);
+  _i3.Future<(_i4.GetFavoritesWordsFailure?, List<_i5.FavoriteWordEntity>)>
+      call(_i6.NoParams? noParams) => (super.noSuchMethod(
+            Invocation.method(
+              #call,
+              [noParams],
+            ),
+            returnValue: _i3.Future<
+                (
+                  _i4.GetFavoritesWordsFailure?,
+                  List<_i5.FavoriteWordEntity>
+                )>.value((null, <_i5.FavoriteWordEntity>[])),
+          ) as _i3.Future<
+              (_i4.GetFavoritesWordsFailure?, List<_i5.FavoriteWordEntity>)>);
 }
 
 /// A class which mocks [RemoveFavoriteWordUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRemoveFavoriteWordUsecase extends _i1.Mock implements _i10.RemoveFavoriteWordUsecase {
+class MockRemoveFavoriteWordUsecase extends _i1.Mock
+    implements _i7.RemoveFavoriteWordUsecase {
   MockRemoveFavoriteWordUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.IRemoveFavoriteWordRepository get _repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeIRemoveFavoriteWordRepository_2(
-          this,
-          Invocation.getter(#repository),
-        ),
-      ) as _i4.IRemoveFavoriteWordRepository);
-  @override
-  _i6.Future<_i3.Either<_i7.RemoveFavoriteWordFailure, bool>> call(_i8.FavoriteWordEntity? model) => (super.noSuchMethod(
+  _i3.Future<(_i4.RemoveFavoriteWordFailure?, bool)> call(
+          _i5.FavoriteWordEntity? entity) =>
+      (super.noSuchMethod(
         Invocation.method(
           #call,
-          [model],
+          [entity],
         ),
-        returnValue: _i6.Future<_i3.Either<_i7.RemoveFavoriteWordFailure, bool>>.value(_FakeEither_1<_i7.RemoveFavoriteWordFailure, bool>(
-          this,
-          Invocation.method(
-            #call,
-            [model],
-          ),
-        )),
-      ) as _i6.Future<_i3.Either<_i7.RemoveFavoriteWordFailure, bool>>);
+        returnValue: _i3.Future<(_i4.RemoveFavoriteWordFailure?, bool)>.value(
+            (null, false)),
+      ) as _i3.Future<(_i4.RemoveFavoriteWordFailure?, bool)>);
 }
 
 /// A class which mocks [SaveFavoriteWordUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveFavoriteWordUsecase extends _i1.Mock implements _i11.SaveFavoriteWordUsecase {
+class MockSaveFavoriteWordUsecase extends _i1.Mock
+    implements _i8.SaveFavoriteWordUsecase {
   MockSaveFavoriteWordUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i3.Either<_i7.SaveFavoriteWordFailure, _i8.FavoriteWordEntity>> call(_i8.FavoriteWordEntity? model) => (super.noSuchMethod(
+  _i3.Future<(_i4.SaveFavoriteWordFailure?, bool)> call(
+          _i5.FavoriteWordEntity? entity) =>
+      (super.noSuchMethod(
         Invocation.method(
           #call,
-          [model],
+          [entity],
         ),
-        returnValue: _i6.Future<_i3.Either<_i7.SaveFavoriteWordFailure, _i8.FavoriteWordEntity>>.value(
-            _FakeEither_1<_i7.SaveFavoriteWordFailure, _i8.FavoriteWordEntity>(
-          this,
-          Invocation.method(
-            #call,
-            [model],
-          ),
-        )),
-      ) as _i6.Future<_i3.Either<_i7.SaveFavoriteWordFailure, _i8.FavoriteWordEntity>>);
+        returnValue: _i3.Future<(_i4.SaveFavoriteWordFailure?, bool)>.value(
+            (null, false)),
+      ) as _i3.Future<(_i4.SaveFavoriteWordFailure?, bool)>);
 }

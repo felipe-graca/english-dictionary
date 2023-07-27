@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart';
 import 'package:english_dictionary/core/feature/user_details/data/datasources/exists_user/exists_user_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/data/repositories/exists_user/exists_user_repository.dart';
@@ -18,17 +17,37 @@ main() {
     test('existsUser() should return true when user exists', () async {
       when(existsUserDatasource.existsUser()).thenAnswer((_) async => true);
 
-      final result = await existsUserRepository.existsUser();
+      final (failure, result) = await existsUserRepository.existsUser();
 
-      expect(result, isA<Right<ExistsUserFailuire, bool>>());
+      expect(result, true);
+      expect(failure, isNull);
+
+      verify(existsUserDatasource.existsUser()).called(1);
+      verifyNoMoreInteractions(existsUserDatasource);
     });
 
     test('existsUser() should return false when user not exists', () async {
       when(existsUserDatasource.existsUser()).thenAnswer((_) async => false);
 
-      final result = await existsUserRepository.existsUser();
+      final (failure, result) = await existsUserRepository.existsUser();
 
-      expect(result, isA<Right<ExistsUserFailuire, bool>>());
+      expect(result, false);
+      expect(failure, isNull);
+
+      verify(existsUserDatasource.existsUser()).called(1);
+      verifyNoMoreInteractions(existsUserDatasource);
+    });
+
+    test('existsUser() should return [ExistsUserFailure()] when [ExistsUserDatasource.existsUser()] throw [ExistsUserFailure()]', () async {
+      when(existsUserDatasource.existsUser()).thenThrow(ExistsUserFailure());
+
+      final (failure, result) = await existsUserRepository.existsUser();
+
+      expect(result, false);
+      expect(failure, isA<ExistsUserFailure>());
+
+      verify(existsUserDatasource.existsUser()).called(1);
+      verifyNoMoreInteractions(existsUserDatasource);
     });
   });
 }

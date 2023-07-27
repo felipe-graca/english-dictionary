@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/repositories/clear_history_worda/clear_history_words_repository.dart';
 import 'package:english_dictionary/core/feature/history/domain/usecases/clear_history_word/clear_history_word_usecase.dart';
@@ -22,22 +21,30 @@ main() {
       test(
         'should return [Right(true)] when [ClearHistoryWordRepository.clearHistoryWords()] return [Right(true)]',
         () async {
-          when(clearHistoryWordRepository.clearHistoryWords()).thenAnswer((_) async => const Right(true));
+          when(clearHistoryWordRepository.clearHistoryWords()).thenAnswer((_) async => (null, true));
 
-          final result = await clearHistoryWordsUsecase.call(noParams);
+          final (failure, result) = await clearHistoryWordsUsecase.call(noParams);
 
-          expect(result, const Right(true));
+          expect(result, true);
+          expect(failure, null);
+
+          verify(clearHistoryWordRepository.clearHistoryWords()).called(1);
+          verifyNoMoreInteractions(clearHistoryWordRepository);
         },
       );
 
       test(
         'should return [Left(ClearHistoryWordsFailure())] when [ClearHistoryWordRepository.clearHistoryWords()] throw [ClearHistoryWordsFailure()]',
         () async {
-          when(clearHistoryWordRepository.clearHistoryWords()).thenThrow(ClearHistoryWordsFailure());
+          when(clearHistoryWordRepository.clearHistoryWords()).thenAnswer((_) async => (ClearHistoryWordsFailure(), false));
 
-          final result = await clearHistoryWordsUsecase.call(noParams);
+          final (failure, result) = await clearHistoryWordsUsecase.call(noParams);
 
-          expect(result, isA<Left<ClearHistoryWordsFailure, bool>>());
+          expect(result, false);
+          expect(failure, isA<ClearHistoryWordsFailure>());
+
+          verify(clearHistoryWordRepository.clearHistoryWords()).called(1);
+          verifyNoMoreInteractions(clearHistoryWordRepository);
         },
       );
     },

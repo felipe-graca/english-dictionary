@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/user_details/core/errors/user_details_failure.dart';
 import 'package:english_dictionary/core/feature/user_details/data/repositories/save_user/save_user_repository.dart';
 import 'package:english_dictionary/core/feature/user_details/domain/entities/user_details_entity.dart';
@@ -26,20 +25,26 @@ main() {
   );
 
   test('Should return true when saveUser is success', () async {
-    when(saveUserRepository.saveUser(any)).thenAnswer((_) async => const Right(true));
+    when(saveUserRepository.saveUser(any)).thenAnswer((_) async => (null, true));
 
-    final result = await saveUserUsecase(userDetails);
+    final (failure, result) = await saveUserUsecase(userDetails);
 
-    expect(result, isA<Right<SaveUserFailure, bool>>());
-    expect(result, const Right(true));
+    expect(result, true);
+    expect(failure, isNull);
+
+    verify(saveUserRepository.saveUser(any)).called(1);
+    verifyNoMoreInteractions(saveUserRepository);
   });
 
   test('Should return failure when saveUser is failure', () async {
-    when(saveUserRepository.saveUser(any)).thenAnswer((_) async => Left(SaveUserFailure()));
+    when(saveUserRepository.saveUser(any)).thenAnswer((_) async => (SaveUserFailure(), false));
 
-    final result = await saveUserUsecase(userDetails);
+    final (failure, result) = await saveUserUsecase(userDetails);
 
-    expect(result, isA<Left<SaveUserFailure, bool>>());
-    expect(result.fold((failure) => failure, (success) => success), isA<SaveUserFailure>());
+    expect(result, false);
+    expect(failure, isA<SaveUserFailure>());
+
+    verify(saveUserRepository.saveUser(any)).called(1);
+    verifyNoMoreInteractions(saveUserRepository);
   });
 }

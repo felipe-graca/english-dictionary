@@ -11,7 +11,7 @@ class GetUserDetailsRepository implements IGetUserDetailsRepository {
   @override
   Future<(GetUserDatailsFailure?, UserDetailsEntity)> getUserDetails() async {
     try {
-      return (null, await _datasource.getUserDetails());
+      return (null, (await _datasource.getUserDetails()).toEntity());
     } on GetUserDatailsFailure catch (e) {
       return (e, UserDetailsEntity.empty());
     }

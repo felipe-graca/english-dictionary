@@ -5,15 +5,16 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
 
-import 'package:dartz/dartz.dart' as _i2;
-import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart' as _i6;
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart' as _i9;
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart' as _i7;
-import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification_exemple/get_word_signification_exemple_repository.dart'
+import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart'
+    as _i6;
+import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart'
     as _i3;
-import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase.dart' as _i4;
+import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart'
+    as _i2;
+import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase.dart'
+    as _i4;
 import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification_exemple/get_word_signification_exemple_usecase.dart'
-    as _i8;
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -27,8 +28,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
-  _FakeEither_0(
+class _FakeWordSignificationEntity_0 extends _i1.SmartFake
+    implements _i2.WordSignificationEntity {
+  _FakeWordSignificationEntity_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -37,8 +39,8 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
         );
 }
 
-class _FakeIGetWordSignificationExampleRepository_1 extends _i1.SmartFake implements _i3.IGetWordSignificationExampleRepository {
-  _FakeIGetWordSignificationExampleRepository_1(
+class _FakeExampleEntity_1 extends _i1.SmartFake implements _i3.ExampleEntity {
+  _FakeExampleEntity_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -50,57 +52,68 @@ class _FakeIGetWordSignificationExampleRepository_1 extends _i1.SmartFake implem
 /// A class which mocks [GetWordSignificationUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetWordSignificationUsecase extends _i1.Mock implements _i4.GetWordSignificationUsecase {
+class MockGetWordSignificationUsecase extends _i1.Mock
+    implements _i4.GetWordSignificationUsecase {
   MockGetWordSignificationUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.Either<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>> call(String? params) => (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue: _i5.Future<_i2.Either<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>>.value(
-            _FakeEither_0<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i5.Future<_i2.Either<_i6.GetWordSignificationFailure, _i7.WordSignificationEntity>>);
+  _i5.Future<(_i6.GetWordSignificationFailure?, _i2.WordSignificationEntity)>
+      call(String? params) => (super.noSuchMethod(
+            Invocation.method(
+              #call,
+              [params],
+            ),
+            returnValue: _i5.Future<
+                (
+                  _i6.GetWordSignificationFailure?,
+                  _i2.WordSignificationEntity
+                )>.value((
+              null,
+              _FakeWordSignificationEntity_0(
+                this,
+                Invocation.method(
+                  #call,
+                  [params],
+                ),
+              )
+            )),
+          ) as _i5.Future<
+              (_i6.GetWordSignificationFailure?, _i2.WordSignificationEntity)>);
 }
 
 /// A class which mocks [GetWordSignificationExampleUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetWordSignificationExampleUsecase extends _i1.Mock implements _i8.GetWordSignificationExampleUsecase {
+class MockGetWordSignificationExampleUsecase extends _i1.Mock
+    implements _i7.GetWordSignificationExampleUsecase {
   MockGetWordSignificationExampleUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.IGetWordSignificationExampleRepository get _repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeIGetWordSignificationExampleRepository_1(
-          this,
-          Invocation.getter(#repository),
-        ),
-      ) as _i3.IGetWordSignificationExampleRepository);
-  @override
-  _i5.Future<_i2.Either<_i6.GetWordSignificationExampleFailure, _i9.ExampleEntity>> call(String? word) => (super.noSuchMethod(
+  _i5.Future<(_i6.GetWordSignificationExampleFailure?, _i3.ExampleEntity)> call(
+          String? word) =>
+      (super.noSuchMethod(
         Invocation.method(
           #call,
           [word],
         ),
-        returnValue: _i5.Future<_i2.Either<_i6.GetWordSignificationExampleFailure, _i9.ExampleEntity>>.value(
-            _FakeEither_0<_i6.GetWordSignificationExampleFailure, _i9.ExampleEntity>(
-          this,
-          Invocation.method(
-            #call,
-            [word],
-          ),
+        returnValue: _i5.Future<
+            (
+              _i6.GetWordSignificationExampleFailure?,
+              _i3.ExampleEntity
+            )>.value((
+          null,
+          _FakeExampleEntity_1(
+            this,
+            Invocation.method(
+              #call,
+              [word],
+            ),
+          )
         )),
-      ) as _i5.Future<_i2.Either<_i6.GetWordSignificationExampleFailure, _i9.ExampleEntity>>);
+      ) as _i5.Future<
+          (_i6.GetWordSignificationExampleFailure?, _i3.ExampleEntity)>);
 }

@@ -11,8 +11,8 @@ import 'package:english_dictionary/core/shared/firebase/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
-class ServicesInitializer {
-  ServicesInitializer._();
+class InitializerService {
+  InitializerService._();
 
   //TODO: Remove all commented code if not needed
 

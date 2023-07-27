@@ -22,11 +22,11 @@ class HistoryCubit extends Cubit<HistoryState> {
     emit(state.copyWith(loading: true));
 
     final (failure, words) = await _getFavoritesWordsUsecase.call(noParams);
-    if (words.isNotEmpty) {
+    if (words.isNotEmpty || failure == null) {
       emit(state.copyWith(words: words, loading: false));
       return;
     }
-    emit(state.copyWith(errorMessage: failure!.message, loading: false));
+    emit(state.copyWith(errorMessage: failure.message, loading: false));
   }
 
   Future<bool> clearHistoryWords() async {
