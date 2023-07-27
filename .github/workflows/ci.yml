@@ -25,9 +25,11 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
+        name: "Flutter analyze"
       - run: flutter analyze
-      - run: dart format --dry-run --set-exit-if-changed lib/
-      - run: dart format --dry-run --set-exit-if-changed test/
+        name: "Flutter test format"
+      - run: dart format --output=none --set-exit-if-changed lib/
+      - run: dart format --output=none --set-exit-if-changed test/
       - run: flutter test --coverage
       - run: flutter test --machine > tests-results.json
       - uses: dorny/test-reporter@v1.4.2
