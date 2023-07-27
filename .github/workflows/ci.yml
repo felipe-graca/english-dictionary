@@ -26,15 +26,15 @@ jobs:
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
       - run: flutter analyze
-      - run: flutter format --dry-run --set-exit-if-changed lib/
-      - run: flutter format --dry-run --set-exit-if-changed test/
+      - run: dart format --dry-run --set-exit-if-changed lib/
+      - run: dart format --dry-run --set-exit-if-changed test/
       - run: flutter test --coverage
       - run: flutter test --machine > tests-results.json
       - uses: dorny/test-reporter@v1.4.2
         with: 
           name: test-results
           path: tests-results.json
-          reorter: flutter-json
+          reporter: flutter-json
       - uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
         with:
           min_coverage: 80
