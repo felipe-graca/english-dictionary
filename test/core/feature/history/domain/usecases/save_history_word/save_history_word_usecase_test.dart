@@ -25,7 +25,7 @@ main() {
       test(
         'should return [Right(HistoryWordEntity)] when [SaveHistoryWordRepository.saveHistoryWord()] return [HistoryWordEntity]',
         () async {
-          when(saveHistoryWordRepository.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => (null, true));
+          when(saveHistoryWordRepository.saveHistoryWord(historyWord)).thenAnswer((_) async => (null, true));
 
           final (failure, result) = await saveHistoryWordUsecase.call(historyWord);
 
@@ -40,7 +40,7 @@ main() {
       test(
         'should return [Left(SaveHistoryWordFailure())] when [SaveHistoryWordRepository.saveHistoryWord()] throw [SaveHistoryWordFailure()]',
         () async {
-          when(saveHistoryWordRepository.saveHistoryWord(historyWord.toModel())).thenAnswer((_) async => (SaveHistoryWordFailure(), false));
+          when(saveHistoryWordRepository.saveHistoryWord(historyWord)).thenAnswer((_) async => (SaveHistoryWordFailure(), false));
 
           final (failure, result) = await saveHistoryWordUsecase.call(historyWord);
 

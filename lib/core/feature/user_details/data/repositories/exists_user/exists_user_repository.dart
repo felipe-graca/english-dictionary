@@ -8,10 +8,10 @@ class ExistsUserRepository implements IExistsUserRepository {
   ExistsUserRepository(this._datasource);
 
   @override
-  Future<(ExistsUserFailuire?, bool)> existsUser() async {
+  Future<(ExistsUserFailure?, bool)> existsUser() async {
     try {
       return (null, await _datasource.existsUser());
-    } on ExistsUserFailuire catch (e) {
+    } on ExistsUserFailure catch (e) {
       return (e, false);
     }
   }

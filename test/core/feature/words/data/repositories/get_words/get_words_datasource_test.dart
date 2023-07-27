@@ -17,21 +17,21 @@ main() {
 
   test('should return a list of words', () async {
     when(datasource.getWords()).thenAnswer((_) async => <WordModel>[]);
-    final result = await repository.getWords();
+    final (failure, result) = await repository.getWords();
 
-    final resultFoded = result.fold((failure) => failure, (success) => success);
+    expect(result, isA<List<WordEntity>>());
+    expect(result, <WordEntity>[]);
+    expect(failure, isNull);
 
-    expect(result.isRight(), true);
-    expect(resultFoded, isA<List<WordEntity>>());
+    verify(datasource.getWords()).called(1);
+    verifyNoMoreInteractions(datasource);
   });
 
   test('should return a failure', () async {
     when(datasource.getWords()).thenThrow(GetWordsFailure());
-    final result = await repository.getWords();
+    final (failure, result) = await repository.getWords();
 
-    final resultFoded = result.fold((failure) => failure, (success) => success);
-
-    expect(result.isLeft(), true);
-    expect(resultFoded, isA<GetWordsFailure>());
+    expect(result, <WordEntity>[]);
+    expect(failure, isA<GetWordsFailure>());
   });
 }

@@ -8,7 +8,7 @@ class LoginFailure extends AuthFailure {
   LoginFailure({String message = "Login failed. Please check your internet connection and try again."}) : super(message: message);
 }
 
-class ExistsUserFailuire extends AuthFailure {
-  ExistsUserFailuire({String message = "Failed to check if user exists. Please check your internet connection and try again."})
+class ExistsUserFailure extends AuthFailure {
+  ExistsUserFailure({String message = "Failed to check if user exists. Please check your internet connection and try again."})
       : super(message: message);
 }

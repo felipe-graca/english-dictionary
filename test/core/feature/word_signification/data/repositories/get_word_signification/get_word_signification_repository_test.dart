@@ -1,8 +1,7 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification/get_word_signification_repository.dart';
-import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification/get_word_signification_trpository_interface.dart';
+import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification/get_word_signification_repository_interface.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/pronunciation_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/results_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/syllables_entity.dart';
@@ -46,9 +45,15 @@ main() {
     'Shold return a Right WordSignificationModel',
     () async {
       when(datasource.getWordSignification(word)).thenAnswer((_) async => wordSignificationEntity.toModel());
-      final result = await repository.getWordSignification(word);
 
-      expect(result, Right(wordSignificationEntity));
+      final (failure, result) = await repository.getWordSignification(word);
+
+      expect(result, isA<WordSignificationEntity>());
+      expect(result, wordSignificationEntity);
+      expect(failure, isNull);
+
+      verify(datasource.getWordSignification(word)).called(1);
+      verifyNoMoreInteractions(datasource);
     },
   );
 
@@ -56,9 +61,13 @@ main() {
     'Shold return a Left GetWordSignificationFailure',
     () async {
       when(datasource.getWordSignification(word)).thenThrow(GetWordSignificationFailure());
-      final result = await repository.getWordSignification(word);
+      final (failure, result) = await repository.getWordSignification(word);
 
-      expect(result, isA<Left<GetWordSignificationFailure, WordSignificationEntity>>());
+      expect(result, WordSignificationEntity.empty());
+      expect(failure, isA<GetWordSignificationFailure>());
+
+      verify(datasource.getWordSignification(word)).called(1);
+      verifyNoMoreInteractions(datasource);
     },
   );
 }

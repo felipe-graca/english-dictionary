@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification_exemple/get_word_signification_exemple_repository.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart';
@@ -24,26 +23,29 @@ main() {
     'Should be return exampleEntity when call getWordSignificationExample',
     () {
       test('should be return exampleEntity when call getWordSignificationExample', () async {
-        when(repository.getWordSignificationExamples(any)).thenAnswer((_) async => const Right(exampleEntity));
+        when(repository.getWordSignificationExamples(any)).thenAnswer((_) async => (null, exampleEntity));
 
-        final result = await usecase('word');
-        final resultFold = result.fold((failure) => failure, (success) => success);
+        final (failure, result) = await usecase.call('word');
 
-        expect(result, isA<Right<GetWordSignificationExampleFailure, dynamic>>());
-        expect(resultFold, exampleEntity);
+        expect(result, isA<ExampleEntity>());
+        expect(result, exampleEntity);
+        expect(failure, isNull);
+
+        verify(repository.getWordSignificationExamples('word')).called(1);
+        verifyNoMoreInteractions(repository);
+      });
+
+      test('should be return GetWordSignificationExampleFailure when call getWordSignificationExample', () async {
+        when(repository.getWordSignificationExamples(any)).thenAnswer((_) async => (GetWordSignificationExampleFailure(), const ExampleEntity()));
+
+        final (failure, result) = await usecase.call('word');
+
+        expect(result, ExampleEntity.empty());
+        expect(failure, isA<GetWordSignificationExampleFailure>());
+
+        verify(repository.getWordSignificationExamples('word')).called(1);
+        verifyNoMoreInteractions(repository);
       });
     },
   );
-
-  group('GetWordSignificationExampleUsecase', () {
-    test('should be a IGetWordSignificationExampleUsecase', () async {
-      when(repository.getWordSignificationExamples(any)).thenAnswer((_) async => Left(GetWordSignificationExampleFailure()));
-
-      final result = await usecase('word');
-      final resultFold = result.fold((failure) => failure, (success) => success);
-
-      expect(result.isLeft(), true);
-      expect(resultFold, isA<GetWordSignificationExampleFailure>());
-    });
-  });
 }

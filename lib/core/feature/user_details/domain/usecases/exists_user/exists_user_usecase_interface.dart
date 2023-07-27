@@ -3,5 +3,5 @@ import 'package:english_dictionary/core/usecase/usecase.dart';
 
 abstract interface class IExistsUserUsecase implements UseCase<bool, NoParams> {
   @override
-  Future<(ExistsUserFailuire?, bool)> call(noParams);
+  Future<(ExistsUserFailure?, bool)> call(noParams);
 }

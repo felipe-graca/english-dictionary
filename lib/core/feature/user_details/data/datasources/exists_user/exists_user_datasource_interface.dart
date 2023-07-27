@@ -13,7 +13,7 @@ class ExistsUserDatasource implements IExistsUserDatasource {
     try {
       return await _firebaseService.existsUser();
     } on FirebaseFailure {
-      throw ExistsUserFailuire();
+      throw ExistsUserFailure();
     }
   }
 }
