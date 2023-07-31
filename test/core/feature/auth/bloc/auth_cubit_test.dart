@@ -25,6 +25,8 @@ import 'package:mockito/mockito.dart';
 import 'auth_cubit_test.mocks.dart';
 
 class MockAuthService extends Mock implements IAuthService {
+  final bool canSignOut;
+  MockAuthService({this.canSignOut = true});
   final faker = Faker();
 
   @override
@@ -34,6 +36,9 @@ class MockAuthService extends Mock implements IAuthService {
         email: faker.internet.email(),
         displayName: faker.person.name(),
       );
+
+  @override
+  Future<bool> signOut() async => canSignOut;
 }
 
 @GenerateMocks([
@@ -44,60 +49,89 @@ class MockAuthService extends Mock implements IAuthService {
   StorageService,
 ])
 void main() {
+  late IAuthService mockAuthService;
   final ILoginUsecase mockLoginUsecase = MockLoginUsecase();
-  final IAuthService mockAuthService = MockAuthService();
 
   final IGetUserDetailsUsecase mockGetUserDetailsUsecase = MockGetUserDetailsUsecase();
   final IExistsUserUsecase mockExistsUserUsecase = MockExistsUserUsecase();
   final ISaveUserUsecase mockSaveUserUsecase = MockSaveUserUsecase();
   final IStorageService mockStorageService = MockStorageService();
 
-  final authCubit = AuthCubit(mockLoginUsecase, mockAuthService);
+  late AuthCubit authCubit;
 
-  setUpAll(() => {
-        GetIt.I.registerSingleton<UserDetailsCubit>(UserDetailsCubit(
-          mockGetUserDetailsUsecase,
-          mockExistsUserUsecase,
-          mockSaveUserUsecase,
-          mockStorageService,
-          mockAuthService,
-        )),
+  setUpAll(() {
+    mockAuthService = MockAuthService();
+    authCubit = AuthCubit(mockLoginUsecase, mockAuthService);
+    GetIt.I.registerSingleton<UserDetailsCubit>(UserDetailsCubit(
+      mockGetUserDetailsUsecase,
+      mockExistsUserUsecase,
+      mockSaveUserUsecase,
+      mockStorageService,
+      mockAuthService,
+    ));
+  });
+
+  tearDownAll(() => {
+        GetIt.I.unregister<UserDetailsCubit>(),
       });
-
-  when(mockExistsUserUsecase.call(noParams)).thenAnswer((_) async => (null, true));
-  when(mockGetUserDetailsUsecase.call(noParams)).thenAnswer((_) async => (null, const UserDetailsEntity(name: 'test')));
 
   test('initial state is correct', () {
     expect(authCubit.state, const AuthState());
   });
 
-  test('login success updates state', () async {
-    when(mockLoginUsecase.call(noParams)).thenAnswer((_) async => (null, true));
+  group('Login', () {
+    when(mockExistsUserUsecase.call(noParams)).thenAnswer((_) async => (null, true));
+    when(mockGetUserDetailsUsecase.call(noParams)).thenAnswer((_) async => (null, const UserDetailsEntity(name: 'test')));
 
-    await authCubit.login();
+    test('login success updates state', () async {
+      when(mockLoginUsecase.call(noParams)).thenAnswer((_) async => (null, true));
 
-    expect(authCubit.state.status, AuthStatus.authenticated);
-    expect(authCubit.state.loading, false);
-    expect(authCubit.state.errorMessage, '');
-  });
+      await authCubit.login();
 
-  test('login failure updates state with error message', () async {
-    when(mockLoginUsecase.call(noParams)).thenAnswer((_) async => (LoginFailure(), false));
+      expect(authCubit.state.status, AuthStatus.authenticated);
+      expect(authCubit.state.loading, false);
+      expect(authCubit.state.errorMessage, '');
+    });
 
-    await authCubit.login();
+    test('login failure updates state with error message', () async {
+      when(mockLoginUsecase.call(noParams)).thenAnswer((_) async => (LoginFailure(), false));
 
-    expect(authCubit.state.status, AuthStatus.unauthenticated);
-    expect(authCubit.state.loading, false);
-    expect(authCubit.state.errorMessage, LoginFailure().message);
-  });
+      await authCubit.login();
 
-  test('login cancelled updates state with error message', () async {
-    when(mockLoginUsecase.call(noParams)).thenAnswer((_) async => (null, false));
+      expect(authCubit.state.status, AuthStatus.unauthenticated);
+      expect(authCubit.state.loading, false);
+      expect(authCubit.state.errorMessage, LoginFailure().message);
+    });
 
-    await authCubit.login();
+    test('login cancelled updates state with error message', () async {
+      when(mockLoginUsecase.call(noParams)).thenAnswer((_) async => (null, false));
 
-    expect(authCubit.state.status, AuthStatus.unauthenticated);
-    expect(authCubit.state.loading, false);
-    expect(authCubit.state.errorMessage, 'Cancelled');
+      await authCubit.login();
+
+      expect(authCubit.state.status, AuthStatus.unauthenticated);
+      expect(authCubit.state.loading, false);
+      expect(authCubit.state.errorMessage, 'Cancelled');
+    });
+
+    group('Logout', () {
+      test('logout success updates state', () async {
+        final result = await authCubit.logout();
+
+        expect(result, true);
+        expect(authCubit.state.status, AuthStatus.unauthenticated);
+        expect(authCubit.state.loading, false);
+        expect(authCubit.state.errorMessage, '');
+      });
+
+      test('logout failure updates state with error message', () async {
+        mockAuthService = MockAuthService(canSignOut: false);
+        authCubit = AuthCubit(mockLoginUsecase, mockAuthService);
+
+        final result = await authCubit.logout();
+
+        expect(result, false);
+        expect(authCubit.state, const AuthState());
+      });
+    });
   });
 }

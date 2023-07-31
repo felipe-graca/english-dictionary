@@ -33,7 +33,10 @@ class AuthCubit extends Cubit<AuthState> {
         .call(noParams)
         .then((value) async => value.$2
             ? await _onUserChanged().catchError((e) => emit(state.copyWith(errorMessage: e.message)))
-            : emit(state.copyWith(errorMessage: value.$1?.message ?? "Cancelled")))
+            : emit(state.copyWith(
+                status: AuthStatus.unauthenticated,
+                errorMessage: value.$1?.message ?? "Cancelled",
+              )))
         .catchError((e) => emit(state.copyWith(errorMessage: e.message)));
     emit(state.copyWith(loading: false));
   }
@@ -71,14 +74,12 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<bool> logout() async {
     try {
-      await _authService.signOut();
-      emit(const AuthState(
-        status: AuthStatus.unauthenticated,
-        loading: false,
-        errorMessage: '',
-      ));
-      isLoggedStream.add(false);
-      return true;
+      final result = await _authService.signOut();
+      if (result) {
+        emit(const AuthState());
+        isLoggedStream.add(false);
+        return true;
+      }
     } catch (e, s) {
       if (kDebugMode) {
         print(e);
