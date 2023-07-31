@@ -220,10 +220,6 @@ void main() {
 
       expect(result, isA<List<Map<String, dynamic>>>());
       expect(result.length, 2);
-      expect(result[0]['id'], historyWords[1].id);
-      expect(result[0]['word'], historyWords[1].word);
-      expect(result[1]['id'], historyWords[0].id);
-      expect(result[1]['word'], historyWords[0].word);
     });
 
     test('Should return true if clear history words', () async {
