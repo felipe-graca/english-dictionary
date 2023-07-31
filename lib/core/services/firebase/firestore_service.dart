@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/services/auth/auth_service_interface.dart';
 import 'package:english_dictionary/core/services/firebase/firestore_service_interface.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService implements IFirestoreService {
   final IAuthService _auth;
-  FirestoreService(this._auth);
+  final FirebaseFirestore _firestore;
+  FirestoreService(this._auth, this._firestore);
 
-  final _firestore = FirebaseFirestore.instance;
+  User get getUserId =>
+      _auth.currentAuthUserDetails != null ? _auth.currentAuthUserDetails! : throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER');
 
   @override
   Future<List<Map<String, dynamic>>> getWords() async => await _firestore
@@ -19,7 +22,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<bool> saveUser(Map<String, dynamic> map) async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .set(map)
       .then((value) => true)
       .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'));
@@ -27,7 +30,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<Map<String, dynamic>> getUserDetails() async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .get()
       .then((value) => value.data()!)
       .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'));
@@ -35,7 +38,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<bool> existsUser() async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .get()
       .then((value) => value.exists)
       .catchError((e) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'));
@@ -43,7 +46,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<bool> saveFavoriteWord(Map<String, dynamic> map) async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .collection('favorites')
       .doc(map['id'])
       .set(map)
@@ -53,7 +56,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<List<Map<String, dynamic>>> getFavoritesWords() async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .collection('favorites')
       .get()
       .then((value) => List<Map<String, dynamic>>.from(value.docs.map((e) => e.data())))
@@ -62,7 +65,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<bool> removeFavoriteWord(Map<String, dynamic> map) async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .collection('favorites')
       .doc(map['id'])
       .delete()
@@ -72,7 +75,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<bool> saveHistoryWord(Map<String, dynamic> map) async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .collection('history')
       .doc(map['id'])
       .set({...map, 'date': DateTime.now().millisecondsSinceEpoch})
@@ -82,7 +85,7 @@ class FirestoreService implements IFirestoreService {
   @override
   Future<List<Map<String, dynamic>>> getHistoryWords() async => await _firestore
       .collection('users')
-      .doc((_auth.currentAuthUserDetails)!.uid)
+      .doc(getUserId.uid)
       .collection('history')
       .orderBy('date', descending: true)
       .get()
@@ -90,7 +93,7 @@ class FirestoreService implements IFirestoreService {
 
   @override
   Future<bool> clearHistoryWords() async =>
-      await _firestore.collection('users').doc((_auth.currentAuthUserDetails)!.uid).collection('history').get().then((snapshot) async {
+      await _firestore.collection('users').doc(getUserId.uid).collection('history').get().then((snapshot) async {
         for (final ds in snapshot.docs) {
           await ds.reference.delete();
         }

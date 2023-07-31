@@ -39,7 +39,7 @@ class ServiceLocator {
 
     /*services*/
     i.registerLazySingleton<IAuthService>(() => AuthService());
-    i.registerLazySingleton<IFirestoreService>(() => FirestoreService(i.get()));
+    i.registerLazySingleton<IFirestoreService>(() => FirestoreService(i.get(), i.get()));
     i.registerLazySingleton<IStorageService>(() => StorageService());
     i.registerLazySingleton<IHttpService>(() => HttpService(i.get()));
     i.registerLazySingleton<ITtsService>(() => TtsService());

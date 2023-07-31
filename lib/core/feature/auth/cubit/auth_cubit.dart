@@ -29,15 +29,18 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login() async {
     emit(state.copyWith(loading: true));
-    await loginUsecase.call(noParams).then((value) async => value.$2
-        ? await _onUserChanged().catchError((e) => emit(state.copyWith(errorMessage: e.message)))
-        : emit(state.copyWith(errorMessage: value.$1?.message ?? "Cancelled")));
+    await loginUsecase
+        .call(noParams)
+        .then((value) async => value.$2
+            ? await _onUserChanged().catchError((e) => emit(state.copyWith(errorMessage: e.message)))
+            : emit(state.copyWith(errorMessage: value.$1?.message ?? "Cancelled")))
+        .catchError((e) => emit(state.copyWith(errorMessage: e.message)));
     emit(state.copyWith(loading: false));
   }
 
   void startListenAuthChanges() => _authService.startListenAuthChanges(() => _onUserChanged());
 
-  dispose() {
+  void dispose() {
     isLoggedStream.close();
   }
 
