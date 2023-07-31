@@ -6,16 +6,15 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../../feature/word_signification/core/services/rapidapi_service_test.mocks.dart';
+import 'http_service_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {
   final dio = MockDio();
 
-  const token = String.fromEnvironment("WORD_SIGNIFICATION_API_KEY");
   final headers = {
-    'X-RapidAPI-Key': token,
-    'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
+    'X-RapidAPI-Key': 'token',
+    'X-RapidAPI-Host': 'google.com',
   };
 
   when(dio.interceptors).thenReturn(Interceptors()..add(PrettyDioLogger()));
