@@ -28,12 +28,12 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: BlocBuilder<WordsCubit, WordsState>(
-          bloc: wordsCubit,
-          builder: (context, state) {
-            return SizedBox(
+      body: BlocBuilder<WordsCubit, WordsState>(
+        bloc: wordsCubit,
+        builder: (context, state) {
+          return GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: SizedBox(
               width: size.width,
               height: size.height,
               child: Column(
@@ -64,9 +64,9 @@ class _DictionaryPageState extends State<DictionaryPage> {
                   const SizedBox(height: 10),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -23,7 +23,8 @@ class GetGptWordsRepository implements IGetGptWordsRepository {
     }
   }
 
-  List<WordEntity> _parseResult(String result) {
-    return List<WordEntity>.from(result.split(', ').map((e) => WordEntity(word: e.capitalize(), id: _faker.guid.guid())));
-  }
+  List<WordEntity> _parseResult(String result) =>
+      List<WordEntity>.from(result.split(', ').map((e) => WordEntity(word: _wordTransformer(e), id: _faker.guid.guid())));
+
+  String _wordTransformer(String word) => word.replaceFirst('-', ' ').replaceAll('.', '').capitalize();
 }
