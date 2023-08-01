@@ -3,6 +3,7 @@ import 'package:english_dictionary/core/feature/words/data/datasources/get_gpt_w
 import 'package:english_dictionary/core/feature/words/domain/entities/gpt_request_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/repositories/get_gpt_words/get_gpt_words_repository_interface.dart';
+import 'package:english_dictionary/core/utils/string_extensions.dart';
 import 'package:faker/faker.dart';
 
 class GetGptWordsRepository implements IGetGptWordsRepository {
@@ -23,6 +24,6 @@ class GetGptWordsRepository implements IGetGptWordsRepository {
   }
 
   List<WordEntity> _parseResult(String result) {
-    return List<WordEntity>.from(result.split(', ').map((e) => WordEntity(word: e, id: _faker.guid.guid())));
+    return List<WordEntity>.from(result.split(', ').map((e) => WordEntity(word: e.capitalize(), id: _faker.guid.guid())));
   }
 }
