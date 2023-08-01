@@ -3,17 +3,17 @@ import 'package:english_dictionary/core/feature/user_details/core/errors/user_de
 import 'package:english_dictionary/core/feature/user_details/data/datasources/save_user/save_user_datasource_interface.dart';
 import 'package:english_dictionary/core/feature/user_details/data/models/user_details_model.dart';
 
-import 'package:english_dictionary/core/services/firebase/firebase_service_interface.dart';
+import 'package:english_dictionary/core/services/firebase/firestore_service_interface.dart';
 
 class SaveUserDatasource implements ISaveUserDatasource {
-  final IFirebaseService _firebaseService;
+  final IFirestoreService _firestoreService;
 
-  SaveUserDatasource(this._firebaseService);
+  SaveUserDatasource(this._firestoreService);
 
   @override
   Future<bool> saveUser(UserDetailsModel model) async {
     try {
-      return await _firebaseService.saveUser(model.toMap());
+      return await _firestoreService.saveUser(model.toMap());
     } on FirebaseFailure {
       throw SaveUserFailure();
     }

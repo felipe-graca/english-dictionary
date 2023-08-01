@@ -5,8 +5,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart' as _i4;
-import 'package:english_dictionary/core/feature/user_details/data/repositories/exists_user/exists_user_repository.dart' as _i2;
+import 'package:english_dictionary/core/feature/auth/core/errors/auth_failures.dart'
+    as _i4;
+import 'package:english_dictionary/core/feature/user_details/data/repositories/exists_user/exists_user_repository.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -23,17 +25,20 @@ import 'package:mockito/mockito.dart' as _i1;
 /// A class which mocks [ExistsUserRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockExistsUserRepository extends _i1.Mock implements _i2.ExistsUserRepository {
+class MockExistsUserRepository extends _i1.Mock
+    implements _i2.ExistsUserRepository {
   MockExistsUserRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<(_i4.ExistsUserFailure?, bool)> existsUser() => (super.noSuchMethod(
+  _i3.Future<(_i4.ExistsUserFailure?, bool)> existsUser() =>
+      (super.noSuchMethod(
         Invocation.method(
           #existsUser,
           [],
         ),
-        returnValue: _i3.Future<(_i4.ExistsUserFailure?, bool)>.value((null, false)),
+        returnValue:
+            _i3.Future<(_i4.ExistsUserFailure?, bool)>.value((null, false)),
       ) as _i3.Future<(_i4.ExistsUserFailure?, bool)>);
 }

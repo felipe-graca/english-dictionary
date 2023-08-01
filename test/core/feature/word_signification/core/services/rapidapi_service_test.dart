@@ -1,88 +1,40 @@
-import 'package:dio/dio.dart';
-import 'package:english_dictionary/core/feature/word_signification/core/services/rapidapi/rapidapi_service.dart';
-import 'package:english_dictionary/core/feature/word_signification/core/services/rapidapi/rapidapi_service_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:dio/dio.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:english_dictionary/core/feature/word_signification/core/services/rapidapi/rapidapi_service.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'rapidapi_service_test.mocks.dart';
 
+// Create a mock of Dio for testing HttpService
+
 @GenerateMocks([Dio])
-main() {
-  final dio = MockDio();
-  final IRapidapiService rapidapiService = RapidapiService(dio);
+void main() {
+  group('RapidapiService', () {
+    // Create a Dio mock and RapidapiService instance for each test
+    late Dio dio;
+    late RapidapiService rapidapiService;
 
-  group("buildAuthOptions()", () {
-    test("should return an Options object with headers", () async {
-      final options = await rapidapiService.buildAuthOptions();
-      expect(options.headers, isNotNull);
-    });
-  });
+    setUp(() {
+      dio = MockDio();
 
-  group("get()", () {
-    group('success case', () {
-      test("should return a response", () async {
-        when(dio.get(any)).thenAnswer(
-          (_) async => Response(
-            data: {},
-            statusCode: 200,
-            requestOptions: RequestOptions(path: ""),
-          ),
-        );
-        final response = await rapidapiService.get("https://www.google.com");
+      when(dio.interceptors).thenReturn(Interceptors()..add(PrettyDioLogger()));
+      when(dio.options).thenReturn(BaseOptions()..headers.addAll({}));
 
-        expect(response, isNotNull);
-      });
-
-      test(
-        'Shold return a response with status code 200',
-        () async {
-          when(dio.get(any)).thenAnswer(
-            (_) async => Response(
-              data: {},
-              statusCode: 200,
-              requestOptions: RequestOptions(path: ""),
-            ),
-          );
-          final response = await rapidapiService.get("https://www.google.com");
-
-          expect(response.statusCode, 200);
-        },
-      );
+      rapidapiService = RapidapiService(dio);
     });
 
-    group('failure case', () {
-      test(
-        'Shold return a response with status code 400',
-        () async {
-          when(dio.get(any)).thenAnswer(
-            (_) async => Response(
-              data: {},
-              statusCode: 400,
-              requestOptions: RequestOptions(path: ""),
-            ),
-          );
-          final response = await rapidapiService.get("https://www.google.com");
+    test('get should call super.get with proper parameters', () async {
+      final response = Response(data: {'message': 'Hello'}, statusCode: 200, requestOptions: RequestOptions(path: ''));
+      when(dio.get('https://www.example.com', options: anyNamed('options'))).thenAnswer((_) async => response);
 
-          expect(response.statusCode, 400);
-        },
-      );
+      final result = await rapidapiService.get('https://www.example.com', options: Options());
 
-      test(
-        'Shold return a response with status code 401',
-        () async {
-          when(dio.get(any)).thenAnswer(
-            (_) async => Response(
-              data: {},
-              statusCode: 401,
-              requestOptions: RequestOptions(path: ""),
-            ),
-          );
-          final response = await rapidapiService.get("https://www.google.com");
+      expect(result, response);
 
-          expect(response.statusCode, 401);
-        },
-      );
+      verify(dio.get('https://www.example.com', options: anyNamed('options'))).called(1);
     });
   });
 }

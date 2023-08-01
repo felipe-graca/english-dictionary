@@ -1,7 +1,4 @@
-abstract interface class IFirebaseService {
-  //auth
-  Future<bool> signInWithGoogle();
-
+abstract interface class IFirestoreService {
   //user
   Future<bool> saveUser(Map<String, dynamic> map);
   Future<Map<String, dynamic>> getUserDetails();

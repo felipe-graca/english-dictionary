@@ -22,7 +22,7 @@ final class RapidapiService extends HttpService implements IRapidapiService {
 
   @override
   Future get(String? url, {Options? options}) async {
-    final response = super.get(url, options: options ?? await buildAuthOptions());
+    final response = await super.get(url, options: options ?? await buildAuthOptions());
     return response;
   }
 }
