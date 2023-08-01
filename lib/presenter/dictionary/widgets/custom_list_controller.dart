@@ -2,6 +2,7 @@ import 'package:english_dictionary/core/feature/words/cubit/words_cubit.dart';
 import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_text_field/custom_text_field.dart';
+import 'package:english_dictionary/ui/shared/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -137,6 +138,20 @@ class _CustomListControllerState extends State<CustomListController> {
                                   CustomIconButton(
                                     icon: Icons.generating_tokens_outlined,
                                     onTap: () async {
+                                      FocusScope.of(context).unfocus();
+                                      if (relatedWordController.text.length < 3) {
+                                        CustomSnackBar.show(
+                                          text: 'Please type an valid word or phrase',
+                                          status: CustomSnackbarStatus.warning,
+                                          context: context,
+                                        );
+                                        return;
+                                      }
+                                      CustomSnackBar.show(
+                                        text: 'Searching for words... 🔎',
+                                        status: CustomSnackbarStatus.success,
+                                        context: context,
+                                      );
                                       await wordsCubit.getAiWords(
                                         relatedWordController.text,
                                       );
