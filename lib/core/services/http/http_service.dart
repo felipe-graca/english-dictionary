@@ -2,14 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:english_dictionary/core/services/http/http_service_interface.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-enum HttpResponseStatus {
-  success,
-  unAuthorized,
-  notFound,
-  serverError,
-  unknownError,
-}
-
 base class HttpService implements IHttpService {
   final Dio _dio;
   HttpService(this._dio) {
@@ -22,22 +14,6 @@ base class HttpService implements IHttpService {
       compact: true,
       maxWidth: 90,
     ));
-  }
-
-  @override
-  HttpResponseStatus handerResponseStatus(int? statusCode) {
-    switch (statusCode) {
-      case int code when code >= 200 && code < 300:
-        return HttpResponseStatus.success;
-      case 401:
-        return HttpResponseStatus.unAuthorized;
-      case 404:
-        return HttpResponseStatus.notFound;
-      case 500:
-        return HttpResponseStatus.serverError;
-      default:
-        return HttpResponseStatus.unknownError;
-    }
   }
 
   @override

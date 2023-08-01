@@ -48,6 +48,6 @@ class UserDetailsServiceLocator implements IUserDetailsServiceLocator {
     i.registerLazySingleton<IExistsUserUsecase>(() => ExistsUserUsecase(i.get()));
 
     /*cubits*/
-    i.registerLazySingleton(() => UserDetailsCubit(i.get(), i.get(), i.get(), i.get()));
+    i.registerLazySingleton(() => UserDetailsCubit(i.get(), i.get(), i.get(), i.get(), i.get()));
   }
 }

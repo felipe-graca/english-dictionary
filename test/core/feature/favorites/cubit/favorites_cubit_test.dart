@@ -54,7 +54,7 @@ main() {
     });
   });
 
-  group('removeFavoriteWord()', () async {
+  group('removeFavoriteWord()', () {
     test('should remove favorite word', () async {
       when(mockRemoveFavoriteWordUsecase.call(favoriteWord)).thenAnswer((_) async => (null, true));
 
@@ -82,7 +82,7 @@ main() {
 
   group(
     'saveFavoriteWord()',
-    () async {
+    () {
       test(
         'should save favorite word',
         () async {
