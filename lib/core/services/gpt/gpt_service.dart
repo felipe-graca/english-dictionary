@@ -10,7 +10,7 @@ final class GptService extends HttpService implements IGptService {
   @override
   Future<String> generateText(GptRequestModel request) async {
     try {
-      const url = String.fromEnvironment('GPT_API_URL');
+      const url = "https://api.openai.com/v1/chat/completions";
       final response = await super.post(url, data: request.toJson(), options: await _buildAuthOptions());
       return response.data['choices'][0]['message']['content'];
     } on DioException {

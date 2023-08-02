@@ -23,11 +23,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(const FavoritesState(loading: true));
 
     final (failure, words) = await _getFavoritesWordsUsecase.call(noParams);
-    if (words.isNotEmpty) {
+    if (failure == null) {
       emit(state.copyWith(words: words, loading: false));
       return;
     }
-    emit(state.copyWith(errorMessage: failure!.message, loading: false));
+    emit(state.copyWith(errorMessage: failure.message, loading: false));
   }
 
   Future<bool> removeFavoriteWord(WordEntity wordEntity) async {

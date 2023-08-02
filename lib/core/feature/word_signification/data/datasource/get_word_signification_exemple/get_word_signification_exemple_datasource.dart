@@ -11,7 +11,7 @@ class GetWordSignificationExampleDatasource implements IGetWordSignificationExam
 
   @override
   Future<ExampleModel> getWordSignificationExamples(String word) async {
-    const url = String.fromEnvironment("WORD_SIGNIFICATION_API_URL");
+    const url = "https://wordsapiv1.p.rapidapi.com/words";
     try {
       final response = await _rapidapiService.get("$url/$word/examples");
       return ExampleModel.fromMap(response.data);

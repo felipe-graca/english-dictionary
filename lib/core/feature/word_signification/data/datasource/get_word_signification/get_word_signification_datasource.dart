@@ -11,7 +11,7 @@ class GetWordSignificationDatasource implements IGetWordSignificationDatasource 
 
   @override
   Future<WordSignificationModel> getWordSignification(String word) async {
-    const url = String.fromEnvironment("WORD_SIGNIFICATION_API_URL");
+    const url = "https://wordsapiv1.p.rapidapi.com/words";
     try {
       final response = await _rapidapiService.get("$url/$word");
       return WordSignificationModel.fromMap(response.data);

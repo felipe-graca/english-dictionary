@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class StorageService implements IStorageService {
   late FirebaseStorage _firebaseStorage;
+
   StorageService() {
     const storageBucket = String.fromEnvironment('STORAGE_BUCKET');
     _firebaseStorage = FirebaseStorage.instanceFor(bucket: storageBucket);
@@ -14,9 +15,10 @@ class StorageService implements IStorageService {
   Future<String> saveImage(String path, {required String userName, required String imagePath}) async {
     try {
       final result = await _firebaseStorage.ref('$path/$userName').putFile(File(imagePath));
-      return result.ref.getDownloadURL();
+      final downloadURL = await result.ref.getDownloadURL();
+      return downloadURL;
     } catch (e) {
-      //TODO: Create a custom exception and throw it
+      // TODO: Create a custom exception and throw it
       rethrow;
     }
   }

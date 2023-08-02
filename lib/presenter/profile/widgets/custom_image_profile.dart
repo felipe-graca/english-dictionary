@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -57,22 +58,9 @@ class _CustomImageProfileState extends State<CustomImageProfile> {
                     width: 120,
                     height: 120,
                     child: ClipOval(
-                      child: Image.network(
-                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 0.5,
-                              color: Colors.black,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-                        widget.imagePath,
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) => const CircularProgressIndicator(strokeWidth: 0.5, color: Colors.black),
+                        imageUrl: widget.imagePath,
                         fit: BoxFit.cover,
                       ),
                     ),

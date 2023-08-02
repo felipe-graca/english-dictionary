@@ -4,7 +4,6 @@ import 'package:english_dictionary/core/routes/app_router.dart';
 import 'package:english_dictionary/core/routes/app_routes.dart';
 import 'package:english_dictionary/presenter/profile/widgets/custom_image_profile.dart';
 import 'package:english_dictionary/presenter/profile/widgets/custom_logout_modal.dart';
-import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_loading_animation/custom_loading_animation.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_text_field/custom_text_field.dart';
@@ -234,26 +233,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
-                child: SizedBox(
-                  height: 100,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PrimaryButton(
-                        label: 'Configurations',
-                        fullWidth: true,
-                        leftIcon: Icons.settings,
-                        onTap: () {},
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
+            //     child: SizedBox(
+            //       height: 100,
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           PrimaryButton(
+            //             label: 'Configurations',
+            //             fullWidth: true,
+            //             leftIcon: Icons.settings,
+            //             onTap: () {},
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // )
           ],
         );
       },
