@@ -1,6 +1,6 @@
 import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart';
 import 'package:english_dictionary/core/feature/words/data/datasources/get_gpt_words/get_gpt_words_datasource_interface.dart';
-import 'package:english_dictionary/core/feature/words/domain/entities/gpt_request_entity.dart';
+import 'package:english_dictionary/core/feature/words/domain/entities/words_request_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/repositories/get_gpt_words/get_gpt_words_repository_interface.dart';
 import 'package:english_dictionary/core/utils/string_extensions.dart';
@@ -13,7 +13,7 @@ class GetGptWordsRepository implements IGetGptWordsRepository {
   final _faker = Faker();
 
   @override
-  Future<(GetWordsFailure?, List<WordEntity>)> getGptWords(GptRequestEntity word) async {
+  Future<(GetWordsFailure?, List<WordEntity>)> getGptWords(WordsRequestEntity word) async {
     try {
       final result = await _datasource.getGptWords(word.toModel());
 

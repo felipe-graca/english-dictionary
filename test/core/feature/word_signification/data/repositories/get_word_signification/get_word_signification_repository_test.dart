@@ -1,10 +1,8 @@
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification/get_word_signification_repository.dart';
+import 'package:english_dictionary/core/feature/word_signification/domain/entities/signification_request_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification/get_word_signification_repository_interface.dart';
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/pronunciation_entity.dart';
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/results_entity.dart';
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/syllables_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,30 +19,26 @@ main() {
   final faker = Faker();
   final word = faker.lorem.word();
 
-  final pronunciationEntity = PronunciationEntity(
-    all: faker.lorem.word(),
-    noun: faker.lorem.word(),
-    verb: faker.lorem.word(),
-    adjective: faker.lorem.word(),
-    adverb: faker.lorem.word(),
-  );
-
-  const syllablesEntity = SyllablesEntity(
-    count: 1,
-    list: <String>[''],
-  );
-
   final wordSignificationEntity = WordSignificationEntity(
-    word: faker.lorem.word(),
-    pronunciation: pronunciationEntity,
-    results: const <ResultsEntity>[],
-    syllables: syllablesEntity,
+    word: word,
+    pronunciation: '/kiː/ (keey)',
+    definition: 'A key is a small, usually metal, instrument specifically cut to fit into a lock and move its bolt.',
+    example: 'She misplaced her house key and couldn\'t get inside.',
+  );
+
+  const text =
+      '''Example: She misplaced her house key and couldn't get inside.\n\nDefinition: A key is a small, usually metal, instrument specifically cut to fit into a lock and move its bolt.\n\nPronunciation: /kiː/ (keey)''';
+
+  final significationRequest = SignificationRequestEntity(
+    messages: [
+      SignificationRequestMessageEntity(content: 'Return an Example, Definition and Pronunciation of word: [$word]. Nothing else', role: 'user')
+    ],
   );
 
   test(
     'Shold return a Right WordSignificationModel',
     () async {
-      when(datasource.getWordSignification(word)).thenAnswer((_) async => wordSignificationEntity.toModel());
+      when(datasource.getWordSignification(significationRequest.toModel())).thenAnswer((_) async => text);
 
       final (failure, result) = await repository.getWordSignification(word);
 
@@ -52,7 +46,7 @@ main() {
       expect(result, wordSignificationEntity);
       expect(failure, isNull);
 
-      verify(datasource.getWordSignification(word)).called(1);
+      verify(datasource.getWordSignification(significationRequest.toModel())).called(1);
       verifyNoMoreInteractions(datasource);
     },
   );
@@ -60,13 +54,13 @@ main() {
   test(
     'Shold return a Left GetWordSignificationFailure',
     () async {
-      when(datasource.getWordSignification(word)).thenThrow(GetWordSignificationFailure());
+      when(datasource.getWordSignification(significationRequest.toModel())).thenThrow(GetWordSignificationFailure());
       final (failure, result) = await repository.getWordSignification(word);
 
-      expect(result, WordSignificationEntity.empty());
+      expect(result, const WordSignificationEntity());
       expect(failure, isA<GetWordSignificationFailure>());
 
-      verify(datasource.getWordSignification(word)).called(1);
+      verify(datasource.getWordSignification(significationRequest.toModel())).called(1);
       verifyNoMoreInteractions(datasource);
     },
   );

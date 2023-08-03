@@ -3,18 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart'
-    as _i6;
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart'
-    as _i3;
+    as _i5;
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart'
     as _i2;
 import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase.dart'
-    as _i4;
-import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification_exemple/get_word_signification_exemple_usecase.dart'
-    as _i7;
+    as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -39,35 +35,25 @@ class _FakeWordSignificationEntity_0 extends _i1.SmartFake
         );
 }
 
-class _FakeExampleEntity_1 extends _i1.SmartFake implements _i3.ExampleEntity {
-  _FakeExampleEntity_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GetWordSignificationUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetWordSignificationUsecase extends _i1.Mock
-    implements _i4.GetWordSignificationUsecase {
+    implements _i3.GetWordSignificationUsecase {
   MockGetWordSignificationUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<(_i6.GetWordSignificationFailure?, _i2.WordSignificationEntity)>
+  _i4.Future<(_i5.GetWordSignificationFailure?, _i2.WordSignificationEntity)>
       call(String? params) => (super.noSuchMethod(
             Invocation.method(
               #call,
               [params],
             ),
-            returnValue: _i5.Future<
+            returnValue: _i4.Future<
                 (
-                  _i6.GetWordSignificationFailure?,
+                  _i5.GetWordSignificationFailure?,
                   _i2.WordSignificationEntity
                 )>.value((
               null,
@@ -79,41 +65,6 @@ class MockGetWordSignificationUsecase extends _i1.Mock
                 ),
               )
             )),
-          ) as _i5.Future<
-              (_i6.GetWordSignificationFailure?, _i2.WordSignificationEntity)>);
-}
-
-/// A class which mocks [GetWordSignificationExampleUsecase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockGetWordSignificationExampleUsecase extends _i1.Mock
-    implements _i7.GetWordSignificationExampleUsecase {
-  MockGetWordSignificationExampleUsecase() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i5.Future<(_i6.GetWordSignificationExampleFailure?, _i3.ExampleEntity)> call(
-          String? word) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [word],
-        ),
-        returnValue: _i5.Future<
-            (
-              _i6.GetWordSignificationExampleFailure?,
-              _i3.ExampleEntity
-            )>.value((
-          null,
-          _FakeExampleEntity_1(
-            this,
-            Invocation.method(
-              #call,
-              [word],
-            ),
-          )
-        )),
-      ) as _i5.Future<
-          (_i6.GetWordSignificationExampleFailure?, _i3.ExampleEntity)>);
+          ) as _i4.Future<
+              (_i5.GetWordSignificationFailure?, _i2.WordSignificationEntity)>);
 }

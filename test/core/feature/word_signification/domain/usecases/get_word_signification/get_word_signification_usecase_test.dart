@@ -1,7 +1,5 @@
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification/get_word_signification_repository.dart';
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/pronunciation_entity.dart';
-import 'package:english_dictionary/core/feature/word_signification/domain/entities/syllables_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/word_signification_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/usecases/get_word_signification/get_word_signification_usecase_interface.dart';
@@ -21,34 +19,21 @@ main() {
 
   final word = faker.lorem.word();
 
-  final pronunciation = PronunciationEntity(
-    all: faker.lorem.word(),
-    noun: faker.lorem.word(),
-    verb: faker.lorem.word(),
-    adjective: faker.lorem.word(),
-    adverb: faker.lorem.word(),
-  );
-
-  const syllables = SyllablesEntity(
-    count: 1,
-    list: <String>[''],
-  );
-
-  final wordSignification = WordSignificationEntity(
-    word: faker.lorem.word(),
-    pronunciation: pronunciation,
-    results: const [],
-    syllables: syllables,
+  final wordSignificationEntity = WordSignificationEntity(
+    word: word,
+    pronunciation: '/kiː/ (keey)',
+    definition: 'A key is a small, usually metal, instrument specifically cut to fit into a lock and move its bolt.',
+    example: 'She misplaced her house key and couldn\'t get inside.',
   );
 
   test(
     'Shold return a Right WordSignificationEntity',
     () async {
-      when(repository.getWordSignification(word)).thenAnswer((_) async => (null, wordSignification));
+      when(repository.getWordSignification(word)).thenAnswer((_) async => (null, wordSignificationEntity));
       final (failure, result) = await usecase.call(word);
 
       expect(result, isA<WordSignificationEntity>());
-      expect(result, wordSignification);
+      expect(result, wordSignificationEntity);
       expect(failure, isNull);
 
       verify(repository.getWordSignification(word)).called(1);
@@ -59,11 +44,11 @@ main() {
   test(
     'Shold return a Left GetWordSignificationFailure',
     () async {
-      when(repository.getWordSignification(word)).thenAnswer((_) async => (GetWordSignificationFailure(), WordSignificationEntity.empty()));
+      when(repository.getWordSignification(word)).thenAnswer((_) async => (GetWordSignificationFailure(), const WordSignificationEntity()));
 
       final (failure, result) = await usecase.call(word);
 
-      expect(result, WordSignificationEntity.empty());
+      expect(result, const WordSignificationEntity());
       expect(failure, isA<GetWordSignificationFailure>());
 
       verify(repository.getWordSignification(word)).called(1);
