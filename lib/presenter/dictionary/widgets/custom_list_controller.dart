@@ -1,8 +1,13 @@
+import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/words/cubit/words_cubit.dart';
+import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
+import 'package:english_dictionary/core/utils/utils.dart';
+import 'package:english_dictionary/presenter/word/page/word_page.dart';
 import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_text_field/custom_text_field.dart';
 import 'package:english_dictionary/ui/shared/custom_snackbar.dart';
+import 'package:english_dictionary/ui/shared/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -23,6 +28,7 @@ class _CustomListControllerState extends State<CustomListController> {
   final relatedWordFocusNode = FocusNode();
 
   final wordsCubit = GetIt.I.get<WordsCubit>();
+  final historyCubit = GetIt.I.get<HistoryCubit>();
 
   @override
   void initState() {
@@ -100,7 +106,12 @@ class _CustomListControllerState extends State<CustomListController> {
                                   const SizedBox(width: 10),
                                   CustomIconButton(
                                     icon: Icons.search,
-                                    onTap: () {},
+                                    onTap: () async {
+                                      await openModalBottomSheet(
+                                        context: context,
+                                        child: WordPage(word: WordEntity(word: specificWordController.text, id: Utils.generateUid)),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),

@@ -3,12 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource.dart'
-    as _i3;
-import 'package:english_dictionary/core/feature/word_signification/data/model/word_signification_model.dart'
     as _i2;
+import 'package:english_dictionary/core/feature/word_signification/data/model/signification_request_model.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -22,40 +22,23 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeWordSignificationModel_0 extends _i1.SmartFake
-    implements _i2.WordSignificationModel {
-  _FakeWordSignificationModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GetWordSignificationDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetWordSignificationDatasource extends _i1.Mock
-    implements _i3.GetWordSignificationDatasource {
+    implements _i2.GetWordSignificationDatasource {
   MockGetWordSignificationDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.WordSignificationModel> getWordSignification(String? word) =>
+  _i3.Future<String> getWordSignification(
+          _i4.SignificationRequestModel? request) =>
       (super.noSuchMethod(
         Invocation.method(
           #getWordSignification,
-          [word],
+          [request],
         ),
-        returnValue: _i4.Future<_i2.WordSignificationModel>.value(
-            _FakeWordSignificationModel_0(
-          this,
-          Invocation.method(
-            #getWordSignification,
-            [word],
-          ),
-        )),
-      ) as _i4.Future<_i2.WordSignificationModel>);
+        returnValue: _i3.Future<String>.value(''),
+      ) as _i3.Future<String>);
 }

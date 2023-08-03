@@ -1,4 +1,4 @@
-import 'package:english_dictionary/core/feature/words/domain/entities/gpt_request_entity.dart';
+import 'package:english_dictionary/core/feature/words/domain/entities/words_request_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase_interface.dart';
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase_interface.dart';
@@ -40,7 +40,7 @@ class WordsCubit extends Cubit<WordsState> {
   Future<void> getAiWords(String relatedWord) async {
     emit(state.copyWith(aiLoading: true));
     final (failure, result) = await _getGptWordsUsecase.call(
-      GptRequestEntity(messages: [GptRequestMessageEntity(content: _builAIString(relatedWord), role: 'user')]),
+      WordsRequestEntity(messages: [WordsRequestMessageEntity(content: _builAIString(relatedWord), role: 'user')]),
     );
 
     if (result.isNotEmpty) {

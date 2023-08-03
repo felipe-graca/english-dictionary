@@ -7,10 +7,10 @@ import 'dart:async' as _i3;
 
 import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart'
     as _i4;
-import 'package:english_dictionary/core/feature/words/domain/entities/gpt_request_entity.dart'
-    as _i8;
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart'
     as _i5;
+import 'package:english_dictionary/core/feature/words/domain/entities/words_request_entity.dart'
+    as _i8;
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase.dart'
     as _i7;
 import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase.dart'
@@ -62,7 +62,7 @@ class MockGetGptWordsUsecase extends _i1.Mock
 
   @override
   _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)> call(
-          _i8.GptRequestEntity? entity) =>
+          _i8.WordsRequestEntity? entity) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
