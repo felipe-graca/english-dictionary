@@ -55,7 +55,7 @@ class UserDetailsEntity extends Equatable {
   }
 
   //isEmty
-  bool get isEmpty => name.isEmpty && email.isEmpty && imagePath.isEmpty && uid.isEmpty;
+  bool get isEmpty => name.isEmpty && email.isEmpty && imagePath.isEmpty && uid.isEmpty && countWords == 0;
 
   //empty
   factory UserDetailsEntity.empty() {

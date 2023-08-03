@@ -37,12 +37,12 @@ class GetWordSignificationRepository implements IGetWordSignificationRepository 
         word: word,
       );
     } catch (e) {
-      if (results.length == 1) throw GetWordSignificationFailure(message: results[0].split('.')[0]);
+      if (results.length == 1) throw GetWordSignificationFailure(message: results[0]);
       throw GptFailure();
     }
   }
 
   String _builAIString(String text) {
-    return "Return an Example, Definition and Pronunciation of word: [$text]. Nothing else";
+    return "Ineed that you return to me an example, definition an pronuciantion of word: [$text]. Your return need to be has this form: Example: [Your text]\n\nDefinition: [Your text]\n\nPronunciation: [Your text]. If this word does exists, your return has in one single line.";
   }
 }

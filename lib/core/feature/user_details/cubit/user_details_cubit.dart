@@ -56,6 +56,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         name: _authService.currentAuthUserDetails?.displayName ?? '',
         email: _authService.currentAuthUserDetails?.email ?? '',
         imagePath: _authService.currentAuthUserDetails?.photoURL ?? '',
+        countWords: 0,
       );
       final (failure, result) = await saveUserUsecase.call(userDetails);
 

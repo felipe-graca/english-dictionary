@@ -67,7 +67,12 @@ class _WordPageState extends State<WordPage> {
                       child: Text(
                         '${state.errorMessage} 😐',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.red),
+                        style: GoogleFonts.lato(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.98,
+                          color: const Color.fromRGBO(102, 106, 214, 0.59),
+                        ),
                       ),
                     ),
                   )

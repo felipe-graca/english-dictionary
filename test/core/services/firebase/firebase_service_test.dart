@@ -7,8 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 import 'package:english_dictionary/core/services/auth/auth_service_interface.dart';
-import 'package:english_dictionary/core/services/firebase/firestore_service.dart';
-import 'package:english_dictionary/core/services/firebase/firestore_service_interface.dart';
+import 'package:english_dictionary/core/services/firestore/firestore_service.dart';
+import 'package:english_dictionary/core/services/firestore/firestore_service_interface.dart';
 import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/favorites/domain/entities/favorite_word_entity.dart';
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
@@ -177,7 +177,7 @@ void main() {
     test('should return throw if user is null', () async {
       mockAuthService = MockAuthService(isNullUser: true);
       firestoreService = FirestoreService(mockAuthService, mockFirestoreService);
-      expect(() async => await firestoreService.existsUser(), throwsA(isA<FirebaseFailure>()));
+      expect(() async => await firestoreService.existsUser(), throwsA(isA<FirestoreFailure>()));
     });
 
     test('should return true if save user', () async {
