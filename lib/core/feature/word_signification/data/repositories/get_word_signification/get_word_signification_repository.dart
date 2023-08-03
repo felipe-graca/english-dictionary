@@ -31,9 +31,9 @@ class GetWordSignificationRepository implements IGetWordSignificationRepository 
     final results = message.split('\n\n');
     try {
       return WordSignificationEntity(
-        example: results[0].replaceRange(0, 'Example:'.length, ''),
-        definition: results[1].replaceRange(0, 'Definition:'.length, ''),
-        pronunciation: results[2].replaceRange(0, 'Pronunciation:'.length, ''),
+        example: results[0].replaceRange(0, 'Example: '.length, ''),
+        definition: results[1].replaceRange(0, 'Definition: '.length, ''),
+        pronunciation: results[2].replaceRange(0, 'Pronunciation :'.length, ''),
         word: word,
       );
     } catch (e) {

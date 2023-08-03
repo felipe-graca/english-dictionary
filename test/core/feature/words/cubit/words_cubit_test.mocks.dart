@@ -5,11 +5,16 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart' as _i4;
-import 'package:english_dictionary/core/feature/words/domain/entities/words_request_entity.dart' as _i8;
-import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart' as _i5;
-import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase.dart' as _i7;
-import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase.dart' as _i2;
+import 'package:english_dictionary/core/feature/words/core/errors/words_failure.dart'
+    as _i4;
+import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart'
+    as _i5;
+import 'package:english_dictionary/core/feature/words/domain/entities/words_request_entity.dart'
+    as _i8;
+import 'package:english_dictionary/core/feature/words/domain/usecases/get_gpt_words/get_gpt_words_usecase.dart'
+    as _i7;
+import 'package:english_dictionary/core/feature/words/domain/usecases/get_words/get_words_usecase.dart'
+    as _i2;
 import 'package:english_dictionary/core/usecase/usecase.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -33,29 +38,38 @@ class MockGetWordsUsecase extends _i1.Mock implements _i2.GetWordsUsecase {
   }
 
   @override
-  _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)> call(_i6.NoParams? noParams) => (super.noSuchMethod(
+  _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)> call(
+          _i6.NoParams? noParams) =>
+      (super.noSuchMethod(
         Invocation.method(
           #call,
           [noParams],
         ),
-        returnValue: _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>.value((null, <_i5.WordEntity>[])),
+        returnValue:
+            _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>.value(
+                (null, <_i5.WordEntity>[])),
       ) as _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>);
 }
 
 /// A class which mocks [GetGptWordsUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetGptWordsUsecase extends _i1.Mock implements _i7.GetGptWordsUsecase {
+class MockGetGptWordsUsecase extends _i1.Mock
+    implements _i7.GetGptWordsUsecase {
   MockGetGptWordsUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)> call(_i8.WordsRequestEntity? entity) => (super.noSuchMethod(
+  _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)> call(
+          _i8.WordsRequestEntity? entity) =>
+      (super.noSuchMethod(
         Invocation.method(
           #call,
           [entity],
         ),
-        returnValue: _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>.value((null, <_i5.WordEntity>[])),
+        returnValue:
+            _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>.value(
+                (null, <_i5.WordEntity>[])),
       ) as _i3.Future<(_i4.GetWordsFailure?, List<_i5.WordEntity>)>);
 }
