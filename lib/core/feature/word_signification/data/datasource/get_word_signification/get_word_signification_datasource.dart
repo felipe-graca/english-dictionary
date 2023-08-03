@@ -1,22 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
-import 'package:english_dictionary/core/feature/word_signification/core/services/rapidapi/rapidapi_service_interface.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource_interface.dart';
-import 'package:english_dictionary/core/feature/word_signification/data/model/word_signification_model.dart';
+import 'package:english_dictionary/core/feature/word_signification/data/model/signification_request_model.dart';
+import 'package:english_dictionary/core/services/gpt/gpt_service_interface.dart';
 
 class GetWordSignificationDatasource implements IGetWordSignificationDatasource {
-  final IRapidapiService _rapidapiService;
+  final IGptService _service;
 
-  GetWordSignificationDatasource(this._rapidapiService);
+  GetWordSignificationDatasource(this._service);
 
   @override
-  Future<WordSignificationModel> getWordSignification(String word) async {
-    const url = "https://wordsapiv1.p.rapidapi.com/words";
+  Future<String> getWordSignification(SignificationRequestModel request) async {
     try {
-      final response = await _rapidapiService.get("$url/$word");
-      return WordSignificationModel.fromMap(response.data);
-    } on DioException catch (e) {
-      throw GetWordSignificationFailure(message: e.message ?? 'error on getWordSignification');
+      return await _service.generateSignificationText(request);
+    } on DioException {
+      throw GetWordSignificationExampleFailure();
     }
   }
 }

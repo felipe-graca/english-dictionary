@@ -1,5 +1,5 @@
-import 'package:english_dictionary/core/feature/word_signification/data/model/word_signification_model.dart';
+import 'package:english_dictionary/core/feature/word_signification/data/model/signification_request_model.dart';
 
 abstract interface class IGetWordSignificationDatasource {
-  Future<WordSignificationModel> getWordSignification(String word);
+  Future<String> getWordSignification(SignificationRequestModel request);
 }

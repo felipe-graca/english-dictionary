@@ -1,5 +1,5 @@
 import 'package:english_dictionary/core/feature/word_signification/core/errors/word_signification_failure.dart';
-import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification_exemple/get_word_signification_exemple_datasource.dart';
+import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource.dart';
 import 'package:english_dictionary/core/feature/word_signification/data/repositories/get_word_signification_exemple/get_word_signification_exemple_repository.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/entities/exemple_entity.dart';
 import 'package:english_dictionary/core/feature/word_signification/domain/repositories/get_word_signification_exemple/get_word_signification_exemple_repository.dart';
@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart';
 
 import 'get_word_signification_example_repository_test.mocks.dart';
 
-@GenerateMocks([GetWordSignificationExampleDatasource])
+@GenerateMocks([GetWordSignificationDatasource])
 void main() {
   final datasource = MockGetWordSignificationExampleDatasource();
 
@@ -22,7 +22,7 @@ void main() {
 
   group('GetWordSignificationRepository', () {
     test('should be a IGetWordSignificationRepository', () async {
-      when(datasource.getWordSignificationExamples(any)).thenAnswer((_) async => exampleEntity.toModel());
+      when(datasource.getWordSignification(any)).thenAnswer((_) async => exampleEntity.toModel());
 
       final (failure, result) = await repository.getWordSignificationExamples('word');
 
@@ -30,19 +30,19 @@ void main() {
       expect(result, exampleEntity);
       expect(failure, isNull);
 
-      verify(datasource.getWordSignificationExamples('word')).called(1);
+      verify(datasource.getWordSignification('word')).called(1);
       verifyNoMoreInteractions(datasource);
     });
 
     test('should return a GetWordSignificationExampleFailure when datasource throw a GetWordSignificationExampleFailure', () async {
-      when(datasource.getWordSignificationExamples(any)).thenThrow(GetWordSignificationExampleFailure());
+      when(datasource.getWordSignification(any)).thenThrow(GetWordSignificationExampleFailure());
 
       final (failure, result) = await repository.getWordSignificationExamples('word');
 
       expect(result, ExampleEntity.empty());
       expect(failure, isA<GetWordSignificationExampleFailure>());
 
-      verify(datasource.getWordSignificationExamples('word')).called(1);
+      verify(datasource.getWordSignification('word')).called(1);
       verifyNoMoreInteractions(datasource);
     });
   });

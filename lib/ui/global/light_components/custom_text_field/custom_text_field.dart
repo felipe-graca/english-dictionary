@@ -122,6 +122,7 @@ class _LightTextFieldState extends State<CustomTextField> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: TextFormField(
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     key: widget.key,
                     textInputAction: widget.textInputAction,
                     onEditingComplete: widget.onEditingComplete,

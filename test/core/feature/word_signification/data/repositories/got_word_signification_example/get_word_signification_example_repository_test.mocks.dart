@@ -5,10 +5,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification_exemple/get_word_signification_exemple_datasource.dart'
+import 'package:english_dictionary/core/feature/word_signification/data/datasource/get_word_signification/get_word_signification_datasource.dart'
     as _i3;
-import 'package:english_dictionary/core/feature/word_signification/data/model/exemple_model.dart'
-    as _i2;
+import 'package:english_dictionary/core/feature/word_signification/data/model/exemple_model.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -35,15 +34,13 @@ class _FakeExampleModel_0 extends _i1.SmartFake implements _i2.ExampleModel {
 /// A class which mocks [GetWordSignificationExampleDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetWordSignificationExampleDatasource extends _i1.Mock
-    implements _i3.GetWordSignificationExampleDatasource {
+class MockGetWordSignificationExampleDatasource extends _i1.Mock implements _i3.GetWordSignificationDatasource {
   MockGetWordSignificationExampleDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.ExampleModel> getWordSignificationExamples(String? word) =>
-      (super.noSuchMethod(
+  _i4.Future<_i2.ExampleModel> getWordSignification(String? word) => (super.noSuchMethod(
         Invocation.method(
           #getWordSignificationExamples,
           [word],

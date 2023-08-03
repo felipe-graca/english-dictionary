@@ -1,5 +1,5 @@
-import 'package:english_dictionary/core/feature/words/data/models/gpt_request_model.dart';
+import 'package:english_dictionary/core/feature/words/data/models/words_request_model.dart';
 
 abstract interface class IGetGptWordsDatasource {
-  Future<String> getGptWords(GptRequestModel word);
+  Future<String> getGptWords(WordsRequestModel word);
 }

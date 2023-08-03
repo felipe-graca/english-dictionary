@@ -72,7 +72,6 @@ class WordListWidget extends StatelessWidget {
                               return WordTileWidget(
                                 word: word.word,
                                 onTap: () async {
-                                  historyCubit.saveHistoryWord(toHistoryWordEntity(word));
                                   await openModalBottomSheet(context: context, child: WordPage(word: word));
                                 },
                                 isActived: state.words.any((element) => element.id == word.id),

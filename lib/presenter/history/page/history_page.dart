@@ -106,7 +106,6 @@ class _HistoryPageState extends State<HistoryPage> {
             return HistoryTileWidget(
               word: word,
               onTap: () async {
-                historyCubit.saveHistoryWord(word);
                 await openModalBottomSheet(context: context, child: WordPage(word: toWordEntity(word)));
               },
             );
