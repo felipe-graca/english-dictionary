@@ -48,6 +48,7 @@ class UserDetailsModel extends UserDetailsEntity {
       email: email,
       imagePath: imagePath,
       uid: uid,
+      countWords: countWords,
     );
   }
 }

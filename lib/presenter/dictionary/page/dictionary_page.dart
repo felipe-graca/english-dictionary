@@ -1,7 +1,7 @@
 import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart';
 import 'package:english_dictionary/core/feature/words/cubit/words_cubit.dart';
 import 'package:english_dictionary/presenter/dictionary/widgets/custom_list_controller.dart';
-import 'package:english_dictionary/presenter/dictionary/widgets/word_list_widget.dart';
+import 'package:english_dictionary/presenter/dictionary/widgets/custom_word_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -54,7 +54,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: WordListWidget(
+                      child: CustomWordList(
                         words: state.words,
                         isLoading: state.loading,
                         iaLoading: state.aiLoading,

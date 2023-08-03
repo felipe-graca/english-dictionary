@@ -2,19 +2,19 @@ import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
+import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
-import 'package:english_dictionary/ui/global/light_components/word_tile/word_tile_widget.dart';
 import 'package:english_dictionary/ui/shared/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WordListWidget extends StatelessWidget {
+class CustomWordList extends StatelessWidget {
   final bool isLoading;
   final List<WordEntity> words;
   final bool iaLoading;
-  const WordListWidget({super.key, required this.words, required this.isLoading, this.iaLoading = false});
+  const CustomWordList({super.key, required this.words, required this.isLoading, this.iaLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +69,9 @@ class WordListWidget extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                             itemBuilder: (context, index) {
                               final word = words[index];
-                              return WordTileWidget(
-                                word: word.word,
+                              return BadgeButton(
+                                label: word.word,
+                                rightIcon: Icons.arrow_forward_ios_rounded,
                                 onTap: () async {
                                   await openModalBottomSheet(context: context, child: WordPage(word: word));
                                 },

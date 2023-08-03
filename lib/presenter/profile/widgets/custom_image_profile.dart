@@ -62,14 +62,11 @@ class _CustomImageProfileState extends State<CustomImageProfile> {
                         placeholder: (context, url) => const CircularProgressIndicator(strokeWidth: 0.5, color: Colors.black),
                         imageUrl: widget.imagePath,
                         fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => const Icon(Icons.person, color: Colors.grey),
                       ),
                     ),
                   )
-                : Icon(
-                    Icons.camera_alt,
-                    color: Colors.white.withOpacity(0.7),
-                    size: 50,
-                  ),
+                : Icon(Icons.camera_alt, color: Colors.white.withOpacity(0.7), size: 50),
           ]
         ],
       ),

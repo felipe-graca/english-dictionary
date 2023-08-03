@@ -2,8 +2,8 @@ import 'package:english_dictionary/core/feature/history/cubit/history_cubit.dart
 import 'package:english_dictionary/core/feature/history/domain/entities/history_word_entity.dart';
 import 'package:english_dictionary/core/feature/words/domain/entities/word_entity.dart';
 import 'package:english_dictionary/presenter/word/page/word_page.dart';
+import 'package:english_dictionary/ui/global/light_components/buttons/buttons.dart';
 import 'package:english_dictionary/ui/global/light_components/custom_card/custom_card.dart';
-import 'package:english_dictionary/ui/global/light_components/history_tile/history_tile_widget.dart';
 import 'package:english_dictionary/ui/shared/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,11 +103,13 @@ class _HistoryPageState extends State<HistoryPage> {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           itemBuilder: (context, index) {
             final word = words[index];
-            return HistoryTileWidget(
-              word: word,
+            return BadgeButton(
+              label: word.word,
               onTap: () async {
                 await openModalBottomSheet(context: context, child: WordPage(word: toWordEntity(word)));
               },
+              leftIcon: Icons.history,
+              rightIcon: Icons.arrow_forward_ios_rounded,
             );
           },
           separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15),

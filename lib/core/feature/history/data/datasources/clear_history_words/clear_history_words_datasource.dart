@@ -1,7 +1,7 @@
 import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/datasources/clear_history_words/clear_history_words_datasource_interface.dart';
-import 'package:english_dictionary/core/services/firebase/firestore_service_interface.dart';
+import 'package:english_dictionary/core/services/firestore/firestore_service_interface.dart';
 
 class ClearHistoryWordsDatasource implements IClearHistoryWordsDatasource {
   final IFirestoreService _firestoreService;
@@ -12,7 +12,7 @@ class ClearHistoryWordsDatasource implements IClearHistoryWordsDatasource {
   Future<bool> clearHistoryWords() async {
     try {
       return _firestoreService.clearHistoryWords();
-    } on FirebaseFailure {
+    } on FirestoreFailure {
       throw ClearHistoryWordsFailure();
     }
   }

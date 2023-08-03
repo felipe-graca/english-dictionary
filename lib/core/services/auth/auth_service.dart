@@ -32,10 +32,10 @@ class AuthService implements IAuthService {
   Future<bool> signOut() async => await _googleSignIn
       .signOut()
       .then((value) async => await _authSignOut())
-      .catchError((_) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'));
+      .catchError((_) => throw FirestoreFailure(message: 'ERROR_ABORTED_BY_USER'));
 
   Future<bool> _authSignOut() async =>
-      await _auth.signOut().then((value) => true).catchError((_) => throw FirebaseFailure(message: 'ERROR_ABORTED_BY_USER'));
+      await _auth.signOut().then((value) => true).catchError((_) => throw FirestoreFailure(message: 'ERROR_ABORTED_BY_USER'));
 
   @override
   Future<void> startListenAuthChanges(Future<void> Function() event) async => _auth.userChanges().listen((_) async {
