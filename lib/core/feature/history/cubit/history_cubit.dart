@@ -57,7 +57,7 @@ class HistoryCubit extends Cubit<HistoryState> {
   }
 
   void dispose() {
-    emit(state.copyWith(words: [], loading: false, errorMessage: ''));
+    emit(state.copyWith(loading: false, errorMessage: ''));
   }
 
   bool get isLoading => state.loading;

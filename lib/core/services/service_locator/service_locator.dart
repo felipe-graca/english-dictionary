@@ -8,8 +8,8 @@ import 'package:english_dictionary/core/feature/word_signification/core/services
 import 'package:english_dictionary/core/feature/words/core/services/service_locator/words_service_locator_interface.dart';
 import 'package:english_dictionary/core/services/auth/auth_service.dart';
 import 'package:english_dictionary/core/services/auth/auth_service_interface.dart';
-import 'package:english_dictionary/core/services/firebase/firestore_service.dart';
-import 'package:english_dictionary/core/services/firebase/firestore_service_interface.dart';
+import 'package:english_dictionary/core/services/firestore/firestore_service.dart';
+import 'package:english_dictionary/core/services/firestore/firestore_service_interface.dart';
 import 'package:english_dictionary/core/services/http/http_service.dart';
 import 'package:english_dictionary/core/services/http/http_service_interface.dart';
 import 'package:english_dictionary/core/services/storage/storage_service.dart';

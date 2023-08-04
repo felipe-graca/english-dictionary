@@ -314,3 +314,120 @@ class CustomIconButton extends StatelessWidget {
     );
   }
 }
+
+class BadgeButton extends StatelessWidget {
+  final String label;
+  final void Function()? onTap;
+  final IconData? rightIcon;
+  final IconData? leftIcon;
+  final double? width;
+  final bool isActived;
+  final bool fullWidth;
+
+  const BadgeButton({
+    Key? key,
+    required this.label,
+    required this.onTap,
+    this.leftIcon,
+    this.rightIcon,
+    this.width,
+    this.isActived = false,
+    this.fullWidth = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TouchWrapper(
+      onTap: () {
+        if (onTap != null) {
+          onTap!();
+        }
+      },
+      builder: (value) {
+        return Container(
+          decoration: BoxDecoration(
+            boxShadow: TouchWrapper.interpolateOuterShadow([
+              const BoxShadow(
+                color: Colors.white,
+                blurRadius: 9,
+                offset: Offset(-4, -4),
+              ),
+              BoxShadow(
+                color: const Color(0xFFAEAEC0).withOpacity(0.5),
+                blurRadius: 9,
+                offset: const Offset(4, 4),
+              ),
+            ], value),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: InnerShadow(
+            shadows: TouchWrapper.interpolateInnerShadow([
+              const BoxShadow(
+                color: Colors.white,
+                blurRadius: 9,
+                offset: Offset(-4, -4),
+              ),
+              BoxShadow(
+                color: const Color(0xFFAEAEC0).withOpacity(0.5),
+                blurRadius: 9,
+                offset: const Offset(4, 4),
+              ),
+            ], value),
+            child: Container(
+              width: fullWidth ? width : 200,
+              height: 50,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xFF797CDB)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Row(
+                      children: [
+                        if (leftIcon == null) ...[
+                          Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              color: isActived ? const Color(0xFF00FF38) : Colors.transparent,
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ] else ...[
+                          Icon(
+                            leftIcon,
+                            size: 15,
+                            color: Colors.white,
+                          ),
+                        ],
+                        const SizedBox(width: 10),
+                        Text(
+                          label,
+                          style: GoogleFonts.lato(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 1.98,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 30),
+                    child: Icon(rightIcon, size: 15, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

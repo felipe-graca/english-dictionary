@@ -31,7 +31,10 @@ main() {
 
   final significationRequest = SignificationRequestEntity(
     messages: [
-      SignificationRequestMessageEntity(content: 'Return an Example, Definition and Pronunciation of word: [$word]. Nothing else', role: 'user')
+      SignificationRequestMessageEntity(
+          content:
+              'Ineed that you return to me an example, definition an pronuciantion of word: [$word]. Your return need to be has this form: Example: [Your text]\n\nDefinition: [Your text]\n\nPronunciation: [Your text]. If this word does exists, your return has in one single line.',
+          role: 'user')
     ],
   );
 

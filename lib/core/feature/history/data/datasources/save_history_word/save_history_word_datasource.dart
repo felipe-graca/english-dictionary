@@ -1,7 +1,7 @@
 import 'package:english_dictionary/core/errors/firebase_failure.dart';
 import 'package:english_dictionary/core/feature/history/core/errors/hisotry_failure.dart';
 import 'package:english_dictionary/core/feature/history/data/models/history_word_model.dart';
-import 'package:english_dictionary/core/services/firebase/firestore_service_interface.dart';
+import 'package:english_dictionary/core/services/firestore/firestore_service_interface.dart';
 
 import 'save_history_word_datasource_interface.dart';
 
@@ -14,7 +14,7 @@ class SaveHistoryWordDatasource implements ISaveHistoryWordDatasource {
   Future<bool> saveHistoryWord(HistoryWordModel model) async {
     try {
       return await _firestoreService.saveHistoryWord(model.toMap());
-    } on FirebaseFailure {
+    } on FirestoreFailure {
       throw SaveHistoryWordFailure();
     }
   }
