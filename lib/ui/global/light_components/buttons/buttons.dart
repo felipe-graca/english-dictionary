@@ -407,9 +407,9 @@ class BadgeButton extends StatelessWidget {
                         ],
                         const SizedBox(width: 10),
                         Text(
-                          label,
+                          label.length > 20 ? '${label.substring(0, 20)}...' : label,
                           style: GoogleFonts.lato(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w400,
                             letterSpacing: 1.98,
                             color: Colors.white,
